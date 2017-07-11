@@ -21,6 +21,57 @@ two,
 three
 };
 
+using namespace std;
+
+template <class legendre_0>
+//for n=0;
+double P0(legendre_0 x)
+{
+	return 1.0;
+}
+
+//for n=1
+template <class legendre_1>
+legendre_1 P1(legendre_1 x)
+{
+	return x;
+}
+
+//for n
+template <class legendre_n>
+legendre_n Pn(int n, legendre_n x)
+{
+	if (n==0)
+	{
+	return P0(x);
+	}
+
+	else if (n==1)
+	{
+	return P1(x);
+	}
+//calls out the special case of x=1
+	if (x == 1.0)
+	{
+	return 1.0;
+	}
+
+	if (x == -1.0)
+	{
+	return ((n % 2 ==0) ? 1.0 : -1.0);
+	}
+	
+	if ((x==0) && (n % 2))
+	{
+	return 0.0;
+	}
+
+	legendre_n pn;
+	pn = ((2*n-1)*x*Pn(n-1,x)-(n-1)*Pn(n-2,x))/n;
+
+	return pn;	
+}
+
 float transform (float var, legendre_info basis)
 {
 
@@ -61,23 +112,14 @@ void basis_eval (legendre_info &basis, particle_info &a)
 
 		a.vec_tild[m] = transform(x, basis);
 		
-		std::cout<<"Vec_Tild is "<<a.vec_tild[m]<<endl;
-		basis.alpha_n[m] = Pn(m,a.vec_tild[m]);
-		std::cout<<"alpha is "<<basis.alpha_n[m]<<endl;
-		basis.alpha_n[m] *= a.weight;
-		basis.a_m[m] = Pn(m,a.vec_tild[m]);
-		std::cout<<"a_m is "<<basis.a_m[m]<<endl;
+		basis.alpha_n[m] = Pn<double>(m,a.vec_tild[m]);
+		basis.alpha_n[m] *= a.b_weight;
+		basis.a_m[m] = Pn<double>(m,a.vec_tild[m]);
 		a.a_n[m] += basis.alpha_n[m];
-		
-		std::cout<<"a_"<<n<<"_"<<m<<" = "<<a.a_n[m]<<endl;
-		std::cout<<"a_"<<n<<"_"<<m<<" = "<<basis.a_m[m]<<endl;
-		std::cout<<endl;
 		}
 		k++;
 		}
 		while( k < a.k_particle);
-		std::cout<<"Particle "<<n<<" crossed the surface "<<k<<" times"<<endl;
-		std::cout<<endl;
 	}
 }
 
@@ -96,7 +138,7 @@ void get_A (legendre_info &basis, particle_info &a)
 //This is a dummy function until I figure out where to get the particle
 void get_particle (particle_info &a)
 {
-a.weight = 0.5;
+a.b_weight = 0.5;
 a.k_particle = 5;
 }
 
@@ -120,7 +162,20 @@ void initalize (legendre_info &basis, particle_info &a)
 	basis.a_m.push_back(0.0);
 	basis.alpha_n.push_back(0.0);
 	a.vec_tild.push_back(0.0);
+	basis.current.push_back(0.0);
+	basis.ortho_const.push_back(0.0);
 	}
+}
+
+void get_current (legendre_info &basis)
+{
+	char x;
+	for(int n=0; n<basis.M; n++)
+	{
+	basis.ortho_const[n] = (2.0*n+1.0)/(basis.max-basis.min);
+	basis.current[n] = basis.a_hat_n[n] * basis.ortho_const[n] * Pn(n,x);
+	}
+
 }
 
 int main ()
@@ -129,40 +184,26 @@ int main ()
 legendre_info basis;
 particle_info a;
 
-//initialize the FET program
 initalize (basis, a);
 get_particle(a);
 
-
-//Calculate the basis functions for particle a_n
 basis_eval(basis, a);
-//Caclulate the A_n
 get_A (basis, a);
 
-std::cout<<"This is a_n and a_m"<<endl;
-for(int n = 0; n < basis.M; n++)
-{
-std::cout<<a.a_n[n]<<"  ";
-std::cout<<basis.a_m[n]<<endl;
-}
-std::cout<<endl;
-std::cout<<"This is A_n and A_n_m"<<endl;
-for(int n = 0; n < basis.M; n++)
-{
-std::cout<<basis.A_n[n]<<"  ";
-std::cout<<basis.A_n_m[n]<<endl;
-}
-
 get_a_hat(basis, a);
+get_current(basis);
 
 for(int n = 0; n < basis.M; n++)
 {
-std::cout<<basis.a_hat_n[n]<<"  ";
-std::cout<<basis.a_hat_m[n]<<"  ";
-std::cout<<basis.a_hat_n_m[n]<<endl;
-std::cout<<endl;
 std::cout<<"The "<<n<<" coefficient is "<<basis.a_hat_n[n]<<" with a std. dev. "<<basis.sigma_a_n_a_m[n]<<endl;
 std::cout<<endl;
 }
+
+std::cout<<"The current is described as: "<<endl;
+for(int n=0; n<basis.M; n++)
+{
+std::cout<<"+"<<basis.current[n]<<"*x^"<<n;
+}
+std::cout<<endl;
 
 }

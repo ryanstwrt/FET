@@ -15,9 +15,9 @@ struct legendre_info
 {
 float min;
 float max;
-float ortho_const;
 int M;
 int N;
+std::vector<float> ortho_const;
 std::vector<float> alpha_n;
 std::vector<float> A_n;
 std::vector<float> A_m;
@@ -32,8 +32,9 @@ std::vector<float> current;
 
 struct particle_info
 {
-float weight;
+double b_weight;
 int k_particle;
+bool b_alive;
 std::vector<float> a_n;
 std::vector<float> vec_tild;
 std::vector<float> sigma_a_n;

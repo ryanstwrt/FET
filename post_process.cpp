@@ -24,16 +24,16 @@ basis.sigma_a_n_a_m[i] = basis.a_hat_n_m[i] - basis.a_hat_n[i] * basis.a_hat_m[i
 }
 
 }
-
+/*
 void get_current (legendre_info &basis)
 {
 
 	for(int n=0; n<basis.M, n++)
 	{
-	basis.ortho_const[i] = (2*n)/(basis.max-basis.min)
+	basis.ortho_const[i] = (2*n+1)/(basis.max-basis.min);
 	basis.current[i] = basis.a_hat_n[i] * basis.ortho_const[i] * Pn(n,
 	}
 
-}
+}*/
 //A new line
 
