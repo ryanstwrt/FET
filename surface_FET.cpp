@@ -7,10 +7,16 @@
  */
 //---------------------------------------------------------------------------//
 
+#include<cmath>
 #include"FET.hh"
 
 using namespace std;
 
+//Dummy random number generator for testing
+double random_num ()
+{
+	return rand()/(double) RAND_MAX;
+}
 
 //Scales the original phase space down to Legendre phase space [-1,1]
 float scale (float x, 
@@ -46,8 +52,9 @@ void basis_eval (legendre_info &basis,
 	double x;
 	for(int n = 0; n<basis.N; n++)
 	{
-		x = rand() / (double) RAND_MAX;
 
+	x=exp(- random_num());
+	cout<<x<<endl;
 		//calculate the legendre coefficients up to truncation 			value M for a_n and a_m
 		int k=0;
 		do
@@ -56,7 +63,7 @@ void basis_eval (legendre_info &basis,
 			{
 
 				a.vec_tild[m] = scale(x, basis);
-				basis.alpha_n[m] = Pn(m,a.vec_tild[m]) * a.b_weight;
+				basis.alpha_n[m] = Pn(m,a.vec_tild[m]) * 					a.b_weight;
 				basis.a_m[m] = Pn(m,a.vec_tild[m]);
 				a.a_n[m] += basis.alpha_n[m];
 			}
@@ -81,9 +88,9 @@ void get_A (legendre_info &basis,
 
 
 //This is a dummy function until I figure out where to get the particle
-void particle_info::get_particle (particle_info &a)
+void get_particle (particle_info &a)
 {
-	a.b_weight = 0.5;
+	a.b_weight = random_num();
 	a.k_particle = 5;
 }
 
@@ -92,9 +99,9 @@ void initalize (legendre_info &basis,
 		particle_info &a)
 {
 	basis.min = 0;
-	basis.max = 5;
+	basis.max = 10;
 	basis.M = 5;
-	basis.N = 100;
+	basis.N = 1000;
 
 	for(int j=0; j<basis.M; j++)
 	{
@@ -124,14 +131,14 @@ legendre_info basis;
 particle_info a;
 
 initalize (basis, a);
-a.get_particle(a);
+get_particle(a);
 
 
 basis_eval(basis, a);
 get_A (basis, a);
 
 get_a_hat(basis, a);
-get_current(basis);
+basis.get_current(basis);
 
 std::cout<<"The scaled current is described as: "<<endl;
 for(int n=0; n<basis.M; n++)

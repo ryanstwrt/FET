@@ -12,8 +12,9 @@
 #include<vector>
 #include<cstdlib>
 
-struct legendre_info
+class legendre_info
 {
+public:
 float min;
 float max;
 int M;
@@ -31,6 +32,10 @@ std::vector<float> a_hat_m;
 std::vector<float> a_hat_n_m;
 std::vector<float> current;
 std::vector<float> current_unc;
+
+float scale (float var, legendre_info basis);
+void get_current (legendre_info &basis);
+float get_ortho_const(int n, legendre_info & basis);
 };
 
 class particle_info
@@ -42,17 +47,17 @@ std::vector<float> sigma_a_n;
 double b_weight;
 int k_particle;
 bool b_alive;
+
 void get_particle (particle_info &a);
 };
 
-void get_particle (particle_info &a);
+
 double Pn(int n, double x);
 void basis_eval (legendre_info &basis, particle_info &a);
-float scale (float var, legendre_info basis);
 void get_A (legendre_info &basis, particle_info &a);
 void initialize (legendre_info &basis, particle_info &a);
 void get_a_hat (legendre_info &basis, particle_info &a);
-void get_current (legendre_info &basis);
-float get_ortho_const(int n, legendre_info & basis);
+
+
 
 
