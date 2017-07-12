@@ -14,107 +14,46 @@
 
 using namespace std;
 
-enum dimension
-{
-one,
-two,
-three
-};
-
-using namespace std;
-
-template <class legendre_0>
-//for n=0;
-double P0(legendre_0 x)
-{
-	return 1.0;
-}
-
-//for n=1
-template <class legendre_1>
-legendre_1 P1(legendre_1 x)
-{
-	return x;
-}
-
-//for n
-template <class legendre_n>
-legendre_n Pn(int n, legendre_n x)
-{
-	if (n==0)
-	{
-	return P0(x);
-	}
-
-	else if (n==1)
-	{
-	return P1(x);
-	}
-//calls out the special case of x=1
-	if (x == 1.0)
-	{
-	return 1.0;
-	}
-
-	if (x == -1.0)
-	{
-	return ((n % 2 ==0) ? 1.0 : -1.0);
-	}
-	
-	if ((x==0) && (n % 2))
-	{
-	return 0.0;
-	}
-
-	legendre_n pn;
-	pn = ((2*n-1)*x*Pn(n-1,x)-(n-1)*Pn(n-2,x))/n;
-
-	return pn;	
-}
-
-float transform (float var, legendre_info basis)
+float scale (float x, legendre_info basis)
 {
 
-	if(var < basis.min || var > basis.max)
+	if(x < basis.min || x > basis.max)
 	{
 	std::cout<< "The domain does not encompass the entire range of the problem."<<endl;
 	}
 	else
 	{
-	float x_tild = 2.0 * ((var - basis.min)/(basis.max - basis.min)) - 1.0;
+	float x_tild = 2.0 * ((x - basis.min)/(basis.max - basis.min)) - 1.0;
 	return x_tild;
 	}
 }
 
+float rescale (float x_tild, legendre_info basis)
+{
+
+	float x = ((x_tild+1)*(basis.max-basis.min)/2)+basis.min;;
+	return x;
+
+}
+
 void basis_eval (legendre_info &basis, particle_info &a)
 {
-	float x;
+	double x;
 	for(int n = 0; n<basis.N; n++)
 	{
-	x = rand() / (float) RAND_MAX;
+	x = rand() / (double) RAND_MAX;
 
-		//initialize the a_n vector if not already initialized
-		if(a.a_n.empty() || basis.a_m.empty() == 1)
-		{
-			for(int l=0; l<basis.M; l++)
-			{
-
-			}
-		}
-	//scale our dimension into legendre space from [-1,1] 
-
-		//calculate the legendre coefficients up to truncation value M for a_n and a_m
+		//calculate the legendre coefficients up to truncation 			value M for a_n and a_m
 		int k=0;
 		do
 		{
 		for(int m=0; m<basis.M; m++)
 		{
 
-		a.vec_tild[m] = transform(x, basis);
-		
-		basis.alpha_n[m] = Pn<double>(m,a.vec_tild[m]);
-		basis.alpha_n[m] *= a.b_weight;
-		basis.a_m[m] = Pn<double>(m,a.vec_tild[m]);
+		a.vec_tild[m] = scale(x, basis);
+
+		basis.alpha_n[m] = Pn(m,a.vec_tild[m]) * 			a.b_weight;
+		basis.a_m[m] = Pn(m,a.vec_tild[m]);
 		a.a_n[m] += basis.alpha_n[m];
 		}
 		k++;
@@ -135,8 +74,15 @@ void get_A (legendre_info &basis, particle_info &a)
 }
 
 
+
+
+void get_uncertainty(legendre_info &basis)
+{
+
+}
+
 //This is a dummy function until I figure out where to get the particle
-void get_particle (particle_info &a)
+void particle_info::get_particle (particle_info &a)
 {
 a.b_weight = 0.5;
 a.k_particle = 5;
@@ -158,25 +104,17 @@ void initalize (legendre_info &basis, particle_info &a)
 	basis.a_hat_m.push_back(0.0);
 	basis.a_hat_n_m.push_back(0.0);
 	basis.sigma_a_n_a_m.push_back(0.0);
-	a.a_n.push_back(0.0);
 	basis.a_m.push_back(0.0);
 	basis.alpha_n.push_back(0.0);
-	a.vec_tild.push_back(0.0);
 	basis.current.push_back(0.0);
-	basis.ortho_const.push_back(0.0);
+	basis.ortho_const_n.push_back(0.0);
+	basis.ortho_const_m.push_back(0.0);
+	basis.current_unc.push_back(0.0);
+	a.a_n.push_back(0.0);
+	a.vec_tild.push_back(0.0);
 	}
 }
 
-void get_current (legendre_info &basis)
-{
-	char x;
-	for(int n=0; n<basis.M; n++)
-	{
-	basis.ortho_const[n] = (2.0*n+1.0)/(basis.max-basis.min);
-	basis.current[n] = basis.a_hat_n[n] * basis.ortho_const[n] * Pn(n,x);
-	}
-
-}
 
 int main ()
 {
@@ -185,7 +123,8 @@ legendre_info basis;
 particle_info a;
 
 initalize (basis, a);
-get_particle(a);
+a.get_particle(a);
+
 
 basis_eval(basis, a);
 get_A (basis, a);
@@ -193,17 +132,17 @@ get_A (basis, a);
 get_a_hat(basis, a);
 get_current(basis);
 
-for(int n = 0; n < basis.M; n++)
-{
-std::cout<<"The "<<n<<" coefficient is "<<basis.a_hat_n[n]<<" with a std. dev. "<<basis.sigma_a_n_a_m[n]<<endl;
-std::cout<<endl;
-}
-
-std::cout<<"The current is described as: "<<endl;
+std::cout<<"The scaled current is described as: "<<endl;
 for(int n=0; n<basis.M; n++)
 {
-std::cout<<"+"<<basis.current[n]<<"*x^"<<n;
+if(n==0)
+{
+std::cout<<basis.current[n]<<" +/- "<<basis.current_unc[n]<<endl;
+}
+else
+{
+std::cout<<basis.current[n]<<"*x^"<<n<<" +/- "<<basis.current_unc[n]<<endl;
+}
 }
 std::cout<<endl;
-
 }

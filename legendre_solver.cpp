@@ -14,19 +14,20 @@
 using namespace std;
 
 //for n=0;
-float P0(float x)
+double P0(double x)
 {
 	return 1.0;
 }
 
 //for n=1
-float P1(float x)
+
+double P1(double x)
 {
 	return x;
 }
 
 //for n
-float Pn(int n, float x)
+double Pn(int n, double x)
 {
 	if (n==0)
 	{
@@ -53,7 +54,7 @@ float Pn(int n, float x)
 	return 0.0;
 	}
 
-	float pn;
+	double pn;
 	pn = ((2*n-1)*x*Pn(n-1,x)-(n-1)*Pn(n-2,x))/n;
 
 	return pn;	

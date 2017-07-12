@@ -22,6 +22,27 @@ basis.a_hat_n_m[i] = basis.A_n_m[i] / basis.N;
 
 basis.sigma_a_n_a_m[i] = basis.a_hat_n_m[i] - basis.a_hat_n[i] * basis.a_hat_m[i];
 }
+}
+
+float get_ortho_const(int n, legendre_info & basis)
+{
+	return (2.0*n+1.0)/(basis.max-basis.min);
+}
+
+void get_current (legendre_info &basis)
+{
+	for(int n=0; n<basis.M; n++)
+	{
+	basis.ortho_const_n[n] = get_ortho_const(n,basis);
+	basis.current[n] = basis.a_hat_n[n] * basis.ortho_const_n[n];
+		for(int m=0;m<basis.M;m++)
+		{
+		basis.ortho_const_m[m] = get_ortho_const(m,basis);
+		basis.current_unc[m] += basis.ortho_const_n[n] *
+		basis.ortho_const_m[m] * basis.sigma_a_n_a_m[m];
+		}
+
+	}
 
 }
 /*
