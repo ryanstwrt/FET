@@ -11,6 +11,7 @@
 #include<vector>
 #include"FET.hh"
 
+//Solves the the coefficient for each requried Legendre polynomial
 void get_a_hat (legendre_info &basis, particle_info &a)
 {
 
@@ -24,11 +25,13 @@ basis.sigma_a_n_a_m[i] = basis.a_hat_n_m[i] - basis.a_hat_n[i] * basis.a_hat_m[i
 }
 }
 
+//Solves for the orthogonality constant due to the phase space shift
 float get_ortho_const(int n, legendre_info & basis)
 {
 	return (2.0*n+1.0)/(basis.max-basis.min);
 }
 
+// Solves for the current and the uncertainty due to each coefficient
 void get_current (legendre_info &basis)
 {
 	for(int n=0; n<basis.M; n++)

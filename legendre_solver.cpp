@@ -13,20 +13,20 @@
 
 using namespace std;
 
-//for n=0;
+//for the special case of n=0;
 double P0(double x)
 {
 	return 1.0;
 }
 
-//for n=1
+//for the special case of n=1
 
 double P1(double x)
 {
 	return x;
 }
 
-//for n
+//for any Legendre polynomial in the nth order
 double Pn(int n, double x)
 {
 	if (n==0)
