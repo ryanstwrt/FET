@@ -8,8 +8,9 @@
 //---------------------------------------------------------------------------//
 
 
-#include <iostream>
-#include <vector>
+#include<iostream>
+#include<vector>
+#include<cstdlib>
 
 struct legendre_info
 {

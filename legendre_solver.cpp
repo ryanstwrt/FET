@@ -8,7 +8,6 @@
 //---------------------------------------------------------------------------//
 
 
-#include<iostream>
 #include "FET.hh"
 
 using namespace std;
@@ -27,7 +26,8 @@ double P1(double x)
 }
 
 //for any Legendre polynomial in the nth order
-double Pn(int n, double x)
+double Pn(int n, 
+	  double x)
 {
 	if (n==0)
 	{
