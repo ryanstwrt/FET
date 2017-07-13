@@ -14,15 +14,21 @@ void get_a_hat (legendre_info &basis,
 		particle_info &a)
 {
 
-for (int i = 0; i<basis.M; i++)
-{
-	basis.a_hat_n[i] = basis.A_n[i] / basis.N;
-	basis.a_hat_m[i] = basis.A_m[i] / basis.N;
-	basis.a_hat_n_m[i] = basis.A_n_m[i] / basis.N;
+	for (int i = 0; i<basis.M; i++)
+	{
+		basis.a_hat_n[i] = basis.A_n[i] / basis.N;
+		basis.a_hat_m[i] = basis.A_m[i] / basis.N;
+	}
 
-	basis.sigma_a_n_a_m[i] = basis.a_hat_n_m[i] - basis.a_hat_n[i] * 
-	basis.a_hat_m[i];
-}
+	for (int n=0; n < basis.N; n++)
+	{
+		for(int m=0; m<basis.M; m++)
+		{
+		basis.sigma_a_n_a_m[m][n] = 
+		basis.A_n_m[m][n]/basis.N - (basis.a_hat_n[n] *
+		basis.a_hat_m[m]);
+		}
+	}
 }
 
 //Solves for the orthogonality constant due to the phase space shift
@@ -33,31 +39,21 @@ float legendre_info::get_ortho_const(int n,
 }
 
 // Solves for the current and the uncertainty due to each coefficient
+
 void legendre_info::get_current (legendre_info &basis)
 {
-	for(int n=0; n<basis.M; n++)
+	for(int m=0; m<basis.M; m++)
 	{
-		basis.ortho_const_n[n] = basis.get_ortho_const(n,basis);
-		basis.current[n] = basis.a_hat_n[n] * basis.ortho_const_n[n];
-
-		for(int m=0;m<basis.M;m++)
+		basis.ortho_const_n[m] = basis.get_ortho_const(m,basis);
+		basis.current[m] = basis.a_hat_n[m];
+	}
+	
+	for(int m=0;m<basis.M;m++)
+	{
+		for(int n=0;n<basis.N;n++)
 		{
-			basis.ortho_const_m[m] = basis.get_ortho_const(m,basis);
-			basis.current_unc[m] += basis.ortho_const_n[n] *
-			basis.ortho_const_m[m] * basis.sigma_a_n_a_m[m];
+			basis.current_unc[m] += basis.sigma_a_n_a_m[m][n];
 		}
+		basis.current_unc[m] *= basis.N/(basis.N-1);
 	}
 }
-/*
-void get_current (legendre_info &basis)
-{
-
-	for(int n=0; n<basis.M, n++)
-	{
-	basis.ortho_const[i] = (2*n+1)/(basis.max-basis.min);
-	basis.current[i] = basis.a_hat_n[i] * basis.ortho_const[i] * Pn(n,
-	}
-
-}*/
-//A new line
-

@@ -19,14 +19,15 @@ float min;
 float max;
 int M;
 int N;
+int n_counter;
 std::vector<float> ortho_const_n;
 std::vector<float> ortho_const_m;
 std::vector<float> alpha_n;
 std::vector<float> A_n;
 std::vector<float> A_m;
 std::vector<float> a_m;
-std::vector<float> A_n_m;
-std::vector<float> sigma_a_n_a_m;
+std::vector<std::vector<float> > A_n_m;
+std::vector<std::vector<float> > sigma_a_n_a_m;
 std::vector<float> a_hat_n;
 std::vector<float> a_hat_m;
 std::vector<float> a_hat_n_m;
@@ -34,6 +35,7 @@ std::vector<float> current;
 std::vector<float> current_unc;
 
 float scale (float var, legendre_info basis);
+float rescale(float var, legendre_info basis);
 void get_current (legendre_info &basis);
 float get_ortho_const(int n, legendre_info & basis);
 };
@@ -42,7 +44,7 @@ class particle_info
 {
 public:
 std::vector<float> a_n;
-std::vector<float> vec_tild;
+std::vector<float> x_tild;
 std::vector<float> sigma_a_n;
 double b_weight;
 int k_particle;
@@ -57,7 +59,4 @@ void basis_eval (legendre_info &basis, particle_info &a);
 void get_A (legendre_info &basis, particle_info &a);
 void initialize (legendre_info &basis, particle_info &a);
 void get_a_hat (legendre_info &basis, particle_info &a);
-
-
-
 

@@ -59,5 +59,3 @@ double Pn(int n,
 
 	return pn;	
 }
-	
-
