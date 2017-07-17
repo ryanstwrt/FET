@@ -16,19 +16,24 @@ void get_a_hat (legendre_info &basis,
 
 	for (int i = 0; i<basis.M; i++)
 	{
-		basis.a_hat_n[i] = basis.A_n[i] / basis.N;
-		basis.a_hat_m[i] = basis.A_m[i] / basis.N;
+		basis.a_hat_n[i] = basis.A_n[i]/basis.N;
+		basis.a_hat_m[i] = basis.A_m[i]/basis.N;
 	}
 
 	for (int n=0; n < basis.N; n++)
 	{
 		for(int m=0; m<basis.M; m++)
 		{
-		basis.sigma_a_n_a_m[m][n] = 
-		basis.A_n_m[m][n]/basis.N - (basis.a_hat_n[n] *
-		basis.a_hat_m[m]);
+			basis.var_a_n[m] += std::pow(basis.a_hat_n[n],2) / basis.N - std::pow(basis.a_hat_n[n]/basis.N,2);
+			basis.sigma_a_n_a_m[m][n] = basis.A_n_m[m][n]/basis.N - (basis.a_hat_n[n] * basis.a_hat_m[m]);
+			if(n==basis.N-1)
+			{
+				basis.var_a_n[m] = pow(basis.var_a_n[m],2) / pow(basis.A_n[m],2);
+				basis.var_a_n[m] = std::sqrt(std::abs(basis.var_a_n[m]));
+			}
 		}
 	}
+
 }
 
 //Solves for the orthogonality constant due to the phase space shift

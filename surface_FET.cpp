@@ -7,7 +7,6 @@
  */
 //---------------------------------------------------------------------------//
 
-#include<cmath>
 #include"FET.hh"
 
 using namespace std;
@@ -52,7 +51,7 @@ void basis_eval (legendre_info &basis,
 	double x;
 	for(int n = 0; n<basis.N; n++)
 	{
-	x=exp(- random_num());
+	x=std::exp(-random_num());
 		//calculate the legendre coefficients up to truncation 			value M for a_n and a_m for one particle
 		int k=0;
 		do
@@ -61,7 +60,8 @@ void basis_eval (legendre_info &basis,
 			{
 				a.get_particle(a);
 				a.x_tild[m] = scale(x, basis);
-				basis.alpha_n[m] = Pn(m,a.x_tild[m]) * 					a.b_weight;
+				basis.alpha_n[m] = Pn(m,a.x_tild[m]) * 	
+				a.b_weight;
 				if(m==0)
 				{
 					for(int i=0; i<basis.M; i++)
@@ -112,7 +112,7 @@ void initalize (legendre_info &basis,
 	basis.min = 0;
 	basis.max = 10;
 	basis.M = 7;
-	basis.N = 1000;
+	basis.N = 100;
 	basis.A_n_m.resize(basis.M);
 	basis.sigma_a_n_a_m.resize(basis.M);
 	for(int j=0; j<basis.M; j++)
@@ -130,39 +130,8 @@ void initalize (legendre_info &basis,
 		basis.ortho_const_n.push_back(0);
 		basis.ortho_const_m.push_back(0);
 		basis.current_unc.push_back(0);
+		basis.var_a_n.push_back(0);
 		a.a_n.push_back(0);
 		a.x_tild.push_back(0);
 	}
-}
-
-
-int main ()
-{
-
-legendre_info basis;
-particle_info a;
-
-initalize (basis, a);
-a.get_particle(a);
-
-
-basis_eval(basis, a);
-
-
-get_a_hat(basis, a);
-basis.get_current(basis);
-
-std::cout<<"The scaled current is described as: "<<endl;
-for(int n=0; n<basis.M; n++)
-{
-if(n==0)
-{
-std::cout<<basis.current[n]<<" +/- "<<basis.current_unc[n]<<endl;
-}
-else
-{
-std::cout<<basis.current[n]<<"*x^"<<n<<" +/- "<<basis.current_unc[n]<<endl;
-}
-}
-std::cout<<endl;
 }

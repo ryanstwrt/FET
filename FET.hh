@@ -11,6 +11,7 @@
 #include<iostream>
 #include<vector>
 #include<cstdlib>
+#include<cmath>
 
 class legendre_info
 {
@@ -33,6 +34,7 @@ std::vector<float> a_hat_m;
 std::vector<float> a_hat_n_m;
 std::vector<float> current;
 std::vector<float> current_unc;
+std::vector<float> var_a_n;
 
 float scale (float var, legendre_info basis);
 float rescale(float var, legendre_info basis);
@@ -53,10 +55,9 @@ bool b_alive;
 void get_particle (particle_info &a);
 };
 
-
 double Pn(int n, double x);
 void basis_eval (legendre_info &basis, particle_info &a);
 void get_A (legendre_info &basis, particle_info &a);
-void initialize (legendre_info &basis, particle_info &a);
+void initalize (legendre_info &basis, particle_info &a);
 void get_a_hat (legendre_info &basis, particle_info &a);
 
