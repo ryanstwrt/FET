@@ -130,8 +130,7 @@ void particle_info::get_particle (legendre_info &basis,
 }
 
 
-void initalize (legendre_info &basis, 
-		particle_info &a)
+void legendre_info::initalize (legendre_info &basis)
 {
 	basis.min = -1;
 	basis.max = 1;
@@ -154,6 +153,5 @@ void initalize (legendre_info &basis,
 		basis.ortho_const_m.push_back(0);
 		basis.current_unc.push_back(0);
 		basis.var_a_n.push_back(0);
-		a.a_n.push_back(0);
 	}
 }

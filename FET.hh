@@ -40,6 +40,7 @@ double scale (double x, legendre_info basis);
 float rescale(float var, legendre_info basis);
 void get_current (legendre_info &basis);
 float get_ortho_const(int n, legendre_info & basis);
+void initalize (legendre_info &basis);
 };
 
 //Initalize the info for the legendre polynomial structure
@@ -94,6 +95,6 @@ class tally_info
 double Pn(int n, double x);
 void basis_eval (legendre_info &basis, particle_info &a);
 void get_A (legendre_info &basis, particle_info &a);
-void initalize (legendre_info &basis, particle_info &a);
+
 void get_a_hat (legendre_info &basis, particle_info &a);
 

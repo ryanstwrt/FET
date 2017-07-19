@@ -11,7 +11,7 @@ int main ()
 legendre_info basis;
 particle_info a;
 
-initalize (basis, a);
+basis.initalize (basis);
 a.get_particle(basis, a);
 
 
