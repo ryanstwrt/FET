@@ -35,7 +35,7 @@ double scale (double x,
 }
 
 //Rescales the Legendre phase space back to the original phase space
-float legendre_info::rescale (float x_tild, 
+float rescale (float x_tild, 
 	       legendre_info basis)
 {
 
@@ -130,7 +130,7 @@ void particle_info::get_particle (legendre_info &basis,
 }
 
 
-void legendre_info::initalize (legendre_info &basis)
+/*void legendre_info::initalize (legendre_info &basis)
 {
 	basis.min = -1;
 	basis.max = 1;
@@ -154,4 +154,4 @@ void legendre_info::initalize (legendre_info &basis)
 		basis.current_unc.push_back(0);
 		basis.var_a_n.push_back(0);
 	}
-}
+}*/

@@ -46,7 +46,7 @@ std::cout<<std::endl;
 }
 
 //Solves for the orthogonality constant due to the phase space shift
-float legendre_info::get_ortho_const(int n, 
+float get_ortho_const(int n, 
 		      legendre_info & basis)
 {
 	return (2.0*n+1.0)/(basis.max-basis.min);
@@ -54,11 +54,11 @@ float legendre_info::get_ortho_const(int n,
 
 // Solves for the current and the uncertainty due to each coefficient
 
-void legendre_info::get_current (legendre_info &basis)
+void get_current (legendre_info &basis)
 {
 	for(int m=0; m<basis.M; m++)
 	{
-		basis.ortho_const_n[m] = basis.get_ortho_const(m,basis);
+		basis.ortho_const_n[m] = get_ortho_const(m,basis);
 		basis.current[m] = basis.a_hat_n[m];
 	}
 	

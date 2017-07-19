@@ -11,14 +11,14 @@ int main ()
 legendre_info basis;
 particle_info a;
 
-basis.initalize (basis);
+
 a.get_particle(basis, a);
 
 
 basis_eval(basis, a);
 
 get_a_hat(basis, a);
-basis.get_current(basis);
+get_current(basis);
 
 std::cout<<"The scaled current is described as: "<<std::endl;
 for(int n=0; n<basis.M; n++)
