@@ -18,7 +18,7 @@ double random_num ()
 }
 
 //Scales the original phase space down to Legendre phase space [-1,1]
-float scale (float x, 
+double scale (double x, 
 	     legendre_info basis)
 {
 
@@ -28,7 +28,7 @@ float scale (float x,
 	}
 	else
 	{
-		float x_tild = 2 * ((x - basis.min)/(basis.max - basis.min))
+		double x_tild = 2 * ((x - basis.min)/(basis.max - basis.min))
 		 - 1;
 		return x_tild;
 	}
@@ -51,34 +51,50 @@ void basis_eval (legendre_info &basis,
 	double x;
 	for(int n = 0; n<basis.N; n++)
 	{
-	x=std::exp(-random_num());
-		//calculate the legendre coefficients up to truncation 			value M for a_n and a_m for one particle
-		int k=0;
-		do
+		x=2*random_num()-1;
+	//	std::cout<<x<<std::endl;
+		a.get_particle(basis, a);
+		//calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
+		for(int k=1; k<=a.k_particle; k++)
 		{
 			for(int m=0; m<basis.M; m++)
 			{
-				a.get_particle(a);
-				a.x_tild[m] = scale(x, basis);
-				basis.alpha_n[m] = Pn(m,a.x_tild[m]) * 	
-				a.b_weight;
-				if(m==0)
+				a.x_tild = scale(x, basis);
+				basis.alpha_n = a.b_weight * Pn(m,a.x_tild);
+				//std::cout<<Pn(m,a.x_tild[m])<<std::endl;
+				//std::cout<<"alpha_"<<k<<": "<<basis.alpha_n<<std::endl;
+				if(k==1)
 				{
-					for(int i=0; i<basis.M; i++)
-					{	
-						a.a_n[i] = 0;
-					}					
+					
+					a.a_n[m] = 0;
+					a.a_n[m] = basis.alpha_n;
+//					std::cout<<"k=0"<<std::endl;
+					//std::cout<<a.a_n[m]<<std::endl<<std::endl;
+					basis.a_m[m] = a.a_n[m];
 				}
-				a.a_n[m] += basis.alpha_n[m];
-								
-				basis.a_m[m] = a.a_n[m];
+				else
+				{
+//					std::cout<<a.a_n[m]<<std::endl;
+					a.a_n[m] += basis.alpha_n;
+					basis.a_m[m] = a.a_n[m];
+				}
 
 			}
-			k++;
+
 		}
-		while( k < a.k_particle);
-		get_A (basis, a);		
-		basis.n_counter++;
+
+		get_A (basis, a);
+		/*	for(int m=0; m<basis.M; m++)
+			{
+					std::cout<<"a_"<<m<<": ";
+					std::cout<<a.a_n[m]<<std::endl<<std::endl;
+			}
+			for(int m=0; m<basis.M; m++)
+			{
+					std::cout<<"A_"<<basis.n_counter<<": ";
+					std::cout<<basis.A_n[m]<<std::endl<<std::endl;
+			}		*/
+			basis.n_counter++;
 
 	}
 }
@@ -99,19 +115,27 @@ void get_A (legendre_info &basis,
 
 
 //This is a dummy function until I figure out where to get the particle
-void particle_info::get_particle (particle_info &a)
+void particle_info::get_particle (legendre_info &basis,
+				  particle_info &a)
 {
 	a.b_weight = random_num();
-	a.k_particle = 6 * random_num();
+	a.k_particle = 6 * random_num() + 1;
+	if(basis.n_counter==0)
+	{
+		for(int m=0;m<basis.M;m++)
+		{
+			a.a_n.push_back(0);
+		}
+	}
 }
 
-//Initalize the info for the legendre polynomial structure
+
 void initalize (legendre_info &basis, 
 		particle_info &a)
 {
-	basis.min = 0;
-	basis.max = 10;
-	basis.M = 7;
+	basis.min = -1;
+	basis.max = 1;
+	basis.M = 3;
 	basis.N = 100;
 	basis.A_n_m.resize(basis.M);
 	basis.sigma_a_n_a_m.resize(basis.M);
@@ -125,13 +149,11 @@ void initalize (legendre_info &basis,
 		basis.sigma_a_n_a_m[j].resize(basis.N);
 		basis.A_n_m[j].resize(basis.N);
 		basis.a_m.push_back(0);
-		basis.alpha_n.push_back(0);
 		basis.current.push_back(0);
 		basis.ortho_const_n.push_back(0);
 		basis.ortho_const_m.push_back(0);
 		basis.current_unc.push_back(0);
 		basis.var_a_n.push_back(0);
 		a.a_n.push_back(0);
-		a.x_tild.push_back(0);
 	}
 }
