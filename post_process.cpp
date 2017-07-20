@@ -9,7 +9,7 @@
 
 #include"FET.hh"
 
-//Solves the the coefficient for each requried Legendre polynomial
+//Solves for the Legendre coefficient and the associated uncertainty for each coefficient(currently broken)
 void get_a_hat (legendre_info &basis, 
 		particle_info &a)
 {
@@ -29,7 +29,6 @@ void get_a_hat (legendre_info &basis,
 			term1.push_back(0);
 			}
 			term1[m] += std::pow(basis.A_n_m[m][n],2);
-			std::cout<<basis.A_n_m[m][n]<<"  ";
 /*			basis.sigma_a_n_a_m[m][n] = basis.A_n_m[m][n]/basis.N - (basis.a_hat_n[n] * basis.a_hat_m[m]);
 			if(n==basis.N-1)
 			{
@@ -37,7 +36,6 @@ void get_a_hat (legendre_info &basis,
 				basis.var_a_n[m] = std::sqrt(std::abs(basis.var_a_n[m]));
 			}
 */		}
-std::cout<<std::endl;
 	}
 		for(int m=0; m<basis.M; m++)
 		{
@@ -52,10 +50,11 @@ float get_ortho_const(int n,
 	return (2.0*n+1.0)/(basis.max-basis.min);
 }
 
-// Solves for the current and the uncertainty due to each coefficient
+// Solves for the current and the overall uncertainty
 
 void get_current (legendre_info &basis)
 {
+	
 	for(int m=0; m<basis.M; m++)
 	{
 		basis.ortho_const_n[m] = get_ortho_const(m,basis);

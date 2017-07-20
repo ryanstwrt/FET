@@ -3,7 +3,7 @@
  * \file   Shift/mc_tallies/FETs/FET.hh
  * \author Ryan H. Stewart
  * \date   Wed June 27 05:08:30 2017
- * \brief  FET definition.
+ * \brief  Definition for discrete event FETs.
  */
 //---------------------------------------------------------------------------//
 
@@ -12,6 +12,39 @@
 #include<vector>
 #include<cstdlib>
 #include<cmath>
+
+class tally_info
+{
+public:
+//inline tally_info ();
+
+int surface_index;
+std::vector<float> surface_indices;
+int num_surfaces;
+std::vector<std::vector<std::vector<float> > > surface_tallies;
+
+};
+
+/*tally_info::tally_info ()
+		: num_surfaces(2)
+{
+	surface_tallies.resize(3);
+	for (int i=0; i < 3; ++i)
+	{
+		surface_tallies[i].resize(4);
+
+		for (int j=0; j < 4; ++j)
+		{
+			surface_tallies[i][j].resize(2);
+
+			for(int k = 0; k<num_surfaces; ++k)
+			{
+				surface_tallies[i][j][k] = 2.0;
+			}
+		}
+	}
+
+}*/
 
 class legendre_info
 {
@@ -37,18 +70,15 @@ std::vector<float> a_hat_n_m;
 std::vector<float> current;
 std::vector<float> current_unc;
 std::vector<float> var_a_n;
-
-
-//void initalize (legendre_info &basis);
 };
 
-//Initalize the info for the legendre polynomial structure
+//Constructor for legendre_info
 legendre_info::legendre_info ()
+		 : min(-10)
+		  ,max(10)
+		  ,M(3)
+		  ,N(100)
 {
-	min = -1;
-	max = 1;
-	M = 3;
-	N = 100;
 	A_n_m.resize(M);
 	sigma_a_n_a_m.resize(M);
 	for(int j=0; j<M; j++)
@@ -69,9 +99,7 @@ legendre_info::legendre_info ()
 	}
 }
 
-
-
-
+//This class will either absorb the values coming out of shift, or disappear once integrated
 class particle_info
 {
 public:
@@ -85,14 +113,10 @@ double x_tild;
 void get_particle (legendre_info &basis, particle_info &a);
 };
 
-class tally_info
-{
 
-
-};
 
 double Pn(int n, double x);
-void basis_eval (legendre_info &basis, particle_info &a);
+void surface_eval (legendre_info &basis, particle_info &a);
 void get_A (legendre_info &basis, particle_info &a);
 double scale (double x, legendre_info basis);
 float rescale(float var, legendre_info basis);

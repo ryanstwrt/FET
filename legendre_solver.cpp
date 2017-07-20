@@ -10,22 +10,24 @@
 
 #include "FET.hh"
 
-using namespace std;
+
 
 //for the special case of n=0;
+//verified 7/18/17
 double P0(double x)
 {
 	return 1;
 }
 
 //for the special case of n=1
-
+//verified 7/18/17
 double P1(double x)
 {
 	return x;
 }
 
 //for any Legendre polynomial in the nth order
+//verified 7/18/17
 double Pn(int n, 
 	  double x)
 {

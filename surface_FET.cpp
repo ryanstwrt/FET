@@ -12,12 +12,14 @@
 using namespace std;
 
 //Dummy random number generator for testing
+//Verified 7/18/17
 double random_num ()
 {
 	return rand()/(double) RAND_MAX;
 }
 
 //Scales the original phase space down to Legendre phase space [-1,1]
+//Verified 7/18/17
 double scale (double x, 
 	     legendre_info basis)
 {
@@ -45,36 +47,33 @@ float rescale (float x_tild,
 }
 
 //Calculated the individual contribution from one particle, which can contribute multiple times depending on how many times it crosses the surface
-void basis_eval (legendre_info &basis, 
+//Verified 7/18/17
+void surface_eval (legendre_info &basis, 
 		 particle_info &a)
 {
 	double x;
 	for(int n = 0; n<basis.N; n++)
 	{
-		x=2*random_num()-1;
-	//	std::cout<<x<<std::endl;
+		x=20*random_num()-10;
 		a.get_particle(basis, a);
 		//calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
+		//k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
 		for(int k=1; k<=a.k_particle; k++)
 		{
 			for(int m=0; m<basis.M; m++)
 			{
+				
 				a.x_tild = scale(x, basis);
 				basis.alpha_n = a.b_weight * Pn(m,a.x_tild);
-				//std::cout<<Pn(m,a.x_tild[m])<<std::endl;
-				//std::cout<<"alpha_"<<k<<": "<<basis.alpha_n<<std::endl;
 				if(k==1)
 				{
 					
 					a.a_n[m] = 0;
 					a.a_n[m] = basis.alpha_n;
-//					std::cout<<"k=0"<<std::endl;
-					//std::cout<<a.a_n[m]<<std::endl<<std::endl;
 					basis.a_m[m] = a.a_n[m];
 				}
 				else
 				{
-//					std::cout<<a.a_n[m]<<std::endl;
 					a.a_n[m] += basis.alpha_n;
 					basis.a_m[m] = a.a_n[m];
 				}
@@ -82,31 +81,22 @@ void basis_eval (legendre_info &basis,
 			}
 
 		}
-
 		get_A (basis, a);
-		/*	for(int m=0; m<basis.M; m++)
-			{
-					std::cout<<"a_"<<m<<": ";
-					std::cout<<a.a_n[m]<<std::endl<<std::endl;
-			}
-			for(int m=0; m<basis.M; m++)
-			{
-					std::cout<<"A_"<<basis.n_counter<<": ";
-					std::cout<<basis.A_n[m]<<std::endl<<std::endl;
-			}		*/
-			basis.n_counter++;
+		basis.n_counter++;
 
 	}
+	get_a_hat(basis, a);
+	get_current(basis);
 }
 
 //Increments A for each particle that passes that contribues to the current on the give surface
+//verified 7/18/17
 void get_A (legendre_info &basis, 
 	    particle_info &a)
 {
 //Calculate A_n and A_n_m
 	for(int i=0;i<basis.M;i++)
 	{
-
 		basis.A_n[i] += a.a_n[i];
 		basis.A_m[i] += basis.a_m[i];
 		basis.A_n_m[i][basis.n_counter] = a.a_n[i] * basis.a_m[i]; 
@@ -119,7 +109,7 @@ void particle_info::get_particle (legendre_info &basis,
 				  particle_info &a)
 {
 	a.b_weight = random_num();
-	a.k_particle = 6 * random_num() + 1;
+	a.k_particle = 6 * random_num();
 	if(basis.n_counter==0)
 	{
 		for(int m=0;m<basis.M;m++)
@@ -129,29 +119,11 @@ void particle_info::get_particle (legendre_info &basis,
 	}
 }
 
-
-/*void legendre_info::initalize (legendre_info &basis)
+void initialize_matrix (tally_info &first, legendre_info &basis)
 {
-	basis.min = -1;
-	basis.max = 1;
-	basis.M = 3;
-	basis.N = 100;
-	basis.A_n_m.resize(basis.M);
-	basis.sigma_a_n_a_m.resize(basis.M);
-	for(int j=0; j<basis.M; j++)
-	{
-		basis.A_n.push_back(0);
-		basis.A_m.push_back(0);
-		basis.a_hat_n.push_back(0);
-		basis.a_hat_m.push_back(0);
-		basis.a_hat_n_m.push_back(0);
-		basis.sigma_a_n_a_m[j].resize(basis.N);
-		basis.A_n_m[j].resize(basis.N);
-		basis.a_m.push_back(0);
-		basis.current.push_back(0);
-		basis.ortho_const_n.push_back(0);
-		basis.ortho_const_m.push_back(0);
-		basis.current_unc.push_back(0);
-		basis.var_a_n.push_back(0);
-	}
-}*/
+first.num_surfaces = 2;
+std::vector<std::vector<std::vector<float> > > 
+surface_tallies (basis.M,std::vector<std::vector<float> >
+(basis.N,std::vector <float>(first.num_surfaces,0)));
+
+}
