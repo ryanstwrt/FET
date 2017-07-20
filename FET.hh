@@ -56,7 +56,7 @@ legendre_info::legendre_info ()
 		 : min(-10)
 		  ,max(10)
 		  ,M(3)
-		  ,N(100)
+		  ,N(10)
 {
 	A_n_m.resize(M);
 	sigma_a_n_a_m.resize(M);
@@ -100,7 +100,7 @@ void get_A (legendre_info &basis, particle_info &a, tally_info &tally);
 
 void get_current (legendre_info &basis);
 void get_a_hat (legendre_info &basis, particle_info &a);
-void initialize_matrix (tally_info &tally, legendre_info &basis);
+void initialize_tally_info (tally_info &tally, legendre_info &basis);
 double Pn(int n, double x);
 double scale (double x, legendre_info basis);
 float rescale(float var, legendre_info basis);

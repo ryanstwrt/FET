@@ -82,6 +82,7 @@ void surface_eval (legendre_info &basis,
 			}
 
 		}
+
 		get_A (basis, a, tally);
 		basis.n_counter++;
 
@@ -101,8 +102,9 @@ void get_A (legendre_info &basis,
 	{
 		basis.A_n[i] += a.a_n[i];
 		basis.A_m[i] += basis.a_m[i];
-		basis.A_n_m[i][basis.n_counter] = a.a_n[i] * basis.a_m[i]; 
-		tally.surface_tallies[i][basis.n_counter][tally.surface_index] = a.a_n[i];
+		basis.A_n_m[i][basis.n_counter] = a.a_n[i] * basis.a_m[i];
+		tally.surface_tallies[i][basis.n_counter][tally.surface_index] = basis.A_n[i];
+		std::cout<<tally.surface_tallies[i][basis.n_counter][tally.surface_index]<<std::endl;
 	}
 }
 
@@ -122,12 +124,21 @@ void particle_info::get_particle (legendre_info &basis,
 	}
 }
 
-void initialize_matrix (tally_info &tally, legendre_info &basis)
+//Initialize the surface tallies matrix and the surface index matrix
+void initialize_tally_info (tally_info &tally, legendre_info &basis)
 {
 
-tally.num_surfaces = 1;
-std::vector<std::vector<std::vector<float> > > 
-surface_tallies (basis.M,std::vector<std::vector<float> >
-(basis.N,std::vector <float>(tally.num_surfaces,0)));
+tally.num_surfaces = 2;
+std::vector<std::vector<std::vector<float> > > surface_tallies;
 
+tally.surface_tallies.resize(basis.M);
+
+	for(int m=0;m<basis.M;m++)
+	{
+	tally.surface_tallies[m].resize(basis.N);
+		for(int n=0;n<basis.N;n++)
+		{
+			tally.surface_tallies[m][n].resize(tally.num_surfaces);
+		}
+	}
 }

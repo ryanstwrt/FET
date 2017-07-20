@@ -13,9 +13,10 @@ legendre_info basis;
 particle_info a;
 
 tally.surface_index = 1;
-std::cout<<"test"<<std::endl;
 
-initialize_matrix (tally, basis);
+
+initialize_tally_info (tally, basis);
+std::cout<<"test"<<std::endl;
 surface_eval (basis, a, tally);
 
 
