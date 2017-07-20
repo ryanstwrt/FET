@@ -49,7 +49,8 @@ float rescale (float x_tild,
 //Calculated the individual contribution from one particle, which can contribute multiple times depending on how many times it crosses the surface
 //Verified 7/18/17
 void surface_eval (legendre_info &basis, 
-		 particle_info &a)
+		   particle_info &a, 
+		   tally_info &tally)
 {
 	double x;
 	for(int n = 0; n<basis.N; n++)
@@ -81,7 +82,7 @@ void surface_eval (legendre_info &basis,
 			}
 
 		}
-		get_A (basis, a);
+		get_A (basis, a, tally);
 		basis.n_counter++;
 
 	}
@@ -92,7 +93,8 @@ void surface_eval (legendre_info &basis,
 //Increments A for each particle that passes that contribues to the current on the give surface
 //verified 7/18/17
 void get_A (legendre_info &basis, 
-	    particle_info &a)
+	    particle_info &a,
+	    tally_info &tally)
 {
 //Calculate A_n and A_n_m
 	for(int i=0;i<basis.M;i++)
@@ -100,6 +102,7 @@ void get_A (legendre_info &basis,
 		basis.A_n[i] += a.a_n[i];
 		basis.A_m[i] += basis.a_m[i];
 		basis.A_n_m[i][basis.n_counter] = a.a_n[i] * basis.a_m[i]; 
+		tally.surface_tallies[i][basis.n_counter][tally.surface_index] = a.a_n[i];
 	}
 }
 
@@ -119,11 +122,12 @@ void particle_info::get_particle (legendre_info &basis,
 	}
 }
 
-void initialize_matrix (tally_info &first, legendre_info &basis)
+void initialize_matrix (tally_info &tally, legendre_info &basis)
 {
-first.num_surfaces = 2;
+
+tally.num_surfaces = 1;
 std::vector<std::vector<std::vector<float> > > 
 surface_tallies (basis.M,std::vector<std::vector<float> >
-(basis.N,std::vector <float>(first.num_surfaces,0)));
+(basis.N,std::vector <float>(tally.num_surfaces,0)));
 
 }

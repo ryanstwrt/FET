@@ -19,32 +19,11 @@ public:
 //inline tally_info ();
 
 int surface_index;
-std::vector<float> surface_indices;
 int num_surfaces;
+std::vector<float> surface_indices;
 std::vector<std::vector<std::vector<float> > > surface_tallies;
 
 };
-
-/*tally_info::tally_info ()
-		: num_surfaces(2)
-{
-	surface_tallies.resize(3);
-	for (int i=0; i < 3; ++i)
-	{
-		surface_tallies[i].resize(4);
-
-		for (int j=0; j < 4; ++j)
-		{
-			surface_tallies[i][j].resize(2);
-
-			for(int k = 0; k<num_surfaces; ++k)
-			{
-				surface_tallies[i][j][k] = 2.0;
-			}
-		}
-	}
-
-}*/
 
 class legendre_info
 {
@@ -114,13 +93,16 @@ void get_particle (legendre_info &basis, particle_info &a);
 };
 
 
+void surface_eval (legendre_info &basis, particle_info &a, tally_info &tally);
+void get_A (legendre_info &basis, particle_info &a, tally_info &tally);
 
+
+
+void get_current (legendre_info &basis);
+void get_a_hat (legendre_info &basis, particle_info &a);
+void initialize_matrix (tally_info &tally, legendre_info &basis);
 double Pn(int n, double x);
-void surface_eval (legendre_info &basis, particle_info &a);
-void get_A (legendre_info &basis, particle_info &a);
 double scale (double x, legendre_info basis);
 float rescale(float var, legendre_info basis);
-void get_current (legendre_info &basis);
 float get_ortho_const(int n, legendre_info & basis);
-void get_a_hat (legendre_info &basis, particle_info &a);
 
