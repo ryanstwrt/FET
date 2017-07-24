@@ -79,6 +79,13 @@ void surface_eval (legendre_info &basis,
 			}
 		}
 	}
+	if(tally.surface_index == 0)
+	{
+		for(int m=0; m<basis.M; m++)
+		{
+		a.a_n[m] = 0;
+		}
+	}
 }
 
 
@@ -96,7 +103,7 @@ void get_A (legendre_info &basis,
 //		std::cout<<basis.A_n[i]<<std::endl;
 		basis.A_m[i] += basis.a_m[i];
 		basis.A_n_m[i][basis.n_counter] = a.a_n[i] * basis.a_m[i];
-		tally.surface_tallies[i][basis.n_counter][tally.surface_index] = basis.A_n[i];
+		tally.surface_tallies[i][basis.n_counter][tally.surface_index] += a.a_n[i];
 
 //		std::cout<<tally.surface_tallies[i][basis.n_counter][tally.surface_index]<<std::endl;
 	}
@@ -110,6 +117,7 @@ void particle_info::get_particle (legendre_info &basis,
 {
 	a.b_weight = random_num();
 	a.k_particle = 6 * random_num();
+	a.particle_surface = random_num();
 	if(basis.n_counter==0)
 	{
 		for(int m=0;m<basis.M;m++)

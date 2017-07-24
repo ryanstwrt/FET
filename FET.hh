@@ -60,7 +60,7 @@ legendre_info::legendre_info ()
 		 : min(-10)
 		  ,max(10)
 		  ,M(3)
-		  ,N(10000)
+		  ,N(10)
 {
 	A_n_m.resize(M);
 	sigma_a_n_a_m.resize(M);
@@ -95,6 +95,7 @@ double b_weight;
 int k_particle;
 bool b_alive;
 double x_tild;
+double particle_surface;
 
 void get_particle (legendre_info &basis, particle_info &a);
 };

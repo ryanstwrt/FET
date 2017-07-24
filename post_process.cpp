@@ -21,6 +21,8 @@ void get_a_hat (legendre_info &basis,
 		basis.a_hat_n[m] = basis.A_n[m]/basis.N;
 		basis.a_hat_m[m] = basis.A_m[m]/basis.N;
 		basis.a_hat_n1[m] = tally.surface_tallies[m][basis.n_counter][tally.surface_index]/basis.N;
+		std::cout<<basis.a_hat_n[m]<<"  "<<basis.a_hat_n1[m]<<std::endl;
+//		basis.a_hat_n1[m] = tally.surface_tallies[m][basis.n_counter][tally.surface_index]/basis.N;
 
 	}
 
@@ -34,7 +36,8 @@ void get_a_hat (legendre_info &basis,
 			term1a.push_back(0);
 			}
 			term1[m] += std::pow(basis.A_n_m[m][n],2);
-			term1a[m] += std::pow(tally.surface_tallies[m][n][tally.surface_index],2);
+			term1a[m] += std::pow(tally.surface_tallies[m][n][0],2);
+//			term1a[m] += std::pow(tally.surface_tallies[m][n][tally.surface_index],2);
 //			std::cout<<term1a[m]<<"  ";
 //			std::cout<<term1a[m]<<std::endl;
 /*			basis.sigma_a_n_a_m[m][n] = basis.A_n_m[m][n]/basis.N - (basis.a_hat_n[n] * basis.a_hat_m[m]);
