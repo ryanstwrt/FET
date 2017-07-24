@@ -51,47 +51,36 @@ float rescale (float x_tild,
 void surface_eval (legendre_info &basis, 
 		   particle_info &a, 
 		   tally_info &tally)
-{
-	double x;
-	for(int n = 0; n<basis.N; n++)
+{	
+	double x;	
+	x=20*random_num()-10;
+	if(basis.n_counter!=0)
 	{
-		if(n!=0)
+		basis.n_counter++;
+	}		
+	//calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
+	//k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
+	for(int k=1; k<=a.k_particle; k++)
+	{
+		for(int m=0; m<basis.M; m++)
 		{
-			basis.n_counter++;
-		}		
-		x=20*random_num()-10;
-		a.get_particle(basis, a);
-		//calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
-		//k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
-		for(int k=1; k<=a.k_particle; k++)
-		{
-			for(int m=0; m<basis.M; m++)
+			a.x_tild = scale(x, basis);
+			basis.alpha_n = a.b_weight * Pn(m,a.x_tild);
+			if(k==1)
 			{
-				
-				a.x_tild = scale(x, basis);
-				basis.alpha_n = a.b_weight * Pn(m,a.x_tild);
-				if(k==1)
-				{
-					
-					a.a_n[m] = 0;
-					a.a_n[m] = basis.alpha_n;
-					basis.a_m[m] = a.a_n[m];
-				}
-				else
-				{
-					a.a_n[m] += basis.alpha_n;
-					basis.a_m[m] = a.a_n[m];
-				}
-
+				a.a_n[m] = 0;
+				a.a_n[m] = basis.alpha_n;
+				basis.a_m[m] = a.a_n[m];
 			}
-
+			else
+			{
+				a.a_n[m] += basis.alpha_n;
+				basis.a_m[m] = a.a_n[m];
+			}
 		}
-
-		get_A (basis, a, tally);
 	}
-	get_a_hat(basis, a, tally);
-	get_current(basis, tally);
 }
+
 
 //Increments A for each particle that passes that contribues to the current on the give surface
 //verified 7/18/17
@@ -102,13 +91,16 @@ void get_A (legendre_info &basis,
 //Calculate A_n and A_n_m
 	for(int i=0;i<basis.M;i++)
 	{
+//		std::cout<<a.a_n[i]<<"  ";
 		basis.A_n[i] += a.a_n[i];
+//		std::cout<<basis.A_n[i]<<std::endl;
 		basis.A_m[i] += basis.a_m[i];
 		basis.A_n_m[i][basis.n_counter] = a.a_n[i] * basis.a_m[i];
 		tally.surface_tallies[i][basis.n_counter][tally.surface_index] = basis.A_n[i];
-//		std::cout<<basis.A_n[i]<<"  ";
+
 //		std::cout<<tally.surface_tallies[i][basis.n_counter][tally.surface_index]<<std::endl;
 	}
+//	std::cout<<std::endl;
 }
 
 

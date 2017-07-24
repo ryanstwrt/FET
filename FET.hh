@@ -12,6 +12,7 @@
 #include<vector>
 #include<cstdlib>
 #include<cmath>
+#include<chrono>
 
 class tally_info
 {
@@ -59,7 +60,7 @@ legendre_info::legendre_info ()
 		 : min(-10)
 		  ,max(10)
 		  ,M(3)
-		  ,N(10)
+		  ,N(10000)
 {
 	A_n_m.resize(M);
 	sigma_a_n_a_m.resize(M);

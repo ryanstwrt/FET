@@ -5,8 +5,9 @@
 #include"FET.hh"
 #endif
 
-int main ()
+int main (int argc, char *argv[])
 {
+
 
 tally_info tally;
 legendre_info basis;
@@ -16,9 +17,17 @@ tally.surface_index = 1;
 
 //test test test
 initialize_tally_info (tally, basis);
-std::cout<<"test"<<std::endl;
-surface_eval (basis, a, tally);
 
+
+for(int n = 0; n<basis.N; n++)
+{
+	a.get_particle(basis, a);
+	surface_eval (basis, a, tally);
+	get_A (basis, a, tally);
+}
+
+get_a_hat(basis, a, tally);
+get_current(basis, tally);
 
 for(int n=0; n<basis.M; n++)
 {	

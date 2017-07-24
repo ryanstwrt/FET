@@ -16,12 +16,12 @@ void get_a_hat (legendre_info &basis,
 {
 	std::vector<double> term1;
 	std::vector<double> term1a;
-	for (int i = 0; i<basis.M; i++)
+	for (int m = 0; m<basis.M; m++)
 	{
-		basis.a_hat_n[i] = basis.A_n[i]/basis.N;
-		basis.a_hat_n1[i] = tally.surface_tallies[i][basis.n_counter][tally.surface_index]/basis.N;
+		basis.a_hat_n[m] = basis.A_n[m]/basis.N;
+		basis.a_hat_m[m] = basis.A_m[m]/basis.N;
+		basis.a_hat_n1[m] = tally.surface_tallies[m][basis.n_counter][tally.surface_index]/basis.N;
 
-		basis.a_hat_m[i] = basis.A_m[i]/basis.N;
 	}
 
 	for (int n=0; n < basis.N; n++)
