@@ -23,7 +23,8 @@ int surface_index;
 int num_surfaces;
 std::vector<float> surface_indices;
 std::vector<std::vector<std::vector<float> > > surface_tallies;
-
+std::vector<std::vector<float> > current_matrix;
+std::vector<std::vector<float> > unc_matrix;
 };
 
 class legendre_info
@@ -48,7 +49,7 @@ std::vector<float> a_hat_n;
 std::vector<float> a_hat_n1;
 std::vector<float> a_hat_m;
 std::vector<float> a_hat_n_m;
-std::vector<float> current;
+std::vector<float> total_current;
 std::vector<float> current1;
 std::vector<float> current_unc;
 std::vector<float> var_a_n;
@@ -60,7 +61,7 @@ legendre_info::legendre_info ()
 		 : min(-10)
 		  ,max(10)
 		  ,M(3)
-		  ,N(10)
+		  ,N(100)
 {
 	A_n_m.resize(M);
 	sigma_a_n_a_m.resize(M);
@@ -75,7 +76,7 @@ legendre_info::legendre_info ()
 		sigma_a_n_a_m[j].resize(N);
 		A_n_m[j].resize(N);
 		a_m.push_back(0);
-		current.push_back(0);
+		total_current.push_back(0);
 		current1.push_back(0);
 		ortho_const_n.push_back(0);
 		ortho_const_m.push_back(0);
@@ -106,7 +107,8 @@ void get_A (legendre_info &basis, particle_info &a, tally_info &tally);
 
 
 
-void get_current (legendre_info &basis, tally_info &tally);
+void get_current (legendre_info &basis, particle_info &a, tally_info &tally);
+void get_uncertainty (legendre_info &basis, particle_info &a, tally_info &tally);
 void get_a_hat (legendre_info &basis, particle_info &a, tally_info &tally);
 void initialize_tally_info (tally_info &tally, legendre_info &basis);
 double Pn(int n, double x);

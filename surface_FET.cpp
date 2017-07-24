@@ -79,13 +79,13 @@ void surface_eval (legendre_info &basis,
 			}
 		}
 	}
-	if(tally.surface_index == 0)
+/*	if(tally.surface_index == 0)
 	{
 		for(int m=0; m<basis.M; m++)
 		{
 		a.a_n[m] = 0;
 		}
-	}
+	}*/
 }
 
 
@@ -131,14 +131,21 @@ void particle_info::get_particle (legendre_info &basis,
 void initialize_tally_info (tally_info &tally, legendre_info &basis)
 {
 
-tally.num_surfaces = 2;
+tally.num_surfaces = 3;
 std::vector<std::vector<std::vector<float> > > surface_tallies;
+std::vector<std::vector<float> > current_matrix;
+std::vector<std::vector<float> > unc_matrix;
 
 tally.surface_tallies.resize(basis.M);
+tally.current_matrix.resize(basis.M);
+tally.unc_matrix.resize(basis.M);
 
 	for(int m=0;m<basis.M;m++)
 	{
 	tally.surface_tallies[m].resize(basis.N);
+	tally.current_matrix[m].resize(tally.num_surfaces);
+	tally.unc_matrix[m].resize(tally.num_surfaces);
+
 		for(int n=0;n<basis.N;n++)
 		{
 			tally.surface_tallies[m][n].resize(tally.num_surfaces);
