@@ -55,6 +55,10 @@ void surface_eval (legendre_info &basis,
 	double x;
 	for(int n = 0; n<basis.N; n++)
 	{
+		if(n!=0)
+		{
+			basis.n_counter++;
+		}		
 		x=20*random_num()-10;
 		a.get_particle(basis, a);
 		//calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
@@ -84,11 +88,9 @@ void surface_eval (legendre_info &basis,
 		}
 
 		get_A (basis, a, tally);
-		basis.n_counter++;
-
 	}
-	get_a_hat(basis, a);
-	get_current(basis);
+	get_a_hat(basis, a, tally);
+	get_current(basis, tally);
 }
 
 //Increments A for each particle that passes that contribues to the current on the give surface
@@ -104,7 +106,8 @@ void get_A (legendre_info &basis,
 		basis.A_m[i] += basis.a_m[i];
 		basis.A_n_m[i][basis.n_counter] = a.a_n[i] * basis.a_m[i];
 		tally.surface_tallies[i][basis.n_counter][tally.surface_index] = basis.A_n[i];
-		std::cout<<tally.surface_tallies[i][basis.n_counter][tally.surface_index]<<std::endl;
+//		std::cout<<basis.A_n[i]<<"  ";
+//		std::cout<<tally.surface_tallies[i][basis.n_counter][tally.surface_index]<<std::endl;
 	}
 }
 

@@ -44,11 +44,14 @@ std::vector<float> a_m;
 std::vector<std::vector<float> > A_n_m;
 std::vector<std::vector<float> > sigma_a_n_a_m;
 std::vector<float> a_hat_n;
+std::vector<float> a_hat_n1;
 std::vector<float> a_hat_m;
 std::vector<float> a_hat_n_m;
 std::vector<float> current;
+std::vector<float> current1;
 std::vector<float> current_unc;
 std::vector<float> var_a_n;
+std::vector<float> var_a_n1;
 };
 
 //Constructor for legendre_info
@@ -65,16 +68,19 @@ legendre_info::legendre_info ()
 		A_n.push_back(0);
 		A_m.push_back(0);
 		a_hat_n.push_back(0);
+		a_hat_n1.push_back(0);
 		a_hat_m.push_back(0);
 		a_hat_n_m.push_back(0);
 		sigma_a_n_a_m[j].resize(N);
 		A_n_m[j].resize(N);
 		a_m.push_back(0);
 		current.push_back(0);
+		current1.push_back(0);
 		ortho_const_n.push_back(0);
 		ortho_const_m.push_back(0);
 		current_unc.push_back(0);
 		var_a_n.push_back(0);
+		var_a_n1.push_back(0);
 	}
 }
 
@@ -98,8 +104,8 @@ void get_A (legendre_info &basis, particle_info &a, tally_info &tally);
 
 
 
-void get_current (legendre_info &basis);
-void get_a_hat (legendre_info &basis, particle_info &a);
+void get_current (legendre_info &basis, tally_info &tally);
+void get_a_hat (legendre_info &basis, particle_info &a, tally_info &tally);
 void initialize_tally_info (tally_info &tally, legendre_info &basis);
 double Pn(int n, double x);
 double scale (double x, legendre_info basis);

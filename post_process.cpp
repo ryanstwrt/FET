@@ -11,12 +11,16 @@
 
 //Solves for the Legendre coefficient and the associated uncertainty for each coefficient(currently broken)
 void get_a_hat (legendre_info &basis, 
-		particle_info &a)
+		particle_info &a,
+	    	tally_info &tally)
 {
 	std::vector<double> term1;
+	std::vector<double> term1a;
 	for (int i = 0; i<basis.M; i++)
 	{
 		basis.a_hat_n[i] = basis.A_n[i]/basis.N;
+		basis.a_hat_n1[i] = tally.surface_tallies[i][basis.n_counter][tally.surface_index]/basis.N;
+
 		basis.a_hat_m[i] = basis.A_m[i]/basis.N;
 	}
 
@@ -27,8 +31,12 @@ void get_a_hat (legendre_info &basis,
 			if(n==0)
 			{
 			term1.push_back(0);
+			term1a.push_back(0);
 			}
 			term1[m] += std::pow(basis.A_n_m[m][n],2);
+			term1a[m] += std::pow(tally.surface_tallies[m][n][tally.surface_index],2);
+//			std::cout<<term1a[m]<<"  ";
+//			std::cout<<term1a[m]<<std::endl;
 /*			basis.sigma_a_n_a_m[m][n] = basis.A_n_m[m][n]/basis.N - (basis.a_hat_n[n] * basis.a_hat_m[m]);
 			if(n==basis.N-1)
 			{
@@ -39,7 +47,9 @@ void get_a_hat (legendre_info &basis,
 	}
 		for(int m=0; m<basis.M; m++)
 		{
+			
 			basis.var_a_n[m] = (term1[m]  - std::pow(basis.a_hat_n[m],2)/basis.N)/(basis.N*(basis.N-1));
+			basis.var_a_n1[m] = (term1[m] - std::pow(basis.a_hat_n1[m],2)/basis.N)/(basis.N*(basis.N-1));
 		}
 }
 
@@ -52,13 +62,15 @@ float get_ortho_const(int n,
 
 // Solves for the current and the overall uncertainty
 
-void get_current (legendre_info &basis)
+void get_current (legendre_info &basis,
+	  	  tally_info &tally)
 {
 	
 	for(int m=0; m<basis.M; m++)
 	{
 		basis.ortho_const_n[m] = get_ortho_const(m,basis);
 		basis.current[m] = basis.a_hat_n[m];
+		basis.current1[m] = basis.a_hat_n1[m];
 	}
 	
 	for(int m=0;m<basis.M;m++)
