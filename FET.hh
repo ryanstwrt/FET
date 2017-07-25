@@ -25,6 +25,7 @@ std::vector<float> surface_indices;
 std::vector<std::vector<std::vector<float> > > surface_tallies;
 std::vector<std::vector<float> > current_matrix;
 std::vector<std::vector<float> > unc_matrix;
+std::vector<std::vector<float> > R_sqr_value;
 };
 
 class legendre_info
@@ -60,8 +61,8 @@ std::vector<float> var_a_n1;
 legendre_info::legendre_info ()
 		 : min(-10)
 		  ,max(10)
-		  ,M(3)
-		  ,N(100)
+		  ,M(7)
+		  ,N(5000)
 {
 	A_n_m.resize(M);
 	sigma_a_n_a_m.resize(M);

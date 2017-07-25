@@ -9,12 +9,11 @@
 
 #include"FET.hh"
 
-//Solves for the Legendre coefficient and the associated uncertainty for each coefficient
+//Solves for each Legendre coefficient
 void get_a_hat (legendre_info &basis, 
 		particle_info &a,
 	    	tally_info &tally)
 {
-
 	for (int m = 0; m<basis.M; m++)
 	{
 		basis.a_hat_n[m] = basis.A_n[m]/basis.N;
@@ -24,6 +23,7 @@ void get_a_hat (legendre_info &basis,
 
 }
 
+//Solves for the uncertainty in the each coefficient
 void get_uncertainty (legendre_info &basis, 
 		      particle_info &a,
 		      tally_info &tally)
@@ -33,7 +33,7 @@ void get_uncertainty (legendre_info &basis,
 	std::vector<double> term1a;
 	term1a.resize(basis.M);
 
-//Get the first term in the uncertainty	
+//Get the first term in the uncertainty	equation
 	for (int n=0; n < basis.N; n++)
 	{
 		for(int m=0; m<basis.M; m++)
@@ -52,8 +52,8 @@ void get_uncertainty (legendre_info &basis,
 	for(int m=0; m<basis.M; m++)
 	{
 		
-		basis.var_a_n[m] = (term1[m]  - std::pow(basis.a_hat_n[m],2)/basis.N)/(basis.N*(basis.N-1));
-		basis.var_a_n1[m] = (term1[m] - std::pow(basis.a_hat_n1[m],2)/basis.N)/(basis.N*(basis.N-1));
+		basis.var_a_n[m] = (term1[m]  - std::pow(basis.a_hat_n[m],2) / basis.N) / (basis.N*(basis.N-1));
+		basis.var_a_n1[m] = (term1[m] - std::pow(basis.a_hat_n1[m],2) / basis.N) / (basis.N*(basis.N-1));
 
 	}
 		
@@ -63,7 +63,7 @@ void get_uncertainty (legendre_info &basis,
 float get_ortho_const(int n, 
 		      legendre_info & basis)
 {
-	return (2.0*n+1.0)/(basis.max-basis.min);
+	return (2.0*n+1.0)/2;//(basis.max-basis.min);
 }
 
 // Solves for the current and the overall uncertainty
@@ -85,11 +85,9 @@ void get_current (legendre_info &basis,
 			basis.total_current[m] = basis.a_hat_n[m];
 			basis.current1[m] = basis.a_hat_n1[m];
 			tally.current_matrix[m][s] = basis.a_hat_n1[m];
-			tally.unc_matrix[m][s] = basis.var_a_n1[m];
-			//std::cout<<basis.total_current[m]<<"  "<<basis.current1[m]<<"  "<<tally.current_matrix[m][s]<<std::endl;
-			std::cout<<tally.current_matrix[m][s]<<" +/- "<<tally.unc_matrix[m][s]<<std::endl;
+			tally.unc_matrix[m][s] = sqrt(fabs(basis.var_a_n1[m]) / pow(basis.a_hat_n1[m],2));
+			tally.R_sqr_value[m][s] = basis.var_a_n1[m] * pow(basis.ortho_const_n[m],2) / pow(basis.a_hat_n1[m],2);
 		}
-		std::cout<<std::endl;
 	}
 	for(int m=0;m<basis.M;m++)
 	{

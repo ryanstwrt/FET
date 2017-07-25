@@ -79,13 +79,6 @@ void surface_eval (legendre_info &basis,
 			}
 		}
 	}
-/*	if(tally.surface_index == 0)
-	{
-		for(int m=0; m<basis.M; m++)
-		{
-		a.a_n[m] = 0;
-		}
-	}*/
 }
 
 
@@ -98,16 +91,11 @@ void get_A (legendre_info &basis,
 //Calculate A_n and A_n_m
 	for(int i=0;i<basis.M;i++)
 	{
-//		std::cout<<a.a_n[i]<<"  ";
 		basis.A_n[i] += a.a_n[i];
-//		std::cout<<basis.A_n[i]<<std::endl;
 		basis.A_m[i] += basis.a_m[i];
 		basis.A_n_m[i][basis.n_counter] = a.a_n[i] * basis.a_m[i];
 		tally.surface_tallies[i][basis.n_counter][tally.surface_index] += a.a_n[i];
-
-//		std::cout<<tally.surface_tallies[i][basis.n_counter][tally.surface_index]<<std::endl;
 	}
-//	std::cout<<std::endl;
 }
 
 
@@ -135,16 +123,19 @@ tally.num_surfaces = 3;
 std::vector<std::vector<std::vector<float> > > surface_tallies;
 std::vector<std::vector<float> > current_matrix;
 std::vector<std::vector<float> > unc_matrix;
+std::vector<std::vector<float> > R_sqr_value;
 
 tally.surface_tallies.resize(basis.M);
 tally.current_matrix.resize(basis.M);
 tally.unc_matrix.resize(basis.M);
+tally.R_sqr_value.resize(basis.M);
 
 	for(int m=0;m<basis.M;m++)
 	{
 	tally.surface_tallies[m].resize(basis.N);
 	tally.current_matrix[m].resize(tally.num_surfaces);
 	tally.unc_matrix[m].resize(tally.num_surfaces);
+	tally.R_sqr_value[m].resize(tally.num_surfaces);
 
 		for(int n=0;n<basis.N;n++)
 		{

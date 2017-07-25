@@ -22,43 +22,37 @@ initialize_tally_info (tally, basis);
 
 for(int n = 0; n<basis.N; n++)
 {
-a.get_particle(basis, a);
-if(a.particle_surface <= 0.33)
-{
-	tally.surface_index=0;
-}
-else if (a.particle_surface >= 0.33 && a.particle_surface <=0.66)
-{
-	tally.surface_index=1;
-}
-else
-{
-	tally.surface_index=2;
-}
-	surface_eval (basis, a, tally);
-	get_A (basis, a, tally);
-//	std::cout<<tally.surface_index<<std::endl;
+	a.get_particle(basis, a);
 
-/*	for(int m=0; m<basis.M; m++)
+	if(a.particle_surface <= 0.1)
 	{
-		std::cout<<a.a_n[m]<<"  ";
+		tally.surface_index=0;
 	}
-	std::cout<<std::endl;*/
-}
+	else if (a.particle_surface >= 0.33 && a.particle_surface <=0.66)
+	{
+		tally.surface_index=1;
+	}
+	else
+	{
+		tally.surface_index=2;
+	}
+		surface_eval (basis, a, tally);
+		get_A (basis, a, tally);
+	}
 
-std::cout<<std::endl;
-
-//get_a_hat(basis, a, tally);
 get_current(basis, a, tally);
-	
 
-for(int n=0; n<basis.M; n++)
+for(int s=0; s<tally.num_surfaces; s++)
 {	
-
-std::cout<<basis.total_current[n]<<"*P_"<<n<<"(x) +/- "<<basis.var_a_n[n]<<std::endl;
-
-}
+	std::cout<<"Surface Number "<<s<<std::endl;
+	for(int m=0; m<basis.M; m++)
+	{
+		std::cout<<tally.current_matrix[m][s]<<" * P_" <<m<<"(x) +/- "<<tally.unc_matrix[m][s]<<"      ";
+//		std::cout<<basis.total_current[m]<<"*P_"<<m<<"(x) +/- "<<basis.var_a_n[m]<<std::endl;
+		std::cout<<"With an R^2 value of "<<tally.R_sqr_value[m][s]<<std::endl;
+	}
 
 std::cout<<std::endl;
+}
 
 }
