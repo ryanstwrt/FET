@@ -14,13 +14,21 @@ void get_a_hat (legendre_info &basis,
 		particle_info &a,
 	    	tally_info &tally)
 {
-	for (int m = 0; m<basis.M; m++)
+    for(int n=0; n<basis.N; n++)
+    {
+        for (int m = 0; m<basis.M; m++)
 	{
-		basis.a_hat_n[m] = basis.A_n[m]/basis.N;
-		basis.a_hat_m[m] = basis.A_m[m]/basis.N;
-		basis.a_hat_n1[m] = tally.surface_tallies[m][basis.n_counter][tally.surface_index]/basis.N;
+	    if(n==0)
+	    {
+		basis.A_n[m] = 0;
+	    }
+	    basis.A_n[m] += tally.surface_tallies[m][n][tally.surface_index];
 	}
-
+    }
+    for (int m = 0; m<basis.M; m++)
+    {
+        basis.a_hat_n[m] = basis.A_n[m]/basis.N;
+    }
 }
 
 //Solves for the uncertainty in the each coefficient
@@ -29,41 +37,34 @@ void get_uncertainty (legendre_info &basis,
 		      tally_info &tally)
 {
 
-	std::vector<double> term1;
-	std::vector<double> term1a;
-	term1a.resize(basis.M);
-
 //Get the first term in the uncertainty	equation
-	for (int n=0; n < basis.N; n++)
+    for (int n=0; n < basis.N; n++)
+    {
+        for(int m=0; m<basis.M; m++)
 	{
-		for(int m=0; m<basis.M; m++)
-		{
-			if(n==0)
-			{
-			term1.push_back(0);
-			term1a.push_back(0);
-			}
-			term1[m] += std::pow(basis.A_n_m[m][n],2);
-			term1a[m] += std::pow(tally.surface_tallies[m][n][tally.surface_index],2);
-		}
+	    if(n==0)
+	    {
+	    basis.unc_term1[m] = 0;
+	    }
+	    
+	    basis.unc_term1[m] += 
+	    std::pow(tally.surface_tallies[m][n][tally.surface_index],2);
 	}
+    }
 
 //Get the uncertainty for each coefficient
-	for(int m=0; m<basis.M; m++)
-	{
-		
-		basis.var_a_n[m] = (term1[m]  - std::pow(basis.a_hat_n[m],2) / basis.N) / (basis.N*(basis.N-1));
-		basis.var_a_n1[m] = (term1[m] - std::pow(basis.a_hat_n1[m],2) / basis.N) / (basis.N*(basis.N-1));
-
-	}
-		
+    for(int m=0; m<basis.M; m++)
+    {	
+        basis.var_a_n[m] = (basis.unc_term1[m]- std::pow(basis.a_hat_n[m],2) / 
+        basis.N) / (basis.N*(basis.N-1));
+    }
 }
 
 //Solves for the orthogonality constant due to the phase space shift
 float get_ortho_const(int n, 
 		      legendre_info & basis)
 {
-	return (2.0*n+1.0)/2;//(basis.max-basis.min);
+    return (2.0*n+1.0)/2;//(basis.max-basis.min);
 }
 
 // Solves for the current and the overall uncertainty
@@ -72,29 +73,19 @@ void get_current (legendre_info &basis,
 	          particle_info &a,
 	  	  tally_info &tally)
 {
-
-	for(int s=0; s<tally.num_surfaces; s++)
-	{
-		tally.surface_index = s;	
-		get_a_hat(basis, a, tally);
-		get_uncertainty(basis, a, tally);
+    for(tally.surface_index=0; tally.surface_index<tally.num_surfaces;
+    tally.surface_index++)
+    {
+	get_a_hat(basis, a, tally);
+	get_uncertainty(basis, a, tally);
 	
-		for(int m=0; m<basis.M; m++)
-		{
-			basis.ortho_const_n[m] = get_ortho_const(m,basis);
-			basis.total_current[m] = basis.a_hat_n[m];
-			basis.current1[m] = basis.a_hat_n1[m];
-			tally.current_matrix[m][s] = basis.a_hat_n1[m];
-			tally.unc_matrix[m][s] = sqrt(fabs(basis.var_a_n1[m]) / pow(basis.a_hat_n1[m],2));
-			tally.R_sqr_value[m][s] = basis.var_a_n1[m] * pow(basis.ortho_const_n[m],2) / pow(basis.a_hat_n1[m],2);
-		}
-	}
-	for(int m=0;m<basis.M;m++)
+	for(int m=0; m<basis.M; m++)
 	{
-		for(int n=0;n<basis.N;n++)
-		{
-			basis.current_unc[m] += basis.sigma_a_n_a_m[m][n];
-		}
-		basis.current_unc[m] *= basis.N/(basis.N-1);
+	    basis.ortho_const[m] = get_ortho_const(m,basis);
+	    basis.total_current[m] = basis.a_hat_n[m];
+	    tally.current_matrix[m][tally.surface_index] = basis.a_hat_n[m];
+	    tally.unc_matrix[m][tally.surface_index] = sqrt(fabs(basis.var_a_n[m]) / pow(basis.a_hat_n[m],2));
+ 	    tally.R_sqr_value[m][tally.surface_index] = basis.var_a_n[m] * pow(basis.ortho_const[m],2) / pow(basis.a_hat_n[m],2);
 	}
+    }
 }
