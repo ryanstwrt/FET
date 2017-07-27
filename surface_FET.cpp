@@ -52,7 +52,8 @@ void surface_eval (legendre_info &basis,
 {
 
     double x;	
-    x=std::exp(-random_num());
+    x=std::pow(5*random_num(),3);
+
     //calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
     //k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
     for(int k=1; k<=a.k_particle; k++)
@@ -93,7 +94,7 @@ void particle_info::get_particle (legendre_info &basis,
 				  particle_info &a)
 {
     a.b_weight = random_num();
-    a.k_particle = 4 * random_num() + 1;
+    a.k_particle = 1;//4 * random_num() + 1;
     a.particle_surface = random_num();
     if(basis.n_counter==0)
     {

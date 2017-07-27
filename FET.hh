@@ -49,10 +49,10 @@ class legendre_info
 
 //Constructor for legendre_info
 legendre_info::legendre_info ()
-		 : min(-1)
-		  ,max(1)
-		  ,M(20)
-		  ,N(100)
+		 : min(0)
+		  ,max(125)
+		  ,M(5)
+		  ,N(1000000)
 		  ,n_counter(0)
 {
     for(int m=0; m<M; m++)

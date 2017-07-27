@@ -24,9 +24,11 @@ void get_legendre_coefficient (legendre_info &basis,
 	        basis.unc_term1[m] = 0;
 	    }
 	    basis.A_n[m] += tally.surface_tallies[m][n][tally.surface_index];
-	    basis.unc_term1[m] += 
-	    std::pow(tally.surface_tallies[m][n][tally.surface_index],2);
+	    basis.unc_term1[m] += std::pow(tally.surface_tallies[m][n][tally.surface_index],2);
+//	    std::cout<<basis.unc_term1[m]<<"  ";
 	}
+//std::cout<<std::endl;
+//std::cout<<std::endl;
     }
     for (int m = 0; m<basis.M; m++)
     {
@@ -57,12 +59,13 @@ void get_current (legendre_info &basis,
 	for(int m=0; m<basis.M; m++)
 	{
 	    basis.ortho_const[m] = get_ortho_const(m,basis);
-	    std::cout<<basis.a_hat_n[m]<<"  ";
-	    std::cout<<basis.var_a_n[m]<<std::endl;
+//		std::cout<<"get_current"<<std::endl;
+	    std::cout<<std::pow(basis.A_n[m],2)/basis.N<<"  ";
+	    std::cout<<basis.unc_term1[m]<<std::endl;
 	    basis.total_current[m] = basis.a_hat_n[m];
 	    tally.current_matrix[m][tally.surface_index] = basis.a_hat_n[m];
-	    tally.unc_matrix[m][tally.surface_index] = sqrt(fabs(basis.var_a_n[m]));//  / basis.a_hat_n[m];
- 	    tally.R_sqr_value[m][tally.surface_index] = fabs(basis.var_a_n[m]) / pow(basis.a_hat_n[m],2);
+	    tally.unc_matrix[m][tally.surface_index] = std::sqrt(fabs(basis.var_a_n[m]));//  / basis.a_hat_n[m];
+ 	    tally.R_sqr_value[m][tally.surface_index] = std::fabs(basis.var_a_n[m]) / std::pow(basis.a_hat_n[m],2);
 	}
 std::cout<<std::endl;
     }
