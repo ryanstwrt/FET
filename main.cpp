@@ -23,7 +23,7 @@ for(int n = 0; n<basis.N; n++)
 	{
 		tally.surface_index=0;
 	}
-	else if (a.particle_surface >= 0.33 && a.particle_surface <=0.66)
+	else if (a.particle_surface <=0.66)
 	{
 		tally.surface_index=1;
 	}
@@ -31,8 +31,9 @@ for(int n = 0; n<basis.N; n++)
 	{
 		tally.surface_index=2;
 	}
-		surface_eval (basis, a, tally);
-		get_A (basis, a, tally);
+	
+	surface_eval (basis, a, tally);
+	get_A (basis, a, tally);
 }
 
 get_current(basis, a, tally);

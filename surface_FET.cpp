@@ -49,9 +49,10 @@ float rescale (float x_tild,
 void surface_eval (legendre_info &basis, 
 		   particle_info &a, 
 		   tally_info &tally)
-{	
+{
+
     double x;	
-    x=20*random_num()-10;
+    x=std::exp(-random_num());
     //calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
     //k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
     for(int k=1; k<=a.k_particle; k++)
@@ -60,7 +61,6 @@ void surface_eval (legendre_info &basis,
 	{
 	    a.x_tild = scale(x, basis);
 	    basis.alpha_n = a.b_weight * Pn(m,a.x_tild);
-
 	    if(k==1)
 	    {
 		a.a_n[m] = 0;
@@ -93,7 +93,7 @@ void particle_info::get_particle (legendre_info &basis,
 				  particle_info &a)
 {
     a.b_weight = random_num();
-    a.k_particle = 4 * random_num();
+    a.k_particle = 4 * random_num() + 1;
     a.particle_surface = random_num();
     if(basis.n_counter==0)
     {

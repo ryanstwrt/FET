@@ -10,7 +10,7 @@
 #include"FET.hh"
 
 //Solves for each Legendre coefficient
-void get_a_hat (legendre_info &basis, 
+void get_legendre_coefficient (legendre_info &basis, 
 		particle_info &a,
 	    	tally_info &tally)
 {
@@ -21,44 +21,20 @@ void get_a_hat (legendre_info &basis,
 	    if(n==0)
 	    {
 		basis.A_n[m] = 0;
+	        basis.unc_term1[m] = 0;
 	    }
 	    basis.A_n[m] += tally.surface_tallies[m][n][tally.surface_index];
+	    basis.unc_term1[m] += 
+	    std::pow(tally.surface_tallies[m][n][tally.surface_index],2);
 	}
     }
     for (int m = 0; m<basis.M; m++)
     {
         basis.a_hat_n[m] = basis.A_n[m]/basis.N;
+        basis.var_a_n[m] = (basis.unc_term1[m] - (std::pow(basis.A_n[m],2)/basis.N) )/ (basis.N*(basis.N-1));
     }
 }
 
-//Solves for the uncertainty in the each coefficient
-void get_uncertainty (legendre_info &basis, 
-		      particle_info &a,
-		      tally_info &tally)
-{
-
-//Get the first term in the uncertainty	equation
-    for (int n=0; n < basis.N; n++)
-    {
-        for(int m=0; m<basis.M; m++)
-	{
-	    if(n==0)
-	    {
-	    basis.unc_term1[m] = 0;
-	    }
-	    
-	    basis.unc_term1[m] += 
-	    std::pow(tally.surface_tallies[m][n][tally.surface_index],2);
-	}
-    }
-
-//Get the uncertainty for each coefficient
-    for(int m=0; m<basis.M; m++)
-    {	
-        basis.var_a_n[m] = (basis.unc_term1[m]- std::pow(basis.a_hat_n[m],2) / 
-        basis.N) / (basis.N*(basis.N-1));
-    }
-}
 
 //Solves for the orthogonality constant due to the phase space shift
 float get_ortho_const(int n, 
@@ -76,16 +52,18 @@ void get_current (legendre_info &basis,
     for(tally.surface_index=0; tally.surface_index<tally.num_surfaces;
     tally.surface_index++)
     {
-	get_a_hat(basis, a, tally);
-	get_uncertainty(basis, a, tally);
+	get_legendre_coefficient(basis, a, tally);
 	
 	for(int m=0; m<basis.M; m++)
 	{
 	    basis.ortho_const[m] = get_ortho_const(m,basis);
+	    std::cout<<basis.a_hat_n[m]<<"  ";
+	    std::cout<<basis.var_a_n[m]<<std::endl;
 	    basis.total_current[m] = basis.a_hat_n[m];
 	    tally.current_matrix[m][tally.surface_index] = basis.a_hat_n[m];
-	    tally.unc_matrix[m][tally.surface_index] = sqrt(fabs(basis.var_a_n[m]) / pow(basis.a_hat_n[m],2));
- 	    tally.R_sqr_value[m][tally.surface_index] = basis.var_a_n[m] * pow(basis.ortho_const[m],2) / pow(basis.a_hat_n[m],2);
+	    tally.unc_matrix[m][tally.surface_index] = sqrt(fabs(basis.var_a_n[m]));//  / basis.a_hat_n[m];
+ 	    tally.R_sqr_value[m][tally.surface_index] = fabs(basis.var_a_n[m]) / pow(basis.a_hat_n[m],2);
 	}
+std::cout<<std::endl;
     }
 }

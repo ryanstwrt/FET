@@ -49,10 +49,10 @@ class legendre_info
 
 //Constructor for legendre_info
 legendre_info::legendre_info ()
-		 : min(-10)
-		  ,max(10)
-		  ,M(7)
-		  ,N(1000)
+		 : min(-1)
+		  ,max(1)
+		  ,M(20)
+		  ,N(100)
 		  ,n_counter(0)
 {
     for(int m=0; m<M; m++)
@@ -84,8 +84,7 @@ class particle_info
     void surface_eval (legendre_info &basis, particle_info &a, tally_info &tally);
     void get_A (legendre_info &basis, particle_info &a, tally_info &tally);
     void get_current (legendre_info &basis, particle_info &a, tally_info &tally);
-    void get_uncertainty (legendre_info &basis, particle_info &a, tally_info &tally);
-    void get_a_hat (legendre_info &basis, particle_info &a, tally_info &tally);
+    void get_legendre_coefficient (legendre_info &basis, particle_info &a, tally_info &tally);
     void initialize_tally_info (tally_info &tally, legendre_info &basis);
     double Pn(int n, double x);
     double scale (double x, legendre_info basis);
