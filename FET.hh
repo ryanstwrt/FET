@@ -23,6 +23,7 @@ class tally_info
     std::vector<float> surface_indices;
     std::vector<std::vector<std::vector<float> > > surface_tallies;
     std::vector<std::vector<float> > current_matrix;
+    std::vector<std::vector<float> > coefficient_matrix;
     std::vector<std::vector<float> > unc_matrix;
     std::vector<std::vector<float> > R_sqr_value;
 };
@@ -40,7 +41,6 @@ class legendre_info
     double alpha_n;
     std::vector<float> A_n;
     std::vector<float> a_hat_n;
-    std::vector<float> total_current;
     std::vector<float> current_unc;
     std::vector<float> ortho_const;
     std::vector<float> var_a_n;
@@ -50,16 +50,15 @@ class legendre_info
 //Constructor for legendre_info
 legendre_info::legendre_info ()
 		 : min(0)
-		  ,max(125)
-		  ,M(5)
-		  ,N(1000000)
+		  ,max(1)
+		  ,M(9)
+		  ,N(10000)
 		  ,n_counter(0)
 {
     for(int m=0; m<M; m++)
     {
 	A_n.push_back(0);
 	a_hat_n.push_back(0);
-	total_current.push_back(0);
 	current_unc.push_back(0);
 	ortho_const.push_back(0);
 	var_a_n.push_back(0);
@@ -82,12 +81,11 @@ class particle_info
 };
 
     void surface_eval (legendre_info &basis, particle_info &a, tally_info &tally);
-    void get_A (legendre_info &basis, particle_info &a, tally_info &tally);
     void get_current (legendre_info &basis, particle_info &a, tally_info &tally);
     void get_legendre_coefficient (legendre_info &basis, particle_info &a, tally_info &tally);
     void initialize_tally_info (tally_info &tally, legendre_info &basis);
     double Pn(int n, double x);
     double scale (double x, legendre_info basis);
-    float rescale(float var, legendre_info basis);
+    float rescale (float x_tild, legendre_info basis);
     float get_ortho_const(int n, legendre_info & basis);
 

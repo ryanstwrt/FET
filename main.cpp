@@ -33,7 +33,6 @@ for(int n = 0; n<basis.N; n++)
 	}
 	
 	surface_eval (basis, a, tally);
-	get_A (basis, a, tally);
 }
 
 get_current(basis, a, tally);
@@ -43,7 +42,11 @@ for(int s=0; s<tally.num_surfaces; s++)
 	std::cout<<"Surface Number "<<s<<std::endl;
 	for(int m=0; m<basis.M; m++)
 	{
-		std::cout<<tally.current_matrix[m][s]<<" * P_" <<m<<"(x) +/- "<<tally.unc_matrix[m][s]<<"      ";
+		float test;
+//		test = rescale(, basis);
+		float test1;
+//		test1 = rescale();
+		std::cout<<tally.coefficient_matrix[m][s]<<" * P_" <<m<<"(x) +/- "<<tally.unc_matrix[m][s]<<"    ";
 //		std::cout<<basis.total_current[m]<<"*P_"<<m<<"(x) +/- "<<basis.var_a_n[m]<<std::endl;
 		std::cout<<"With an R^2 value of "<<tally.R_sqr_value[m][s]<<std::endl;
 	}

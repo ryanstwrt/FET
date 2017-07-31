@@ -51,8 +51,8 @@ void surface_eval (legendre_info &basis,
 		   tally_info &tally)
 {
 
-    double x;	
-    x=std::pow(5*random_num(),3);
+    double x;
+    x=random_num();//random_num(); 
 
     //calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
     //k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
@@ -61,29 +61,11 @@ void surface_eval (legendre_info &basis,
 	for(int m=0; m<basis.M; m++)
 	{
 	    a.x_tild = scale(x, basis);
+
 	    basis.alpha_n = a.b_weight * Pn(m,a.x_tild);
-	    if(k==1)
-	    {
-		a.a_n[m] = 0;
-	    }
-		a.a_n[m] += basis.alpha_n;
+
+	    tally.surface_tallies[m][basis.n_counter][tally.surface_index] += basis.alpha_n;
 	}
-    }
-
-}
-
-
-//Increments A for each particle that passes that contribues to the current on the give surface
-//verified 7/18/17
-void get_A (legendre_info &basis, 
-	    particle_info &a,
-	    tally_info &tally)
-{
-
-//Calculate A_n and A_n_m
-    for(int m=0;m<basis.M;m++)
-    {
-	tally.surface_tallies[m][basis.n_counter][tally.surface_index] = a.a_n[m];
     }
    basis.n_counter++;
 }
@@ -95,7 +77,7 @@ void particle_info::get_particle (legendre_info &basis,
 {
     a.b_weight = random_num();
     a.k_particle = 1;//4 * random_num() + 1;
-    a.particle_surface = random_num();
+    a.particle_surface = .25;//random_num();
     if(basis.n_counter==0)
     {
 	for(int m=0;m<basis.M;m++)
@@ -109,14 +91,16 @@ void particle_info::get_particle (legendre_info &basis,
 void initialize_tally_info (tally_info &tally, legendre_info &basis)
 {
 
-    tally.num_surfaces = 3;
+    tally.num_surfaces = 1;
     std::vector<std::vector<std::vector<float> > > surface_tallies;
     std::vector<std::vector<float> > current_matrix;
+    std::vector<std::vector<float> > coefficient_matrix;
     std::vector<std::vector<float> > unc_matrix;
     std::vector<std::vector<float> > R_sqr_value;
 
     tally.surface_tallies.resize(basis.M);
     tally.current_matrix.resize(basis.M);
+    tally.coefficient_matrix.resize(basis.M);
     tally.unc_matrix.resize(basis.M);
     tally.R_sqr_value.resize(basis.M);
 
@@ -124,6 +108,7 @@ void initialize_tally_info (tally_info &tally, legendre_info &basis)
     {
  	tally.surface_tallies[m].resize(basis.N);
 	tally.current_matrix[m].resize(tally.num_surfaces);
+	tally.coefficient_matrix[m].resize(tally.num_surfaces);
 	tally.unc_matrix[m].resize(tally.num_surfaces);
 	tally.R_sqr_value[m].resize(tally.num_surfaces);
 
