@@ -9,6 +9,7 @@
 
 
 #include<iostream>
+#include<fstream>
 #include<vector>
 #include<cstdlib>
 #include<cmath>
@@ -21,11 +22,10 @@ class tally_info
     int surface_index;
     int num_surfaces;
     std::vector<float> surface_indices;
-    std::vector<std::vector<std::vector<float> > > surface_tallies;
-    std::vector<std::vector<float> > current_matrix;
-    std::vector<std::vector<float> > coefficient_matrix;
-    std::vector<std::vector<float> > unc_matrix;
-    std::vector<std::vector<float> > R_sqr_value;
+    std::vector<float> current_matrix;
+    std::vector<float> coefficient_matrix;
+    std::vector<float> unc_matrix;
+    std::vector<float> R_sqr_value;
 };
 
 class legendre_info
@@ -54,7 +54,7 @@ class legendre_info
 legendre_info::legendre_info ()
 		 : min(0)
 		  ,max(2)
-		  ,M(5)
+		  ,M(7)
 		  ,N(1e7)
 		  ,n_counter(0)
 {

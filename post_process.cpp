@@ -37,10 +37,10 @@ void get_current (legendre_info &basis,
 	for(int m=0; m<basis.M; m++)
 	{
 	    basis.ortho_const[m] = (2.0*m+1.0)/2;
-	    tally.coefficient_matrix[m][tally.surface_index] = basis.A_n[m] * basis.ortho_const[m];
-	    tally.current_matrix[m][tally.surface_index] = basis.A_n[m] * basis.ortho_const[m];
-	    tally.unc_matrix[m][tally.surface_index] = std::sqrt(fabs(basis.var_a_n[m]));//  / basis.a_hat_n[m];
- 	    tally.R_sqr_value[m][tally.surface_index] = (std::fabs(basis.var_a_n[m]) * basis.ortho_const[m]) / std::pow(basis.A_n[m],2);
+	    tally.coefficient_matrix[m] = basis.A_n[m] * basis.ortho_const[m];
+	    tally.current_matrix[m] = basis.A_n[m] * basis.ortho_const[m];
+	    tally.unc_matrix[m] = std::sqrt(fabs(basis.var_a_n[m]));//  / basis.a_hat_n[m];
+ 	    tally.R_sqr_value[m] = (std::fabs(basis.var_a_n[m]) * basis.ortho_const[m]) / std::pow(basis.A_n[m],2);
 	}
     }
 }

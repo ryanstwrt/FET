@@ -98,29 +98,14 @@ void initialize_tally_info (tally_info &tally, legendre_info &basis)
 {
 
     tally.num_surfaces = 1;
-    std::vector<std::vector<std::vector<float> > > surface_tallies;
-    std::vector<std::vector<float> > current_matrix;
-    std::vector<std::vector<float> > coefficient_matrix;
-    std::vector<std::vector<float> > unc_matrix;
-    std::vector<std::vector<float> > R_sqr_value;
+    std::vector<float> current_matrix;
+    std::vector<float> coefficient_matrix;
+    std::vector<float> unc_matrix;
+    std::vector<float> R_sqr_value;
 
-    tally.surface_tallies.resize(basis.M);
-    tally.current_matrix.resize(basis.M);
-    tally.coefficient_matrix.resize(basis.M);
-    tally.unc_matrix.resize(basis.M);
-    tally.R_sqr_value.resize(basis.M);
+    tally.current_matrix.resize(basis.M, 0.0);
+    tally.coefficient_matrix.resize(basis.M), 0.0;
+    tally.unc_matrix.resize(basis.M), 0.0;
+    tally.R_sqr_value.resize(basis.M, 0.0);
 
-    for(int m=0;m<basis.M;m++)
-    {
- 	tally.surface_tallies[m].resize(basis.N);
-	tally.current_matrix[m].resize(tally.num_surfaces);
-	tally.coefficient_matrix[m].resize(tally.num_surfaces);
-	tally.unc_matrix[m].resize(tally.num_surfaces);
-	tally.R_sqr_value[m].resize(tally.num_surfaces);
-
-	for(int n=0;n<basis.N;n++)
-	{
-	     tally.surface_tallies[m][n].resize(tally.num_surfaces);
-	}
-    }
 }

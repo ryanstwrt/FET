@@ -1,0 +1,40 @@
+Number of Particle: 100000
+Time take: 1.227711
+3.670755 * P_0(x) +/- 0.003144With an R^2 value of 0.000000
+0.992417 * P_1(x) +/- 0.006709With an R^2 value of 0.000154
+-0.660011 * P_2(x) +/- 0.005463With an R^2 value of 0.001070
+2.047766 * P_3(x) +/- 0.004557With an R^2 value of 0.000212
+0.003102 * P_4(x) +/- 0.004069With an R^2 value of 156.771713
+-0.012106 * P_5(x) +/- 0.003685With an R^2 value of 15.417397
+0.037426 * P_6(x) +/- 0.003390With an R^2 value of 2.253746
+
+Number of Particle: 1000000
+Time take: 12.246786
+3.662988 * P_0(x) +/- 0.001009With an R^2 value of 0.000000
+0.999852 * P_1(x) +/- 0.002118With an R^2 value of 0.000015
+-0.669469 * P_2(x) +/- 0.001725With an R^2 value of 0.000104
+2.004240 * P_3(x) +/- 0.001438With an R^2 value of 0.000022
+0.011313 * P_4(x) +/- 0.001284With an R^2 value of 1.174044
+0.001923 * P_5(x) +/- 0.001159With an R^2 value of 60.445274
+-0.004447 * P_6(x) +/- 0.001065With an R^2 value of 15.754696
+
+Number of Particle: 10000000
+Time take: 121.870641
+3.693760 * P_0(x) +/- 0.000236With an R^2 value of 0.000000
+1.000695 * P_1(x) +/- 0.000664With an R^2 value of 0.000001
+-0.667177 * P_2(x) +/- 0.000543With an R^2 value of 0.000010
+1.991563 * P_3(x) +/- 0.000451With an R^2 value of 0.000002
+0.000235 * P_4(x) +/- 0.000402With an R^2 value of 265.415314
+-0.007825 * P_5(x) +/- 0.000362With an R^2 value of 0.356186
+-0.006513 * P_6(x) +/- 0.000335With an R^2 value of 0.725559
+
+Number of Particle: 10000000
+Time take: 105.454122
+3.693760 * P_0(x) +/- 0.000236With an R^2 value of 0.000000
+1.000695 * P_1(x) +/- 0.000664With an R^2 value of 0.000001
+-0.667177 * P_2(x) +/- 0.000543With an R^2 value of 0.000010
+1.991563 * P_3(x) +/- 0.000451With an R^2 value of 0.000002
+0.000235 * P_4(x) +/- 0.000402With an R^2 value of 265.415314
+-0.007825 * P_5(x) +/- 0.000362With an R^2 value of 0.356186
+-0.006513 * P_6(x) +/- 0.000335With an R^2 value of 0.725559
+
