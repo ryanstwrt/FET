@@ -32,6 +32,7 @@ class legendre_info
 {
   public:
     inline legendre_info ();
+    virtual ~legendre_info() = default;
 
     float min;
     float max;
@@ -40,29 +41,33 @@ class legendre_info
     int n_counter;
     double alpha_n;
     std::vector<float> A_n;
-    std::vector<float> a_hat_n;
+    std::vector<float> A_m;
+    std::vector<float> A_n_m;
+    std::vector<float> a_n;
+    std::vector<float> a_hat_m;
     std::vector<float> current_unc;
     std::vector<float> ortho_const;
     std::vector<float> var_a_n;
-    std::vector<float> unc_term1;
 };
 
 //Constructor for legendre_info
 legendre_info::legendre_info ()
 		 : min(0)
-		  ,max(1)
-		  ,M(9)
-		  ,N(10000)
+		  ,max(2)
+		  ,M(5)
+		  ,N(1e7)
 		  ,n_counter(0)
 {
+    A_n.resize(M, 0.0);
+    A_m.resize(M, 0.0);
+    A_n_m.resize(M, 0.0);
+    a_n.resize(M, 0.0);
+    a_hat_m.resize(M, 0.0);
+    var_a_n.resize(M, 0.0);
     for(int m=0; m<M; m++)
     {
-	A_n.push_back(0);
-	a_hat_n.push_back(0);
 	current_unc.push_back(0);
 	ortho_const.push_back(0);
-	var_a_n.push_back(0);
-	unc_term1.push_back(0);
     }
 }
 

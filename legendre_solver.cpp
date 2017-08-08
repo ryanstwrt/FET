@@ -16,16 +16,70 @@
 //verified 7/18/17
 double P0(double x)
 {
-	return 1;
+    return 1;
 }
 
 //for the special case of n=1
 //verified 7/18/17
 double P1(double x)
 {
-	return x;
+    return x;
 }
 
+double P2(double x)
+{
+    
+}
+
+double P3(double x)
+{
+
+}
+
+double P4(double x)
+{
+
+}
+
+double P5(double x)
+{
+
+}
+
+double P6(double x)
+{
+
+}
+
+double P7(double x)
+{
+
+}
+
+double P8(double x)
+{
+
+}
+
+double P9(double x)
+{
+
+}
+
+double P10(double x)
+{
+
+}
+
+double P11(double x)
+{
+
+}
+
+double P12(double x)
+{
+
+}
 //for any Legendre polynomial in the nth order
 //verified 7/18/17
 double Pn(int n, 

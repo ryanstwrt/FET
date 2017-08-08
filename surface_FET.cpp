@@ -8,8 +8,11 @@
 //---------------------------------------------------------------------------//
 
 #include"FET.hh"
+#include "Distribution.hh"
 
 using namespace std;
+
+Distribution fluxshape;
 
 //Dummy random number generator for testing
 //Verified 7/18/17
@@ -34,16 +37,6 @@ double scale (double x,
     }
 }
 
-//Rescales the Legendre phase space back to the original phase space
-float rescale (float x_tild, 
-	       legendre_info basis)
-{
-
-    float x = ((x_tild+1)*(basis.max-basis.min)/2)+basis.min;
-    return x;
-
-}
-
 //Calculated the individual contribution from one particle, which can contribute multiple times depending on how many times it crosses the surface
 //Verified 7/18/17
 void surface_eval (legendre_info &basis, 
@@ -51,22 +44,35 @@ void surface_eval (legendre_info &basis,
 		   tally_info &tally)
 {
 
-    double x;
-    x=random_num();//random_num(); 
-
     //calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
     //k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
     for(int k=1; k<=a.k_particle; k++)
     {
 	for(int m=0; m<basis.M; m++)
 	{
-	    a.x_tild = scale(x, basis);
+	    a.x_tild = scale(a.b_weight, basis);
 
-	    basis.alpha_n = a.b_weight * Pn(m,a.x_tild);
+	    basis.alpha_n = Pn(m,a.x_tild);
+		
+	    if(k==1)
+	    {
+		basis.a_n[m] = 0;
+	    }
 
-	    tally.surface_tallies[m][basis.n_counter][tally.surface_index] += basis.alpha_n;
+	    basis.a_n[m] += basis.alpha_n;
+
 	}
+
+//	    std::cout<<basis.A_n[2]<<"  "<<basis.A_m[2]<<"  "<< basis.A_n_m[2] <<std::endl;
     }
+    float ratio = fluxshape(a.x_tild) / a.k_particle;
+	for(int m=0; m<basis.M; m++)
+	{
+	    basis.A_n[m] += basis.a_n[m] * ratio;
+	    basis.A_m[m] += pow(basis.a_n[m]* ratio,2) ;
+	    basis.A_n_m[m] += basis.a_n[m] * pow(basis.a_n[m],2) * ratio * ratio;
+	}
+
    basis.n_counter++;
 }
 
@@ -75,7 +81,7 @@ void surface_eval (legendre_info &basis,
 void particle_info::get_particle (legendre_info &basis,
 				  particle_info &a)
 {
-    a.b_weight = random_num();
+    a.b_weight = (basis.max - basis.min) * random_num();
     a.k_particle = 1;//4 * random_num() + 1;
     a.particle_surface = .25;//random_num();
     if(basis.n_counter==0)
