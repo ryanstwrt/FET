@@ -10,7 +10,7 @@ Time take: 1.227711
 
 Number of Particle: 1000000
 Time take: 12.246786
-3.662988 * P_0(x) +/- 0.001009With an R^2 value of 0.000000
+3.662988 * P_0(x) +/- 0.001009 With an R^2 value of 0.000000
 0.999852 * P_1(x) +/- 0.002118With an R^2 value of 0.000015
 -0.669469 * P_2(x) +/- 0.001725With an R^2 value of 0.000104
 2.004240 * P_3(x) +/- 0.001438With an R^2 value of 0.000022
@@ -20,21 +20,33 @@ Time take: 12.246786
 
 Number of Particle: 10000000
 Time take: 121.870641
-3.693760 * P_0(x) +/- 0.000236With an R^2 value of 0.000000
-1.000695 * P_1(x) +/- 0.000664With an R^2 value of 0.000001
--0.667177 * P_2(x) +/- 0.000543With an R^2 value of 0.000010
-1.991563 * P_3(x) +/- 0.000451With an R^2 value of 0.000002
-0.000235 * P_4(x) +/- 0.000402With an R^2 value of 265.415314
--0.007825 * P_5(x) +/- 0.000362With an R^2 value of 0.356186
--0.006513 * P_6(x) +/- 0.000335With an R^2 value of 0.725559
+3.693760 * P_0(x) +/- 0.000236 With an R^2 value of 0.000000
+1.000695 * P_1(x) +/- 0.000664 With an R^2 value of 0.000001
+-0.667177 * P_2(x) +/- 0.00054 With an R^2 value of 0.000010
+1.991563 * P_3(x) +/- 0.000451 With an R^2 value of 0.000002
+0.000235 * P_4(x) +/- 0.000402 With an R^2 value of 265.415314
+-0.007825 * P_5(x) +/- 0.000362 With an R^2 value of 0.356186
+-0.006513 * P_6(x) +/- 0.000335 With an R^2 value of 0.725559
 
+Removal of tally matrix
 Number of Particle: 10000000
 Time take: 105.454122
-3.693760 * P_0(x) +/- 0.000236With an R^2 value of 0.000000
-1.000695 * P_1(x) +/- 0.000664With an R^2 value of 0.000001
--0.667177 * P_2(x) +/- 0.000543With an R^2 value of 0.000010
-1.991563 * P_3(x) +/- 0.000451With an R^2 value of 0.000002
-0.000235 * P_4(x) +/- 0.000402With an R^2 value of 265.415314
--0.007825 * P_5(x) +/- 0.000362With an R^2 value of 0.356186
--0.006513 * P_6(x) +/- 0.000335With an R^2 value of 0.725559
+3.693760 * P_0(x) +/- 0.000236 With an R^2 value of 0.000000
+1.000695 * P_1(x) +/- 0.000664 With an R^2 value of 0.000001
+-0.667177 * P_2(x) +/- 0.000543 With an R^2 value of 0.000010
+1.991563 * P_3(x) +/- 0.000451 With an R^2 value of 0.000002
+0.000235 * P_4(x) +/- 0.000402 With an R^2 value of 265.415314
+-0.007825 * P_5(x) +/- 0.000362 With an R^2 value of 0.356186
+-0.006513 * P_6(x) +/- 0.000335 With an R^2 value of 0.725559
+
+Removal of Extraneous variables & loops
+Number of Particle: 10000000
+Time take: 92.682575
+3.693760 * P_0(x) +/- 0.000236 With an R^2 value of 0.000000
+1.000695 * P_1(x) +/- 0.000664 With an R^2 value of 0.000001
+-0.667177 * P_2(x) +/- 0.000543 With an R^2 value of 0.000010
+1.991563 * P_3(x) +/- 0.000451 With an R^2 value of 0.000002
+0.000235 * P_4(x) +/- 0.000402 With an R^2 value of 265.415314
+-0.007825 * P_5(x) +/- 0.000362 With an R^2 value of 0.356186
+-0.006513 * P_6(x) +/- 0.000335 With an R^2 value of 0.725559
 

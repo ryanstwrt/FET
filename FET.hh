@@ -23,7 +23,6 @@ class tally_info
     int num_surfaces;
     std::vector<float> surface_indices;
     std::vector<float> current_matrix;
-    std::vector<float> coefficient_matrix;
     std::vector<float> unc_matrix;
     std::vector<float> R_sqr_value;
 };
@@ -42,7 +41,6 @@ class legendre_info
     double alpha_n;
     std::vector<float> A_n;
     std::vector<float> A_m;
-    std::vector<float> A_n_m;
     std::vector<float> a_n;
     std::vector<float> a_hat_m;
     std::vector<float> current_unc;
@@ -60,15 +58,12 @@ legendre_info::legendre_info ()
 {
     A_n.resize(M, 0.0);
     A_m.resize(M, 0.0);
-    A_n_m.resize(M, 0.0);
     a_n.resize(M, 0.0);
     a_hat_m.resize(M, 0.0);
     var_a_n.resize(M, 0.0);
-    for(int m=0; m<M; m++)
-    {
-	current_unc.push_back(0);
-	ortho_const.push_back(0);
-    }
+    current_unc.resize(M, 0.0);
+    ortho_const.resize(M, 0.0);
+
 }
 
 //This class will either absorb the values coming out of shift, or disappear once integrated

@@ -69,8 +69,7 @@ void surface_eval (legendre_info &basis,
 	for(int m=0; m<basis.M; m++)
 	{
 	    basis.A_n[m] += basis.a_n[m] * ratio;
-	    basis.A_m[m] += pow(basis.a_n[m]* ratio,2) ;
-	    basis.A_n_m[m] += basis.a_n[m] * pow(basis.a_n[m],2) * ratio * ratio;
+	    basis.A_m[m] += pow(basis.a_n[m] * ratio,2) ;
 	}
 
    basis.n_counter++;
@@ -96,16 +95,12 @@ void particle_info::get_particle (legendre_info &basis,
 //Initialize the surface tallies matrix and the surface index matrix
 void initialize_tally_info (tally_info &tally, legendre_info &basis)
 {
-
     tally.num_surfaces = 1;
     std::vector<float> current_matrix;
-    std::vector<float> coefficient_matrix;
     std::vector<float> unc_matrix;
     std::vector<float> R_sqr_value;
 
     tally.current_matrix.resize(basis.M, 0.0);
-    tally.coefficient_matrix.resize(basis.M), 0.0;
     tally.unc_matrix.resize(basis.M), 0.0;
     tally.R_sqr_value.resize(basis.M, 0.0);
-
 }

@@ -47,7 +47,7 @@ for(int s=0; s<tally.num_surfaces; s++)
 	std::cout<<"Surface Number "<<s<<std::endl;
 	for(int m=0; m<basis.M; m++)
 	{
-		std::cout<<tally.coefficient_matrix[m]<<" * P_" <<m<<"(x) +/- "<<tally.unc_matrix[m]<<"    ";
+		std::cout<<tally.current_matrix[m]<<" * P_" <<m<<"(x) +/- "<<tally.unc_matrix[m]<<"    ";
 		std::cout<<"With an R^2 value of "<<tally.R_sqr_value[m]<<std::endl;
 	}
 
@@ -61,7 +61,7 @@ for(int cp = 0; cp <= 10; cp++)
  float sum = 0;
 
   for(int m = 0; m < basis.M; m++)
-	sum += tally.coefficient_matrix[m] * Pn(m,x);
+	sum += tally.current_matrix[m] * Pn(m,x);
     std::cout.precision(2);
     std::cout << std::fixed;
     std::cout << "Position: " << x
@@ -76,7 +76,7 @@ myfile << "Number of Particle: " + std::to_string(basis.N) + "\n";
 myfile << "Time take: " + std::to_string(time) + "\n";
 for (int m=0; m < basis.M; m++)
 {
-myfile << std::to_string(tally.coefficient_matrix[m]) + " * P_" + std::to_string(m) + "(x) +/- " + std::to_string(tally.unc_matrix[m]) + "With an R^2 value of " + std::to_string(tally.R_sqr_value[m]) + "\n";
+myfile << std::to_string(tally.current_matrix[m]) + " * P_" + std::to_string(m) + "(x) +/- " + std::to_string(tally.unc_matrix[m]) + " With an R^2 value of " + std::to_string(tally.R_sqr_value[m]) + "\n";
 }
 myfile << "\n";
 myfile.close();
