@@ -30,13 +30,12 @@ class tally_info
 class legendre_info
 {
   public:
-    inline legendre_info ();
+    inline legendre_info (std::size_t poly_order);
     virtual ~legendre_info() = default;
 
     double min;
     double max;
     int M;
-    int N;
     int n_counter;
     std::vector<double> A_n;
     std::vector<double> A_m;
@@ -47,11 +46,10 @@ class legendre_info
 };
 
 //Constructor for legendre_info
-legendre_info::legendre_info ()
+legendre_info::legendre_info (std::size_t poly_order)
 		 : min(0)
 		  ,max(2)
-		  ,M(6)
-		  ,N(1e8)
+		  ,M(poly_order+1)
 		  ,n_counter(0)
 {
     A_n.resize(M, 0.0);
@@ -76,9 +74,9 @@ class particle_info
     void get_particle (legendre_info &basis, particle_info &a);
 };
 
-    void surface_eval (legendre_info &basis, particle_info &a);
-    void get_current (legendre_info &basis, particle_info &a, tally_info &tally);
-    void initialize_tally_info (tally_info &tally, std::size_t poly_order);
+    void surface_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
+    void get_current (legendre_info &basis, tally_info &tally, std::size_t poly_terms, std::size_t N);
+    void initialize_tally_info (tally_info &tally, std::size_t poly_terms);
     double Pn(int n, double x);
     double scale (double x, legendre_info basis);
     double rescale (double x_tild, legendre_info basis);

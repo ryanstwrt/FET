@@ -10,14 +10,15 @@
 #include"FET.hh"
 
 //Solves for each Legendre coefficient
-void get_current (legendre_info &basis, 
-		particle_info &a,
-	    	tally_info &tally)
+void get_current (legendre_info &basis,
+	    	tally_info &tally, 
+		std::size_t poly_terms,
+		std::size_t N)
 {
-    for (int m = 0; m<basis.M; m++)
+    for (int m = 0; m<poly_terms; m++)
     {
-        basis.var_a_n[m] = (basis.A_m[m] - (1.0/basis.N)*(basis.A_n[m] * basis.A_n[m])) * 1.0/(basis.N*(basis.N-1.0));
-        basis.A_n[m] *= (basis.max-basis.min) / basis.N;
+        basis.var_a_n[m] = (basis.A_m[m] - (1.0/N)*(basis.A_n[m] * basis.A_n[m])) * 1.0/(N*(N-1.0));
+        basis.A_n[m] *= (basis.max-basis.min) / N;
 
         basis.ortho_const[m] = (2.0*m+1.0)/2.0;
         tally.current_matrix[m] = basis.A_n[m] * basis.ortho_const[m];

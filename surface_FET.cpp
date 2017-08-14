@@ -40,18 +40,17 @@ double scale (double x,
 //Calculated the individual contribution from one particle, which can contribute multiple times depending on how many times it crosses the surface
 //Verified 7/18/17
 void surface_eval (legendre_info &basis, 
-		   particle_info &a)
+		   particle_info &a, std::size_t poly_terms)
 {
     double alpha_n;
     double temp_var;
-    double temp_var2;
     double x_tild = scale(a.b_weight, basis);
     double ratio = fluxshape(x_tild) / a.k_particle;
     //calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
     //k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
-    for(int k=1; k<=a.k_particle; k++)
+    for(int k=1; k<=a.k_particle; ++k)
     {
-	for(int m=0; m<basis.M; m++)
+	for(int m=0; m<poly_terms; ++m)
 	{
 
 	    alpha_n = Pn(m,x_tild);
@@ -67,13 +66,11 @@ void surface_eval (legendre_info &basis,
 	}
 
     }
-    for(int m=0; m<basis.M; m++)
+    for(int m=0; m<poly_terms; ++m)
     {
 	temp_var = basis.a_n[m] * ratio;
-//	temp_var2 += temp_var;
 	basis.A_n[m] += temp_var;
 	basis.A_m[m] += pow(temp_var,2);
-//	std::cout<<temp_var2<<"  "<<basis.A_n[m]<<"  "<<basis.A_m[m]<<"  "<<std::endl;
     }
 
 
