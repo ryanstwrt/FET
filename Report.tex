@@ -1,0 +1,178 @@
+\documentclass[10tma4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{{/home/stewryan/Documents/FET/} }
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\title{Project Report}
+\author{Ryan Stewart}
+\begin{document}
+	\begin{center}
+		Implementation of Functional Expansion Tallies in the 
+		Monte Carlo Code SHIFT
+		\\
+		\bigskip
+		\small{Ryan H. Stewart, Leslie} Kerby
+		\\
+	\end{center}
+	
+	\begin{center}
+		\textit{\small{Idaho State University, Department of Nuclear Engineering and Health Physics, Pocatello, ID 83209, stewryan@isu.edu}}
+	\end{center}
+	
+
+\section{Abstract}\label{abstract}
+
+
+
+\section{Introduction}\label{intro}
+
+
+ Shift is a new Monte Carlo (MC) transport code developed by Oak Ridge National Laboratory for large scale reactor analysis and optimized to perform MC transport calculations on current and near-future computing architectures, while retaining the ability to be run on small clusters and personal laptops. The design of Shift allows for modular and easily extensible implementation of features such as physics and source implementations, hybrid capabilities with deterministic codes, and parallel decomposition. Implementation of these features allows for full utilization with large computing clusters to examine whole core reactor analysis with the hope of coupling Shift with computational fluid dynamics codes such as Nek5000. Shift utilizes traditional MC bin tallying techniques to determine collision rates or flux values within the core which can lead to excessive particle requirements and run times.
+\\
+Traditional MC tallies utilize two different classes of estimator, discrete and track length, to extract useful information during the MC process. The information is then separated into bins to create a histogram based solution for the underlying physically meaningful result such as flux, or reaction rate. These bins require many particles to provide meaningful results, and if a small bin is required a large variance may occur due to too few particles. To obtain reliable results the tally would have to be increased, thereby defeating the purpose, or the number of particle histories would need to be increased, which would increase the run time.
+\\
+An attempt to address these issues using functional expansion tallies (FETs) was implemented by Griesheimer in the code MCNPX. FETs use a set of basis functions, which form complete set, to estimate the shape of the flux (or current) as a series expansion. This provides a continuous representation of the flux compared to the bin method of traditional MC tallies. FETs also have the ability to extract higher order information about the current shape from particle histories, while retaining the lower order information, such as integral quantities. Along with this, FETs are not dependent on mesh or finite element calculations which provides a method to transfer data between multiple codes with differing geometric definitions.  
+\\
+To determine the applicability of FETs for Shift, only discrete estimators, in the form of surface currant tallies, were implemented. Legendre polynomials were utilized as the set of basis functions.
+
+\section{Background}\label{background}
+
+
+FETs rely on a series expansion to approximate the shape of an unknown distribution. The series used for expansion can vary depending on the boundary conditions, geometry and prior of the distribution. Often times, there is little knowledge of a priori information and it is best to select a basis function such as the Legendre or Chebyshev Polynomials, which are known to have fast convergence rates for nearly smooth functions. For the work in Shift, Legendre Polynomials were selected for implementation.
+\\
+To first step in implementing FETs into Shift was the implementation of surface current. The surface current is easy to implement and can expressed as a series expansion, $J_{m}$ (x), although this can be generalized to multiple dimensions, collision types, energy levels, etc. The finite expansion of $J_{m}$ (x) can be described by
+	\begin{equation} \label{eq:1}
+	J_{m}(x) \approx \sum_{m=0}^{M}a_{m}\psi_{m}(x)k_{m}\rho(x)
+	\end{equation}
+Where,$k_{n}$ is the orthonormalization constant and is described by
+\begin{equation}\label{eq:2}
+k_{n} = \frac{1}{||\psi(x)||}
+\end{equation} 
+This allows the individual coefficients to be described as
+	 \begin{equation} \label{eq:3}
+	a_{m}=\int j(x)\psi_{m}(x)\rho(x)dx
+	 \end{equation}
+In this sense, $a_m$ is the $m^{th}$ coefficient of the $m^{th}$ basis function, $\psi_{m}(x)$ (in this case, the Legendre Polynomial). For ease of implementation, it is often easiest to utilize a basis function with an orthogonal basis. Along with this, $\rho(x)$ is the associated weighing function for the basis function used. In the case of Legendre Polynomials, $\rho(x)=1$. Monte Carlo does not utilize an infinite number of particles, and thus an estimate of $a_{m}$ is required, namely
+	 \begin{equation} \label{eq:4}
+	 \hat{a}_{m}=\frac{1}{N}\sum_{n=1}^{N}w_{n}\psi_{m}(x_{n})
+	 \end{equation}
+Where in the context of a discrete estimator; $w_{n}$ is the weight of the $n^{th}$ particle, and $\psi_{m}(x_{n})$ is the contribution of the $n^{th}$ particle to the $m^{th}$ order Legendre Polynomial $P_{n}(x)$, and N is the total number of particles that contributed to the coefficient. Each coefficient is calculated many times through the simulation, and thus has an associated variance for each coefficient included.
+	\begin{equation} \label{eq:5}
+	\sigma_{\hat{a}_{m}}^2 = \frac{\sum_{n=1}^{N}[\sum_{m=0}^{M}w_{m,n}\psi_{m}(x)]^{2} - \frac{1}{N}[ \sum_{n=1}^{N}\sum_{m=0}^{M}w_{m,n}\psi_{m}(x)]^{2}}{N(N-1)}
+	\end{equation}
+This uncertainty is an estimator of the real uncertainty, which requires prior knowledge of the probability density function. This knowledge is rarely known, and thus a statistical estimator is required.
+\\With the coefficients of the basis function found, along with their associated uncertainties, the Monte Carlo approximation of $\phi(x)$ can be written as
+	\begin{equation} \label{eq:6}
+	\hat{J}(x) = \sum_{m=0}^{M} \hat{a}_{m}k_{m}\psi_{m}(x)
+	\end{equation}
+As with the coefficients, Monte Carlo approximations are meaningless without the corresponding variance, which is given by the two-norm variances
+	\begin{equation} \label{eq:7}
+	\sigma_{\hat{\phi}}^2=\sum_{m=0}^{M}\sigma_{\hat{a}_{m}}^2k_{m}
+	\end{equation}
+Where $a_{m}^{n}$ is the contribution of particle n to the $m^{th}$ coefficient.
+\section{Algorithm}\label{algorith}
+The algorithm for solving the FET's was written in C++ to allow for an ease in integrating into SHIFT, which is also written in C++. To solve for surface, data had to be obtained from the source code in SHIFT and transfered to the FET algorithm. The FET algorithm required the particle weight and the surface to be tallied. With this information, an approximate could be made on the shape of the functional expansion tally.
+\\
+The FET algorithm was simple in nature to allow for a more efficient method in calculating tallies. The first step was to obtain the data from SHIFT that would be required. This involved activating the algorithm each time a tally surface was crossed. When a tally surface was crossed, the weight of the particle and the tally surface number was transfered into the functional expansion tally algorithm. The surface is bound by two maxima and minima which is used to transfer the particles position from the surface space to Legendre space. This is done using the following equation, where $\tilde{x}$ is the Legendre space transform of position $x$ in surface space:
+\begin{equation} \label{eq:8}
+\tilde{x} = 2 \frac{x-x_{min}}{x_{max}-x_{min}} - 1
+\end{equation}
+The transformed $\tilde{x}$ is then plugged into the Legendre polynomial and solved. The Legendre polynomial is solved, designated by $\alpha_{n}$, for multiple times depending on the order supplied by the user. This process can be repeated multiple times depending on the number of times the particle crosses tally surface. Each time a particle crosses the tally surface, the $\alpha_{n}$'s are summed to create $a_{n}$. Once a particle is killed, the $a_{n}$'s are summed to create an estimate of $\hat{a}_{m}$, designated as $A_{n}$. In addition to this, for each $a_{n}$, a separate sum of $a_{n}^{2}$ is kept, and designated as $A_{m}$. The value of $A_{m}$ is used post processing for calculating the variance. Along with this, a running tally for the number of particles crossing the surface of interest is kept for post processing.
+\\
+Once the simulation is complete, and all of the histories/particles have been run, post processing  is performed to find the values of $\hat{a}_{n}$, their associate variance, the current, and the overall variance through the surface. To find $\hat{a}_{m}$, the final $A_{n}$ is divided by the total number of particles crossing the surface of interest. This normalizes the coefficients according to the particle fluence through the surface. \\
+To find the variance, equation \eqref{eq:5} was used where $[\sum_{m=0}^{M}w_{m,n}\psi_{m}(x)]^{2}$ is represented by $A_{m}$, and $\sum_{n=1}^{N}\sum_{m=0}^{M}w_{m,n}\psi_{m}(x)$ is represented by $A_{n}$. Once the variance is found per coefficient, the current can be written as
+\begin{equation}\label{eq:9}
+	\tilde{J_{m}}(\tilde{x}) = \sum_{m=0}^{M}\hat{a}_{m}k_{m}P_{m}(\tilde{x}) \pm  \sigma_{\hat{a}_{m}}
+\end{equation}
+It should be noted that equation \eqref{eq:9} is still contained in Legendre space, that is [-1,1]. If the user desired to transform the equation to original units, a simple transformation of $\tilde{x}$ is required, as in equation \eqref{eq:10}.
+\begin{equation}\label{eq:10}
+\tilde{x} = 2\frac{x-x_{min}}{x_{max}-x_{min}}-1
+\end{equation}
+Where $\tilde{x}$ from equation \eqref{eq:9} is replaced with equation \eqref{eq:10}. Along with this, the orthonormalization constant must be transformed from $k'_{m}$ back to $k_{m}$ via equation \eqref{eq:11}
+\begin{equation}\label{eq:11}
+k'_{n} = \frac{2n+1}{x_{max}-x_{min}}
+\end{equation}
+With the transformations equations \eqref{eq:10} and \eqref{1eq:1} the current for the original tally domain is described as 
+\begin{equation}
+	\hat{J_{m}}(x) = \sum_{m=0}^{M}\hat{a}_{m}k'_{m}P_{m}(2\frac{x-x_{min}}{x_{max}-x_{min}}-1) \pm  \sigma_{\hat{a}_{m}}
+\end{equation}
+Again, if multiple dimensions were to be used, each transformation can be performed independently and multiplied together to yield a final current.
+\section{Verification \& Validation}\label{vv}
+\subsection{Phase One: Verification of Functionality}\label{P1}
+
+The first phase of the verification process was to ensure the algorithm was performing the intended calculation and producing reliable results. To test this, a test function was developed. The test function used rejection sampling to sample the shape of a user defined distribution. For the sake of testing, multiple distributions were selected to determine accurate results, and to learn additional nuances of FET properties; such as time requirements, optimal coefficient selection, particle number, and statistical uncertainties.
+\\
+For the first test, a distribution of $5x^{3}-x^{2}-2x+4$ was used. This initial test was to determine if the algorithm created was performing its intended function and creating a Legendre polynomial that matched the distribution function. The results were promising, for nearly any number of particles, as seen in Table \ref{table:Alg Res}. For the results in Table \ref{table:Alg Res}, seven coefficients were used which can be seen, along with their corresponding uncertainties in Table \ref{table:coef Res}.
+\begin{table}[htbp!]
+	\caption{FET Algorithm Results}
+	\centering
+	\begin{tabular}{c c c c c c c c}
+		\hline
+		Position & Distribution &  & FE &  & Diff. &  &\\[0.5ex]
+		 & & 1e5 & 1e6 & 1e7 & 1e8 & 1e9 &\\
+		 \hline
+		 \hline
+		-1.0 & 0.00 & -2.32e-2 & 1.91e-3  & -1.41e-3 & 1.63e-3  & 3.41e-4  & \\
+		-0.6 & 3.76 & -2.94e-2 & 3.04e-3  & 3.94e-3  & 4.68e-4  & 1.96e-5  & \\
+		-0.2 & 4.32 & -1.74e-2 & -5.40e-3 & -3.09e-3 & -6.71e-4 & 4.04e-5  & \\
+		 0.2 & 3.60 & 1.98e-2  & -4.01e-3 & -1.26e-4 & -1.66e-4 & 5.83e-5  & \\
+		 0.6 & 3.52 & 1.04e-2  & 6.93e-3  & -1.20e-3 & -2.88e-4 & -2.15e-4 & \\
+		 1.0 & 6.00 & -7.93e-2 & -1.11e-2 & 1.90e-2  & 5.98e-3  & 2.254    & \\ [1ex]
+		\hline
+	\end{tabular}
+	\label{table:Alg Res}
+\end{table}
+\begin{table}[htbp!]
+	\caption{FET Coefficient Values}
+	\centering
+	\begin{tabular}{c c c c c c c }
+		\hline
+		Coefficient & &  & FE  &  & & \\[0.5ex]
+		 & 1e5 & 1e6 & 1e7 & 1e8 & 1e9 &\\
+		 \hline		
+		\hline
+		$P_{0}(x)$ & 3.67     & 3.67     & 3.67     & 3.67     & 3.67     & \\
+		$P_{1}(x)$ & 0.99     & 1.00     & 1.00     & 1.00     & 1.00     & \\
+		$P_{2}(x)$ & -0.66    & -0.67    & -0.67    & -0.67    & -0.67    & \\
+		$P_{3}(x)$ & 2.05     & 2.00     & 2.00     & 2.00     & 2.00     & \\
+		$P_{4}(x)$ & 3.10e-3  & 1.13e-2  & 2.35e-4  & -7.11e-4 & -2.31e-4 & \\
+		$P_{5}(x)$ & -1.21e-2 & 1.92e-3  & -7.83e-3 & -1.36e-3 & -1.31e-4 & \\
+		$P_{6}(x)$ & 3.74e-2  & -4.45e-3 & -6.51e-3 & -2.44e-3 & -2.14e-4 & \\ [1ex]
+		\hline
+	\end{tabular}
+	\label{table:coef Res}
+\end{table}
+\begin{table}[htbp!]
+	\caption{FET Coefficient Uncertainty}
+	\centering
+	\begin{tabular}{c c c c c c c }
+		\hline
+		Coefficient & & & FE & & & \\[0.5ex]
+		& 1e5 & 1e6 & 1e7 & 1e8 & 1e9 &\\
+		\hline		
+		\hline
+		$P_{0}(x)$ & 3.14e-3 & 9.97e-4 & 3.15e-4 & 1.00e-4 & 3.15e-5 & \\
+		$P_{1}(x)$ & 6.71e-3 & 2.12e-3 & 6.70e-4 & 2.12e-4 & 6.70e-5 & \\
+		$P_{2}(x)$ & 5.46e-3 & 1.73e-3 & 5.45e-4 & 1.72e-4 & 5.45e-5 & \\
+		$P_{3}(x)$ & 4.56e-3 & 1.44e-3 & 4.54e-4 & 1.44e-4 & 4.55e-5 & \\
+		$P_{4}(x)$ & 4.07e-3 & 1.28e-3 & 4.06e-4 & 1.28e-4 & 4.06e-5 & \\
+		$P_{5}(x)$ & 3.69e-3 & 1.16e-3 & 3.66e-4 & 1.16e-4 & 3.66e-5 & \\
+		$P_{6}(x)$ & 3.39e-3 & 1.07e-3 & 3.37e-4 & 1.06e-4 & 3.37e-5 & \\ [1ex]
+		\hline
+	\end{tabular}
+	\label{table:coef unc Res}
+\end{table}
+
+\section{Optimization}\label{optimization}
+
+\section{Implementation into SHIFT}\label{shift}
+
+\section{Conclusions}\label{conclusion}
+
+\section{Further Research}\label{further}
+
+
+\end{document}
