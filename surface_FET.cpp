@@ -32,45 +32,50 @@ double scale (double x,
     }
     else
     {
-	double x_tild = 2 * ((x - basis.min)/(basis.max - basis.min)) - 1;
-	return x_tild;
+	return (2 * ((x - basis.min)/(basis.max - basis.min)) - 1);
+
     }
 }
 
 //Calculated the individual contribution from one particle, which can contribute multiple times depending on how many times it crosses the surface
 //Verified 7/18/17
 void surface_eval (legendre_info &basis, 
-		   particle_info &a, 
-		   tally_info &tally)
+		   particle_info &a)
 {
-
+    double alpha_n;
+    double temp_var;
+    double temp_var2;
+    double x_tild = scale(a.b_weight, basis);
+    double ratio = fluxshape(x_tild) / a.k_particle;
     //calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
     //k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
     for(int k=1; k<=a.k_particle; k++)
     {
 	for(int m=0; m<basis.M; m++)
 	{
-	    a.x_tild = scale(a.b_weight, basis);
 
-	    basis.alpha_n = Pn(m,a.x_tild);
+	    alpha_n = Pn(m,x_tild);
 		
 	    if(k==1)
 	    {
-		basis.a_n[m] = 0;
+		basis.a_n[m] = alpha_n;
 	    }
-
-	    basis.a_n[m] += basis.alpha_n;
-
+	    else
+	    {
+		basis.a_n[m] += alpha_n;
+	    }
 	}
 
-//	    std::cout<<basis.A_n[2]<<"  "<<basis.A_m[2]<<"  "<< basis.A_n_m[2] <<std::endl;
     }
-    float ratio = fluxshape(a.x_tild) / a.k_particle;
-	for(int m=0; m<basis.M; m++)
-	{
-	    basis.A_n[m] += basis.a_n[m] * ratio;
-	    basis.A_m[m] += pow(basis.a_n[m] * ratio,2) ;
-	}
+    for(int m=0; m<basis.M; m++)
+    {
+	temp_var = basis.a_n[m] * ratio;
+//	temp_var2 += temp_var;
+	basis.A_n[m] += temp_var;
+	basis.A_m[m] += pow(temp_var,2);
+//	std::cout<<temp_var2<<"  "<<basis.A_n[m]<<"  "<<basis.A_m[m]<<"  "<<std::endl;
+    }
+
 
    basis.n_counter++;
 }
@@ -83,24 +88,17 @@ void particle_info::get_particle (legendre_info &basis,
     a.b_weight = (basis.max - basis.min) * random_num();
     a.k_particle = 1;//4 * random_num() + 1;
     a.particle_surface = .25;//random_num();
-    if(basis.n_counter==0)
-    {
-	for(int m=0;m<basis.M;m++)
-	{
-	    a.a_n.push_back(0);
-	}
-    }
 }
 
 //Initialize the surface tallies matrix and the surface index matrix
-void initialize_tally_info (tally_info &tally, legendre_info &basis)
+void initialize_tally_info (tally_info &tally, std::size_t poly_order)
 {
     tally.num_surfaces = 1;
-    std::vector<float> current_matrix;
-    std::vector<float> unc_matrix;
-    std::vector<float> R_sqr_value;
+    std::vector<double> current_matrix;
+    std::vector<double> unc_matrix;
+    std::vector<double> R_sqr_value;
 
-    tally.current_matrix.resize(basis.M, 0.0);
-    tally.unc_matrix.resize(basis.M), 0.0;
-    tally.R_sqr_value.resize(basis.M, 0.0);
+    tally.current_matrix.resize(poly_order, 0.0);
+    tally.unc_matrix.resize(poly_order, 0.0);
+    tally.R_sqr_value.resize(poly_order, 0.0);
 }

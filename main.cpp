@@ -20,7 +20,7 @@ ofstream myfile;
 myfile.open ("time.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
-const std::size_t poly_order = 10;
+const std::size_t poly_order = 5;
 const std::size_t poly_terms = poly_order + 1;
 const std::size_t N = 1e7;
 
@@ -30,14 +30,15 @@ tally_info tally;
 legendre_info basis;
 particle_info a;
 tally.surface_index=0;
+a.a_n.resize(poly_terms, 0.0);
 
-initialize_tally_info (tally, basis);
+initialize_tally_info (tally, poly_terms);
 
 for(int n = 0; n<basis.N; n++)
 {
 	a.get_particle(basis, a);
 
-	surface_eval (basis, a, tally);
+	surface_eval (basis, a);
 }
 
 get_current(basis, a, tally);
@@ -56,9 +57,9 @@ std::cout<<std::endl;
 
 for(int cp = 0; cp <= 10; cp++)
 {
- float x = double(cp) / 10 * 2 -1;
- float y = fluxshape(x);
- float sum = 0;
+ double x = double(cp) / 10 * 2 -1;
+ double y = fluxshape(x);
+ double sum = 0;
 
   for(int m = 0; m < basis.M; m++)
 	sum += tally.current_matrix[m] * Pn(m,x);
