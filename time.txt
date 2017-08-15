@@ -270,3 +270,10 @@ Time take: 2161.016975
 -0.000721 * P_19(x) +/- 0.000019 With an R^2 value of 5.373218
 -0.001250 * P_20(x) +/- 0.000019 With an R^2 value of 1.976676
 
+Number of Particle: 1000000000
+Time take: 1381.156241
+3.666702 * P_0(x) +/- 0.000032 With an R^2 value of 0.000000
+1.000167 * P_1(x) +/- 0.000067 With an R^2 value of 0.000000
+-0.666556 * P_2(x) +/- 0.000055 With an R^2 value of 0.000000
+2.000007 * P_3(x) +/- 0.000045 With an R^2 value of 0.000000
+
