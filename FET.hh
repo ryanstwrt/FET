@@ -30,34 +30,36 @@ class tally_info
 class legendre_info
 {
   public:
-    inline legendre_info (std::size_t poly_order);
+    inline legendre_info (std::size_t poly_order, std::size_t num_surfaces);
     virtual ~legendre_info() = default;
 
     double min;
     double max;
-    int M;
-    int n_counter;
+    std::vector<double> n_counter;
     std::vector<double> A_n;
     std::vector<double> A_m;
-    std::vector<double> a_n;
-    std::vector<double> current_unc;
-    std::vector<double> ortho_const;
-    std::vector<double> var_a_n;
+    std::vector<double> Pn(std::size_t poly_terms, double x);
+    std::vector<double> P_n;
+
+  private:
+    std::size_t order;
+    std::size_t terms;
+    std::size_t num_surfaces;
+    double load(std::size_t index) const;
+    void save(std::size_t index, double value);
 };
 
 //Constructor for legendre_info
-legendre_info::legendre_info (std::size_t poly_order)
-		 : min(0)
+legendre_info::legendre_info (std::size_t poly_order, std::size_t num_surfaces)
+		 : order(poly_order)
+		  ,terms(poly_order+1)
+		  ,min(0)
 		  ,max(2)
-		  ,M(poly_order+1)
-		  ,n_counter(0)
+		  ,n_counter(num_surfaces, 0.0)
+		  ,P_n(poly_order+1, 0.0)
 {
-    A_n.resize(M, 0.0);
-    A_m.resize(M, 0.0);
-    a_n.resize(M, 0.0);
-    var_a_n.resize(M, 0.0);
-    current_unc.resize(M, 0.0);
-    ortho_const.resize(M, 0.0);
+    A_n.resize(terms, 0.0);
+    A_m.resize(terms, 0.0);
 }
 
 //This class will either absorb the values coming out of shift, or disappear once integrated
@@ -77,7 +79,7 @@ class particle_info
     void surface_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void get_current (legendre_info &basis, tally_info &tally, std::size_t poly_terms, std::size_t N);
     void initialize_tally_info (tally_info &tally, std::size_t poly_terms);
-    double Pn(int n, double x);
+
     double scale (double x, legendre_info basis);
     double rescale (double x_tild, legendre_info basis);
 

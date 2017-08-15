@@ -15,15 +15,17 @@ void get_current (legendre_info &basis,
 		std::size_t poly_terms,
 		std::size_t N)
 {
+    std::vector<double> ortho_const(poly_terms, 0.0);
+    std::vector<double> var_a_n(poly_terms, 0.0);
     for (int m = 0; m<poly_terms; m++)
     {
-        basis.var_a_n[m] = (basis.A_m[m] - (1.0/N)*(basis.A_n[m] * basis.A_n[m])) * 1.0/(N*(N-1.0));
+        var_a_n[m] = (basis.A_m[m] - (1.0/N)*(basis.A_n[m] * basis.A_n[m])) * 1.0/(N*(N-1.0));
         basis.A_n[m] *= (basis.max-basis.min) / N;
 
-        basis.ortho_const[m] = (2.0*m+1.0)/2.0;
-        tally.current_matrix[m] = basis.A_n[m] * basis.ortho_const[m];
-        tally.unc_matrix[m] = std::sqrt(basis.var_a_n[m]);
-        tally.R_sqr_value[m] = (basis.var_a_n[m] * basis.ortho_const[m]) / std::pow(basis.A_n[m],2.0);
+        ortho_const[m] = (2.0*m+1.0)/2.0;
+        tally.current_matrix[m] = basis.A_n[m] * ortho_const[m];
+        tally.unc_matrix[m] = std::sqrt(var_a_n[m]);
+        tally.R_sqr_value[m] = (var_a_n[m] * ortho_const[m]) / std::pow(basis.A_n[m],2.0);
     }
 }
 

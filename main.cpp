@@ -20,14 +20,15 @@ ofstream myfile;
 myfile.open ("time.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
-const std::size_t poly_order = 20;
+const std::size_t poly_order = 5;
 const std::size_t poly_terms = poly_order + 1;
 const std::size_t N = 1e6;
+const std::size_t num_surfaces = 1;
 
 Distribution fluxshape;
 
 tally_info tally;
-legendre_info basis(poly_order);
+legendre_info basis(poly_order, num_surfaces);
 particle_info a;
 tally.surface_index=0;
 a.a_n.resize(poly_terms, 0.0);
@@ -60,9 +61,10 @@ for(int cp = 0; cp <= 10; ++cp)
  double x = double(cp) / 10 * 2 -1;
  double y = fluxshape(x);
  double sum = 0;
+ basis.Pn(poly_terms, x);
 
   for(int m = 0; m < poly_terms; m++)
-	sum += tally.current_matrix[m] * Pn(m,x);
+	sum += tally.current_matrix[m] * basis.P_n[m];
     std::cout.precision(2);
     std::cout << std::fixed;
     std::cout << "Position: " << x
