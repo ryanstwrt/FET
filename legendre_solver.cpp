@@ -17,17 +17,9 @@ std::vector<double> legendre_info::Pn(std::size_t poly_terms,
 {
 const double x2 = x * x;
 
-
-    if(poly_terms>12)
-    {
-	for (int n = 13; n <= poly_terms; ++n)
-	{
-	save(n, ((2*n-1)*x*load(n-1)-(n-1)*load(n-2))/n);
-	}
-    }
-
     switch(poly_terms)
     {
+	default:
 	case 12:
 	save(12, ((((((676039 * x2 - 1939938) * x2 + 2078505) * x2 - 1021020) * x2 + 225225) * x2 - 18018) * x2 + 231) / 1024);
 	case 11:
@@ -55,6 +47,10 @@ const double x2 = x * x;
 	case 0:
 	save(0, 1.0);
     }
+	for (int n = 13; n < poly_terms; ++n)
+	{
+	save(n, ( ( 2 * n - 1 ) * x * load( n - 1 ) - ( n - 1 ) * load( n - 2 ) ) / n );
+	}
 
     return P_n;
 }

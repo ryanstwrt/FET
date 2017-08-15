@@ -48,6 +48,7 @@ void surface_eval (legendre_info &basis,
     std::vector<double> alpha_n(poly_terms, 0.0);
     std::vector<double> a_n(poly_terms, 0.0);
     basis.Pn(poly_terms, x_tild);
+
     //calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
     //k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
     for(int k=1; k<=a.k_particle; ++k)
@@ -64,7 +65,6 @@ void surface_eval (legendre_info &basis,
 	basis.A_n[m] += temp_var;
 	basis.A_m[m] += pow(temp_var,2);
     }
-
 
    basis.n_counter[0]++;
 }
