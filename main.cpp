@@ -22,7 +22,7 @@ clock_t tStart = clock ();
 
 const std::size_t poly_order = 3;
 const std::size_t poly_terms = poly_order + 1;
-const std::size_t N = 1e4;
+const std::size_t N = 1e6;
 const std::size_t num_surfaces = 1;
 
 Distribution fluxshape;
@@ -58,20 +58,28 @@ std::cout<<std::endl;
 for(int cp = 0; cp <= 10; ++cp)
 {
  double x = double(cp) / 10 * 2 -1;
- double y = fluxshape(x);
+ double y = double(cp) / 10 * 2 -1;
+ double z = fluxshape(x) * fluxshape(y);
  double sum = 0;
+ double sum1 = 0;
+ double sum_tot;
  basis.Pn(poly_terms, x);
 
   for(int m = 0; m < poly_terms; m++)
+  {
 	sum += tally.current_matrix[m] * basis.P_n[m];
+	sum1 += tally.current_matrix_y[m] * basis.P_n[m];
+	sum_tot = sum*sum1;
+  }
     std::cout.precision(2);
     std::cout << std::fixed;
-    std::cout << "Position: " << x
-              << "\t\tFlux Value: " << y;
+    std::cout << "Position x: " << x
+	      << "\tPosition y: " << y
+              << "\tFlux Value: " << z;
     
-    std::cout.precision(5);
-    std::cout << "\t\tFE Value: " << sum
-              << "\t\tDifference: " << std::scientific << y - sum << std::endl;
+    std::cout.precision(2);
+    std::cout << "\tFE Value: " << sum_tot
+              << "\tDifference: " << std::scientific << z - sum_tot <<std::endl;
 }
 double time = (double)(clock() - tStart)/CLOCKS_PER_SEC;
 myfile << "Number of Particle: " + std::to_string(N) + "\n";

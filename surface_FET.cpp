@@ -45,8 +45,10 @@ void surface_eval (legendre_info &basis,
     double temp_var;
     double x_tild = scale(a.b_weight, basis);
     double y_tild = scale(a.b_weight, basis);
-    double ratio = fluxshape(x_tild) / a.k_particle;
-    std::vector<double> a_n(poly_terms, 0.0);
+    double ratio = fluxshape(x_tild)/ a.k_particle;
+    double ratio2 = fluxshape(y_tild)/ a.k_particle;
+    std::vector<double> a_n_x(poly_terms, 0.0);
+    std::vector<double> a_n_y(poly_terms, 0.0);
     std::vector<double> P_n_x = basis.Pn(poly_terms, x_tild);
     std::vector<double> P_n_y = basis.Pn(poly_terms, y_tild);
 
@@ -56,14 +58,17 @@ void surface_eval (legendre_info &basis,
     {
     	    for(int m=0; m<poly_terms; ++m)
     	    {
-        	a_n[m] += P_n_x[m];
+        	a_n_x[m] += P_n_x[m];
+		a_n_y[m] += P_n_y[m];
 	    }
 
     }
     for(int m=0; m<poly_terms; ++m)
     {
-	temp_var = a_n[m] * ratio;
+	temp_var = a_n_x[m] * ratio;
 	basis.A_n[m] += temp_var;
+	temp_var = a_n_y[m] * ratio2;
+	basis.A_n_y[m] += temp_var;
 	basis.A_m[m] += pow(temp_var,2);
     }
 
@@ -83,11 +88,8 @@ void particle_info::get_particle (legendre_info &basis,
 //Initialize the surface tallies matrix and the surface index matrix
 void initialize_tally_info (tally_info &tally, std::size_t poly_order)
 {
-    std::vector<double> current_matrix;
-    std::vector<double> unc_matrix;
-    std::vector<double> R_sqr_value;
-
     tally.current_matrix.resize(poly_order, 0.0);
+    tally.current_matrix_y.resize(poly_order, 0.0);
     tally.unc_matrix.resize(poly_order, 0.0);
     tally.R_sqr_value.resize(poly_order, 0.0);
 }

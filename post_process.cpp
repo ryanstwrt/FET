@@ -21,9 +21,11 @@ void get_current (legendre_info &basis,
     {
         var_a_n[m] = (basis.A_m[m] - (1.0/N)*(basis.A_n[m] * basis.A_n[m])) * 1.0/(N*(N-1.0));
         basis.A_n[m] *= (basis.x_basis[basis.surface_index+1]-basis.x_basis[basis.surface_index]) / N;
+        basis.A_n_y[m] *= (basis.y_basis[basis.surface_index+1]-basis.y_basis[basis.surface_index]) / N;
 
         ortho_const[m] = (2.0*m+1.0)/2.0;
         tally.current_matrix[m] = basis.A_n[m] * ortho_const[m];
+	tally.current_matrix_y[m] = basis.A_n_y[m] * ortho_const[m];
         tally.unc_matrix[m] = std::sqrt(var_a_n[m]);
         tally.R_sqr_value[m] = (var_a_n[m] * ortho_const[m]) / std::pow(basis.A_n[m],2.0);
     }

@@ -21,6 +21,7 @@ class tally_info
 //inline tally_info ();
     std::vector<double> surface_indices;
     std::vector<double> current_matrix;
+    std::vector<double> current_matrix_y;
     std::vector<double> unc_matrix;
     std::vector<double> R_sqr_value;
 };
@@ -37,6 +38,7 @@ class legendre_info
     std::vector<double> y_basis;
     std::vector<double> n_counter;
     std::vector<double> A_n;
+    std::vector<double> A_n_y;
     std::vector<double> A_m;
     std::vector<double> P_n;
 
@@ -60,6 +62,7 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_surfaces)
     x_basis.resize(2*num_surfaces, 0.0);
     y_basis.resize(2*num_surfaces, 0.0);
     A_n.resize(terms, 0.0);
+    A_n_y.resize(terms, 0.0);
     A_m.resize(terms, 0.0);
     for(int n=0; n<2*num_surfaces; ++n)
     {
