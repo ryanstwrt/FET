@@ -22,7 +22,7 @@ clock_t tStart = clock ();
 
 const std::size_t poly_order = 3;
 const std::size_t poly_terms = poly_order + 1;
-const std::size_t N = 1e9;
+const std::size_t N = 1e4;
 const std::size_t num_surfaces = 1;
 
 Distribution fluxshape;
@@ -30,8 +30,7 @@ Distribution fluxshape;
 tally_info tally;
 legendre_info basis(poly_order, num_surfaces);
 particle_info a;
-tally.surface_index=0;
-a.a_n.resize(poly_terms, 0.0);
+basis.surface_index=0;
 
 initialize_tally_info (tally, poly_terms);
 
@@ -44,7 +43,7 @@ for(int n = 0; n<N; n++)
 
 get_current(basis, tally, poly_terms, N);
 
-for(int s=0; s<tally.num_surfaces; s++)
+for(int s=0; s<basis.num_surfaces; s++)
 {	
 	std::cout<<"Surface Number "<<s<<std::endl;
 	for(int m=0; m<poly_terms; m++)

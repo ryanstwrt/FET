@@ -19,8 +19,6 @@ class tally_info
 {
   public:
 //inline tally_info ();
-    int surface_index;
-    int num_surfaces;
     std::vector<double> surface_indices;
     std::vector<double> current_matrix;
     std::vector<double> unc_matrix;
@@ -33,18 +31,20 @@ class legendre_info
     inline legendre_info (std::size_t poly_order, std::size_t num_surfaces);
     virtual ~legendre_info() = default;
 
-    double min;
-    double max;
+    int surface_index;
+    std::size_t num_surfaces;
+    std::vector<double> x_basis;
+    std::vector<double> y_basis;
     std::vector<double> n_counter;
     std::vector<double> A_n;
     std::vector<double> A_m;
-    std::vector<double> Pn(std::size_t poly_terms, double x);
     std::vector<double> P_n;
+
+    std::vector<double> Pn(std::size_t poly_terms, double x);
 
   private:
     std::size_t order;
     std::size_t terms;
-    std::size_t num_surfaces;
     double load(std::size_t index) const;
     void save(std::size_t index, double value);
 };
@@ -53,13 +53,19 @@ class legendre_info
 legendre_info::legendre_info (std::size_t poly_order, std::size_t num_surfaces)
 		 : order(poly_order)
 		  ,terms(poly_order+1)
-		  ,min(0)
-		  ,max(2)
+		  ,num_surfaces(num_surfaces)
 		  ,n_counter(num_surfaces, 0.0)
 		  ,P_n(poly_order+1, 0.0)
 {
+    x_basis.resize(2*num_surfaces, 0.0);
+    y_basis.resize(2*num_surfaces, 0.0);
     A_n.resize(terms, 0.0);
     A_m.resize(terms, 0.0);
+    for(int n=0; n<2*num_surfaces; ++n)
+    {
+	x_basis[n] = 2*n;
+	y_basis[n] = 2*n;
+    }
 }
 
 //This class will either absorb the values coming out of shift, or disappear once integrated
@@ -79,7 +85,4 @@ class particle_info
     void surface_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void get_current (legendre_info &basis, tally_info &tally, std::size_t poly_terms, std::size_t N);
     void initialize_tally_info (tally_info &tally, std::size_t poly_terms);
-
     double scale (double x, legendre_info basis);
-    double rescale (double x_tild, legendre_info basis);
-
