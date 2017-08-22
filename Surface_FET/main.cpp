@@ -20,9 +20,9 @@ ofstream myfile;
 myfile.open ("time.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
-const std::size_t poly_order = 20;
+const std::size_t poly_order = 3;
 const std::size_t poly_terms = poly_order + 1;
-const std::size_t N = 1e5;
+const std::size_t N = 1e6;
 const std::size_t num_surfaces = 1;
 
 Distribution fluxshape;
@@ -92,3 +92,4 @@ myfile << std::to_string(tally.current_matrix_x[m]) + " * P_" + std::to_string(m
 myfile << "\n";
 myfile.close();
 }
+

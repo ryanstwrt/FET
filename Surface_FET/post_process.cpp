@@ -19,6 +19,7 @@ void get_current (legendre_info &basis,
     std::vector<double> var_a_n_x(poly_terms, 0.0);
     std::vector<double> var_a_n_y(poly_terms, 0.0);
 
+
     for (int m = 0; m<poly_terms; m++)
     {
         var_a_n_x[m] = (basis.A_m_x[m] - (1.0/N)*(basis.A_n_x[m] * basis.A_n_x[m])) * 1.0/(N*(N-1.0));

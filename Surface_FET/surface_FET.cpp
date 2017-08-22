@@ -76,7 +76,51 @@ void surface_eval (legendre_info &basis,
    basis.n_counter[0]++;
 }
 
+/*void collision_eval (legendre_info &basis, 
+		   particle_info &a, std::size_t poly_terms)
+{
+    double temp_var;
+    double x_tild = scale(a.b_weight, basis);
+    double y_tild = scale(a.b_weight, basis);
+    double z_tild = scale(a.b_weight, basis);
+    double ratio = fluxshape(x_tild)/ a.k_particle;
+    double ratio2 = fluxshape(y_tild)/ a.k_particle;
+    double ratio3 = fluxshape(z_tild)/ a.k_particle;
+    std::vector<double> a_n_x(poly_terms, 0.0);
+    std::vector<double> a_n_y(poly_terms, 0.0);
+    std::vector<double> a_n_z(poly_terms, 0.0);
+    std::vector<double> P_n_x = basis.Pn(poly_terms, x_tild);
+    std::vector<double> P_n_y = basis.Pn(poly_terms, y_tild);
+    std::vector<double> P_n_z = basis.Pn(poly_terms, z_tild);
 
+    //calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
+    //k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
+    for(int k=1; k<=a.k_particle; ++k)
+    {
+    	    for(int m=0; m<poly_terms; ++m)
+    	    {
+        	a_n_x[m] += P_n_x[m];
+		a_n_y[m] += P_n_y[m];
+		a_n_z[m] += P_n_z[m];
+	    }
+
+    }
+    for(int m=0; m<poly_terms; ++m)
+    {
+	temp_var = a_n_x[m] * ratio;
+	basis.A_n_x[m] += temp_var;
+	basis.A_m_x[m] += pow(temp_var,2);
+	temp_var = a_n_y[m] * ratio2;
+	basis.A_n_y[m] += temp_var;
+	basis.A_m_y[m] += pow(temp_var,2);
+	temp_var = a_n_z[m] * ratio3;
+	basis.A_n_z[m] += temp_var;
+	basis.A_m_z[m] += pow(temp_var,2);
+    }
+
+   basis.n_counter[0]++;
+}
+*/
 //This is a dummy function until I figure out where to get the particle
 void particle_info::get_particle (legendre_info &basis,
 				  particle_info &a)
@@ -91,6 +135,7 @@ void initialize_tally_info (tally_info &tally, std::size_t poly_order)
 {
     tally.current_matrix_x.resize(poly_order, 0.0);
     tally.current_matrix_y.resize(poly_order, 0.0);
+//    tally.current_matrix_z.resize(poly_order, 0.0);
     tally.unc_matrix.resize(poly_order, 0.0);
     tally.R_sqr_value.resize(poly_order, 0.0);
 }

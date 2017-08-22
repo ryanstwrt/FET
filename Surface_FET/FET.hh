@@ -22,9 +22,17 @@ class tally_info
     std::vector<double> surface_indices;
     std::vector<double> current_matrix_x;
     std::vector<double> current_matrix_y;
+//    std::vector<double> current_matrix_z;
     std::vector<double> unc_matrix;
     std::vector<double> R_sqr_value;
 };
+/*
+class collision_tally_info
+{
+  private:
+    double total_xc;
+
+};*/
 
 class legendre_info
 {
