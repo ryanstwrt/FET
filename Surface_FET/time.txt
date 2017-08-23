@@ -1242,3 +1242,73 @@ Time take: 3.911382
 0.001232 * P_2(x) +/- 0.000671 With an R^2 value of 4.631941
 -0.354185 * P_3(x) +/- 0.000577 With an R^2 value of 0.000114
 
+Number of Particle: 1000000
+Time take: 4.510849
+-0.000035 * P_0(x) +/- 0.001294 With an R^2 value of 166.814172
+2.227652 * P_1(x) +/- 0.000599 With an R^2 value of 0.000000
+0.001232 * P_2(x) +/- 0.000671 With an R^2 value of 4.631941
+-0.354185 * P_3(x) +/- 0.000577 With an R^2 value of 0.000114
+
+Number of Particle: 1000000
+Time take: 4.846993
+-0.000035 * P_0(x) +/- 0.001294 With an R^2 value of 166.814172
+2.227652 * P_1(x) +/- 0.000599 With an R^2 value of 0.000000
+0.001232 * P_2(x) +/- 0.000671 With an R^2 value of 4.631941
+-0.354185 * P_3(x) +/- 0.000577 With an R^2 value of 0.000114
+
+Number of Particle: 1000000
+Time take: 5.016137
+-0.000035 * P_0(x) +/- 0.001294 With an R^2 value of 166.814172
+2.227652 * P_1(x) +/- 0.000599 With an R^2 value of 0.000000
+0.001232 * P_2(x) +/- 0.000671 With an R^2 value of 4.631941
+-0.354185 * P_3(x) +/- 0.000577 With an R^2 value of 0.000114
+
+Number of Particle: 1000000
+Time take: 4.780272
+3.667170 * P_0(x) +/- 0.000997 With an R^2 value of 0.000000
+1.000003 * P_1(x) +/- 0.002118 With an R^2 value of 0.000015
+-0.669433 * P_2(x) +/- 0.001726 With an R^2 value of 0.000104
+2.004593 * P_3(x) +/- 0.001438 With an R^2 value of 0.000022
+
+Number of Particle: 1000000
+Time take: 6.083189
+3.667170 * P_0(x) +/- 0.000997 With an R^2 value of 0.000000
+1.000003 * P_1(x) +/- 0.002118 With an R^2 value of 0.000015
+-0.669433 * P_2(x) +/- 0.001726 With an R^2 value of 0.000104
+2.004593 * P_3(x) +/- 0.001438 With an R^2 value of 0.000022
+
+Number of Particle: 1000000
+Time take: 6.159724
+3.667170 * P_0(x) +/- 0.000997 With an R^2 value of 0.000000
+1.000003 * P_1(x) +/- 0.002118 With an R^2 value of 0.000015
+-0.669433 * P_2(x) +/- 0.001726 With an R^2 value of 0.000104
+2.004593 * P_3(x) +/- 0.001438 With an R^2 value of 0.000022
+
+Number of Particle: 1000000
+Time take: 9.358217
+0.000000 * P_0(x) +/- 0.000000 With an R^2 value of -nan
+0.000000 * P_1(x) +/- 0.000000 With an R^2 value of -nan
+0.000000 * P_2(x) +/- 0.000000 With an R^2 value of -nan
+0.000000 * P_3(x) +/- 0.000000 With an R^2 value of -nan
+
+Number of Particle: 1000000
+Time take: 15.948943
+0.000000 * P_0(x) +/- 0.000000 With an R^2 value of -nan
+0.000000 * P_1(x) +/- 0.000000 With an R^2 value of -nan
+0.000000 * P_2(x) +/- 0.000000 With an R^2 value of -nan
+0.000000 * P_3(x) +/- 0.000000 With an R^2 value of -nan
+
+Number of Particle: 1000000
+Time take: 28.043507
+3.667170 * P_0(x) +/- 0.000997 With an R^2 value of 0.000000
+1.000003 * P_1(x) +/- 0.002118 With an R^2 value of 0.000015
+-0.669433 * P_2(x) +/- 0.001726 With an R^2 value of 0.000104
+2.004593 * P_3(x) +/- 0.001438 With an R^2 value of 0.000022
+
+Number of Particle: 1000000
+Time take: 30.756827
+3.667170 * P_0(x) +/- 0.000997 With an R^2 value of 0.000000
+1.000003 * P_1(x) +/- 0.002118 With an R^2 value of 0.000015
+-0.669433 * P_2(x) +/- 0.001726 With an R^2 value of 0.000104
+2.004593 * P_3(x) +/- 0.001438 With an R^2 value of 0.000022
+

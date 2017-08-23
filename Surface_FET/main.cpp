@@ -38,23 +38,37 @@ for(int n = 0; n<N; n++)
 {
 	a.get_particle(basis, a);
 
+	collision_eval (basis, a, poly_terms);
 	surface_eval (basis, a, poly_terms);
 }
 
 get_current(basis, tally, poly_terms, N);
+/*
+for(int s=0; s<basis.num_surfaces; s++)
+{	
+	std::cout<<"Surface Number "<<s<<std::endl;
+	for(int m=0; m<poly_terms; m++)
+	{
+		std::cout<<tally.current_matrix_x[m]<<" * P_" <<m<<"(x) +/- "<<tally.current_unc_matrix[m]<<"    ";
+		std::cout<<"With an R^2 value of "<<tally.current_R_sqr_value[m]<<std::endl;
+	}
+
+std::cout<<std::endl;
+}*/
 
 for(int s=0; s<basis.num_surfaces; s++)
 {	
 	std::cout<<"Surface Number "<<s<<std::endl;
 	for(int m=0; m<poly_terms; m++)
 	{
-		std::cout<<tally.current_matrix_x[m]<<" * P_" <<m<<"(x) +/- "<<tally.unc_matrix[m]<<"    ";
-		std::cout<<"With an R^2 value of "<<tally.R_sqr_value[m]<<std::endl;
+		std::cout<<tally.flux_matrix_x[m]<<" * P_" <<m<<"(x) +/- "<<tally.flux_unc_matrix[m]<<"    ";
+		std::cout<<"With an R^2 value of "<<tally.flux_R_sqr_value[m]<<std::endl;
+		std::cout<<tally.current_total_unc<<"  "<<tally.flux_total_unc<<std::endl;
 	}
 
 std::cout<<std::endl;
 }
-
+/*
 for(int cp = 0; cp <= 10; ++cp)
 {
  double x = double(cp) / 10 * 2 -1;
@@ -71,6 +85,7 @@ for(int cp = 0; cp <= 10; ++cp)
 	sum1 += tally.current_matrix_y[m] * basis.P_n[m];
 	sum_tot = sum*sum1;
   }
+
     std::cout.precision(2);
     std::cout << std::fixed;
     std::cout << "Position x: " << x
@@ -82,12 +97,47 @@ for(int cp = 0; cp <= 10; ++cp)
     std::cout << "\t FE Value: " << sum_tot
               << "\t Difference: " << std::scientific << z - sum_tot <<std::endl;
 }
+*/
+for(int cp = 0; cp <= 10; ++cp)
+{
+ double x = double(cp) / 10 * 2 -1;
+ double y = double(cp) / 10 * 2 -1;
+ double z = double(cp) / 10 * 2 -1;
+ double t = fluxshape(x) * fluxshape(y) * fluxshape(z);
+ double sum = 0;
+ double sum1 = 0;
+ double sum2 = 0;
+ double sum_tot;
+ basis.Pn(poly_terms, x);
+
+  for(int m = 0; m < poly_terms; m++)
+  {
+	sum += tally.current_matrix_x[m] * basis.P_n[m];
+	sum1 += tally.current_matrix_y[m] * basis.P_n[m];
+	sum2 += tally.flux_matrix_z[m] * basis.P_n[m];
+	sum_tot = sum*sum1*sum2;
+  }
+
+    std::cout.precision(2);
+    std::cout << std::fixed;
+    std::cout << "Position x: " << x
+	      << "\t Position y: " << y
+	      << "\t Position y: " << z
+              << "\t Flux Value: " << t;
+    
+    std::cout.precision(3);
+    std::cout << std::fixed;
+    std::cout << "\t FE Value: " << sum_tot
+              << "\t Difference: " << std::scientific << d - sum_tot <<std::endl;
+}
+
+
 double time = (double)(clock() - tStart)/CLOCKS_PER_SEC;
 myfile << "Number of Particle: " + std::to_string(N) + "\n";
 myfile << "Time take: " + std::to_string(time) + "\n";
 for (int m=0; m < poly_terms; ++m)
 {
-myfile << std::to_string(tally.current_matrix_x[m]) + " * P_" + std::to_string(m) + "(x) +/- " + std::to_string(tally.unc_matrix[m]) + " With an R^2 value of " + std::to_string(tally.R_sqr_value[m]) + "\n";
+myfile << std::to_string(tally.current_matrix_x[m]) + " * P_" + std::to_string(m) + "(x) +/- " + std::to_string(tally.current_unc_matrix[m]) + " With an R^2 value of " + std::to_string(tally.current_R_sqr_value[m]) + "\n";
 }
 myfile << "\n";
 myfile.close();
