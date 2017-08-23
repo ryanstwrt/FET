@@ -22,7 +22,7 @@ clock_t tStart = clock ();
 
 const std::size_t poly_order = 3;
 const std::size_t poly_terms = poly_order + 1;
-const std::size_t N = 1e6;
+const std::size_t N = 1e7;
 const std::size_t num_surfaces = 1;
 
 Distribution fluxshape;
@@ -39,7 +39,7 @@ for(int n = 0; n<N; n++)
 	a.get_particle(basis, a);
 
 	collision_eval (basis, a, poly_terms);
-	surface_eval (basis, a, poly_terms);
+//	surface_eval (basis, a, poly_terms);
 }
 
 get_current(basis, tally, poly_terms, N);
@@ -112,8 +112,8 @@ for(int cp = 0; cp <= 10; ++cp)
 
   for(int m = 0; m < poly_terms; m++)
   {
-	sum += tally.current_matrix_x[m] * basis.P_n[m];
-	sum1 += tally.current_matrix_y[m] * basis.P_n[m];
+	sum += tally.flux_matrix_x[m] * basis.P_n[m];
+	sum1 += tally.flux_matrix_y[m] * basis.P_n[m];
 	sum2 += tally.flux_matrix_z[m] * basis.P_n[m];
 	sum_tot = sum*sum1*sum2;
   }
@@ -128,7 +128,7 @@ for(int cp = 0; cp <= 10; ++cp)
     std::cout.precision(3);
     std::cout << std::fixed;
     std::cout << "\t FE Value: " << sum_tot
-              << "\t Difference: " << std::scientific << d - sum_tot <<std::endl;
+              << "\t Difference: " << std::scientific << t - sum_tot <<std::endl;
 }
 
 
