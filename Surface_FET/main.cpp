@@ -20,29 +20,28 @@ ofstream myfile;
 myfile.open ("time.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
-const std::size_t poly_order = 3;
+const std::size_t poly_order = 5;
 const std::size_t poly_terms = poly_order + 1;
-const std::size_t N = 1e7;
+const std::size_t N = 1e6;
 const std::size_t num_surfaces = 1;
 
 Distribution fluxshape;
 
-tally_info tally;
+tally_info tally (poly_order);
 legendre_info basis(poly_order, num_surfaces);
 particle_info a;
 basis.surface_index=0;
-
-initialize_tally_info (tally, poly_terms);
+FET_solver solver;
 
 for(int n = 0; n<N; n++)
 {
 	a.get_particle(basis, a);
 
-	collision_eval (basis, a, poly_terms);
-//	surface_eval (basis, a, poly_terms);
+	solver.collision_eval (basis, a, poly_terms);
+//	solver.surface_eval (basis, a, poly_terms);
 }
 
-get_current(basis, tally, poly_terms, N);
+solver.get_current(basis, tally, poly_terms, N);
 /*
 for(int s=0; s<basis.num_surfaces; s++)
 {	
@@ -63,7 +62,6 @@ for(int s=0; s<basis.num_surfaces; s++)
 	{
 		std::cout<<tally.flux_matrix_x[m]<<" * P_" <<m<<"(x) +/- "<<tally.flux_unc_matrix[m]<<"    ";
 		std::cout<<"With an R^2 value of "<<tally.flux_R_sqr_value[m]<<std::endl;
-		std::cout<<tally.current_total_unc<<"  "<<tally.flux_total_unc<<std::endl;
 	}
 
 std::cout<<std::endl;
@@ -98,6 +96,7 @@ for(int cp = 0; cp <= 10; ++cp)
               << "\t Difference: " << std::scientific << z - sum_tot <<std::endl;
 }
 */
+
 for(int cp = 0; cp <= 10; ++cp)
 {
  double x = double(cp) / 10 * 2 -1;
@@ -130,7 +129,6 @@ for(int cp = 0; cp <= 10; ++cp)
     std::cout << "\t FE Value: " << sum_tot
               << "\t Difference: " << std::scientific << t - sum_tot <<std::endl;
 }
-
 
 double time = (double)(clock() - tStart)/CLOCKS_PER_SEC;
 myfile << "Number of Particle: " + std::to_string(N) + "\n";
