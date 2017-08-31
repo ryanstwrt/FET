@@ -9,6 +9,8 @@
 #include <iomanip>
 #include <random>
 #include <time.h>
+#include <iterator>
+#include <sstream>
 using namespace  std;
 
 #include"FET.hh"
@@ -17,6 +19,8 @@ using namespace  std;
 int main (int argc, char** argv)
 {
 ofstream myfile;
+ifstream input;
+//input.open("/opt/Shift_inputs/shift_input_cell_small.rst");
 myfile.open ("time.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
@@ -24,7 +28,14 @@ const std::size_t poly_order = 5;
 const std::size_t poly_terms = poly_order + 1;
 const std::size_t N = 1e6;
 const std::size_t num_surfaces = 1;
-
+double xs;
+double wt;
+double x1;
+double y1;
+double z1;
+char c;
+std::string::size_type sz;
+std::string str;
 Distribution fluxshape;
 
 tally_info tally (poly_order);
@@ -32,13 +43,44 @@ legendre_info basis(poly_order, num_surfaces);
 particle_info a;
 basis.surface_index=0;
 FET_solver solver;
+/*
+while( !input.eof() )
+{
+getline( input, str);
+int size = str.size();
+//std::cout<<str<<std::endl;
+if(size <= 3)
+{
+a.b_alive = 0;
+}
+else if(size <= 12 && size > 3)
+{
+
+a.xs_tot = std::stod(str,&sz);
+}
+else if(size > 12)
+{
+std::istringstream iss(str);
+std::vector<std::string> temp((std::istream_iterator<std::string>(iss)), std::istream_iterator<std::string>());
+
+	a.b_weight = std::stod(temp[0],&sz); //std::stod(str,&sz);
+	a.x = std::stod(temp[1],&sz); //std::stod (str.substr(sz));
+	a.y = std::stod(temp[2],&sz); //std::stod (str.substr(str.substr(sz)));
+	a.z = std::stod(temp[3],&sz); //std::stod (str.substr(sz));
+}
+
+	solver.collision_eval (basis, a, poly_terms);
+	solver.surface_eval (basis, a, poly_terms);
+
+}
+*/
 
 for(int n = 0; n<N; n++)
 {
 	a.get_particle(basis, a);
 
 	solver.collision_eval (basis, a, poly_terms);
-//	solver.surface_eval (basis, a, poly_terms);
+	solver.collision_eval2 (basis, a, poly_terms);
 }
 
 solver.get_current(basis, tally, poly_terms, N);

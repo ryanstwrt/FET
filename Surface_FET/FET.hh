@@ -85,6 +85,9 @@ class legendre_info
     std::vector<double> B_n_x;
     std::vector<double> B_n_y;
     std::vector<double> B_n_z;
+    std::vector<double> b_n_x;
+    std::vector<double> b_n_y;
+    std::vector<double> b_n_z;
     std::vector<double> P_n;
 
     std::vector<double> Pn(std::size_t poly_terms, double x);
@@ -112,6 +115,9 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_surfaces)
     B_n_x.resize(2*terms, 0.0);
     B_n_y.resize(2*terms, 0.0);
     B_n_z.resize(2*terms, 0.0);
+    b_n_x.resize(2*terms, 0.0);
+    b_n_y.resize(2*terms, 0.0);
+    b_n_z.resize(2*terms, 0.0);
     for(int n=0; n<2*num_surfaces; ++n)
     {
 	x_basis[n] = 2*n;
@@ -128,8 +134,11 @@ class particle_info
     double b_weight;
     int k_particle;
     bool b_alive;
-    double x_tild;
+    double x;
+    double y;
+    double z;    
     double particle_surface;
+    double xs_tot;
 
     void get_particle (legendre_info &basis, particle_info &a);
 };
@@ -140,6 +149,7 @@ class FET_solver
 
     void surface_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void collision_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
+    void collision_eval2 (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void get_current (legendre_info &basis, tally_info &tally, std::size_t poly_terms, std::size_t N);
     double scale (double x, legendre_info basis);
 };

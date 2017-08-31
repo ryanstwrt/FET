@@ -79,16 +79,10 @@ void FET_solver::surface_eval (legendre_info &basis,
 void FET_solver::collision_eval (legendre_info &basis, 
 		   particle_info &a, std::size_t poly_terms)
 {
-    double temp_var;
+
     double x_tild = scale(a.b_weight, basis);
     double y_tild = scale(a.b_weight, basis);
     double z_tild = scale(a.b_weight, basis);
-    double ratio = fluxshape(x_tild)/ a.k_particle;
-    double ratio2 = fluxshape(y_tild)/ a.k_particle;
-    double ratio3 = fluxshape(z_tild)/ a.k_particle;
-    std::vector<double> b_n_x(poly_terms, 0.0);
-    std::vector<double> b_n_y(poly_terms, 0.0);
-    std::vector<double> b_n_z(poly_terms, 0.0);
     std::vector<double> P_n_x = basis.Pn(poly_terms, x_tild);
     std::vector<double> P_n_y = basis.Pn(poly_terms, y_tild);
     std::vector<double> P_n_z = basis.Pn(poly_terms, z_tild);
@@ -99,25 +93,39 @@ void FET_solver::collision_eval (legendre_info &basis,
     {
     	    for(int m=0; m<poly_terms; ++m)
     	    {
-        	b_n_x[m] += P_n_x[m];
-		b_n_y[m] += P_n_y[m];
-		b_n_z[m] += P_n_z[m];
+        	basis.b_n_x[m] += P_n_x[m];
+		basis.b_n_y[m] += P_n_y[m];
+		basis.b_n_z[m] += P_n_z[m];
 	    }
 
     }
+}
+
+void FET_solver::collision_eval2 (legendre_info &basis, 
+		   particle_info &a, std::size_t poly_terms)
+{
+    double x_tild = scale(a.b_weight, basis);
+    double y_tild = scale(a.b_weight, basis);
+    double z_tild = scale(a.b_weight, basis);
+    double ratio = fluxshape(x_tild)/ a.k_particle;
+    double ratio2 = fluxshape(y_tild)/ a.k_particle;
+    double ratio3 = fluxshape(z_tild)/ a.k_particle;
     for(int m=0; m<poly_terms; ++m)
     {
-	temp_var = b_n_x[m] * ratio;
+	double temp_var;	
+	temp_var = basis.b_n_x[m] * ratio;
 	basis.B_n_x[m] += temp_var;
 	basis.B_n_x[m+poly_terms] += pow(temp_var,2);
-	temp_var = b_n_y[m] * ratio2;
+	temp_var = basis.b_n_y[m] * ratio2;
 	basis.B_n_y[m] += temp_var;
 	basis.B_n_y[m+poly_terms] += pow(temp_var,2);
-	temp_var = b_n_z[m] * ratio3;
+	temp_var = basis.b_n_z[m] * ratio3;
 	basis.B_n_z[m] += temp_var;
 	basis.B_n_z[m+poly_terms] += pow(temp_var,2);
+	basis.b_n_x[m] = 0;
+	basis.b_n_y[m] = 0;
+	basis.b_n_z[m] = 0;
     }
-
    basis.n_counter[0]++;
 }
 
