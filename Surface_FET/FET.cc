@@ -54,15 +54,12 @@ void FET_solver::surface_eval (legendre_info &basis,
 
     //calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
     //k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
-    for(int k=1; k<=a.k_particle; ++k)
+    for(int m=0; m<poly_terms; ++m)
     {
-    	    for(int m=0; m<poly_terms; ++m)
-    	    {
-        	a_n_x[m] += P_n_x[m];
-		a_n_y[m] += P_n_y[m];
-	    }
-
+       	a_n_x[m] += P_n_x[m];
+	a_n_y[m] += P_n_y[m];
     }
+
     for(int m=0; m<poly_terms; ++m)
     {
 	temp_var = a_n_x[m] * ratio;
@@ -80,52 +77,45 @@ void FET_solver::collision_eval (legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
 {
 
-    double x_tild = scale(a.b_weight, basis);
-    double y_tild = scale(a.b_weight, basis);
-    double z_tild = scale(a.b_weight, basis);
+    double x_tild = scale(a.x, basis);
+    double y_tild = scale(a.y, basis);
+    double z_tild = scale(a.z, basis);
     std::vector<double> P_n_x = basis.Pn(poly_terms, x_tild);
     std::vector<double> P_n_y = basis.Pn(poly_terms, y_tild);
     std::vector<double> P_n_z = basis.Pn(poly_terms, z_tild);
 
-    //calculate the legendre coefficients up to truncation value M for a_n and a_m for one particle
-    //k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
-    for(int k=1; k<=a.k_particle; ++k)
+//Calculates b with the coordinates from teh current neutron
+  for(int m=0; m<poly_terms; ++m)
+  {
+    for(int n=0; n<poly_terms; ++n)
     {
-    	    for(int m=0; m<poly_terms; ++m)
-    	    {
-        	basis.b_n_x[m] += P_n_x[m];
-		basis.b_n_y[m] += P_n_y[m];
-		basis.b_n_z[m] += P_n_z[m];
-	    }
-
+      for(int i=0; i<poly_terms; ++i)
+      {
+        basis.b[m][n][i] += a.b_weight * P_n_x[m] * P_n_y[n] * P_n_z[i] / a.xs_tot;
+      }
     }
+  }
+
 }
 
-void FET_solver::collision_eval2 (legendre_info &basis, 
+void FET_solver::collision_eval2(legendre_info &basis, 
 		   particle_info &a, std::size_t poly_terms)
 {
-    double x_tild = scale(a.b_weight, basis);
-    double y_tild = scale(a.b_weight, basis);
-    double z_tild = scale(a.b_weight, basis);
-    double ratio = fluxshape(x_tild)/ a.k_particle;
-    double ratio2 = fluxshape(y_tild)/ a.k_particle;
-    double ratio3 = fluxshape(z_tild)/ a.k_particle;
+double temp;
+
     for(int m=0; m<poly_terms; ++m)
     {
-	double temp_var;	
-	temp_var = basis.b_n_x[m] * ratio;
-	basis.B_n_x[m] += temp_var;
-	basis.B_n_x[m+poly_terms] += pow(temp_var,2);
-	temp_var = basis.b_n_y[m] * ratio2;
-	basis.B_n_y[m] += temp_var;
-	basis.B_n_y[m+poly_terms] += pow(temp_var,2);
-	temp_var = basis.b_n_z[m] * ratio3;
-	basis.B_n_z[m] += temp_var;
-	basis.B_n_z[m+poly_terms] += pow(temp_var,2);
-	basis.b_n_x[m] = 0;
-	basis.b_n_y[m] = 0;
-	basis.b_n_z[m] = 0;
-    }
+      for(int n=0; n<poly_terms; ++n)
+      {
+        for(int i=0; i<poly_terms; ++i)
+        {
+  	  temp =  basis.b[m][n][i];
+	  basis.B[m][n][i] += temp;
+	  basis.b[m][n][i] = 0;
+        }
+      }
+   }
+
    basis.n_counter[0]++;
 }
 

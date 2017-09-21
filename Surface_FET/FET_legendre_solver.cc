@@ -35,7 +35,7 @@ const double x2 = x * x;
 	case 6:
 	save(6, (((231 * x2 - 315) * x2 + 105) * x2 - 5) / 16);
 	case 5:
-	save(5, ((35 * x2 - 30) * x2 + 3) / 8); 
+	save(5, ((63 * x2 - 70) * x2 + 15)*x / 8); 
 	case 4:
 	save(4, ((35 * x2 - 30) * x2 + 3) / 8);
 	case 3:
