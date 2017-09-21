@@ -13,17 +13,16 @@
 using namespace  std;
 
 #include"FET.hh"
-#include "Distribution.hh"
 
 int main (int argc, char** argv)
 {
 ofstream myfile;
 ifstream input;
-input.open("/opt/Shift_inputs/large10e7.rst");
+input.open("/opt/Shift_inputs/point10e3.rst");
 myfile.open ("new_source.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
-const std::size_t poly_order = 10;
+const std::size_t poly_order = 3;
 const std::size_t poly_terms = poly_order + 1;
 const std::size_t N = 1e6;
 const std::size_t num_surfaces = 1;
@@ -74,6 +73,21 @@ while( !input.eof() )
 std::cout<< basis.n_counter[0] << std::endl;
 solver.get_current(basis, tally, poly_terms, N);
 
+for (int m=0; m < poly_terms; ++m)
+{
+   for(int n=0; n<poly_terms; ++n)
+    {
+      for(int i=0; i<poly_terms; ++i)
+      {
+	if(/*tally.flux_unc_matrix[m][n][i] >= tally.flux_unc_matrix[m][n][i]/100 || */tally.flux_R_matrix[m][n][i] >= 1)
+	std::cout<<"P("<<m<<")("<<n<<")("<<i<<") = " << tally.flux_matrix[m][n][i] << " +/- " << tally.flux_unc_matrix[m][n][i] << " w/ " << tally.flux_R_matrix[m][n][i] <<std::endl;
+//	if(tally.flux_R_matrix[m][n][i] > 1)
+
+       }
+	std::cout<<std::endl;
+    }
+}
+
 double time = (double)(clock() - tStart)/CLOCKS_PER_SEC;
 myfile << "Number of Particle: " + std::to_string(basis.n_counter[0]) + "\n";
 myfile << "Time take: " + std::to_string(time) + "\n";
@@ -99,7 +113,6 @@ for (int m=0; m < poly_terms; ++m)
 
 myfile << "\n";
 myfile << "\n";
-std::cout<< basis.n_counter[0] << std::endl;
 myfile.close();
 input.close();
 

@@ -4,6 +4,7 @@
  * \file   Shift/mc_tallies/FETs/FET.hh
  * \author Ryan H. Stewart
  * \date   Wed June 27 05:08:30 2017
+ * \mod    Thur Sept 20 04:53:00 2017
  * \brief  Definition for discrete event FETs.
  */
 //---------------------------------------------------------------------------//
@@ -14,7 +15,6 @@
 #include<vector>
 #include<cstdlib>
 #include<cmath>
-//#include<chrono>
 
 class tally_info
 {
@@ -23,18 +23,17 @@ class tally_info
     virtual ~tally_info() = default;
 
     std::vector<double> surface_indices;
-    std::vector<double> current_matrix_x;
-    std::vector<double> current_matrix_y;
-
-    std::vector<double> current_unc_matrix;
-    std::vector<double> current_R_sqr_value;
 
     double current_total_unc;
     double flux_total_unc;
+    std::vector<std::vector<double> > current_matrix;
+    std::vector<std::vector<double> > current_unc_matrix;
+    std::vector<std::vector<double> > current_R_matrix;
 
     std::vector<std::vector<std::vector<double> > > flux_matrix;
     std::vector<std::vector<std::vector<double> > > flux_unc_matrix;
     std::vector<std::vector<std::vector<double> > > flux_R_matrix;
+
 
   private:
     std::size_t order;
@@ -46,11 +45,9 @@ tally_info::tally_info (std::size_t poly_order)
 			,terms(poly_order+1)
 {
 
-    current_matrix_x.resize(terms, 0.0);
-    current_matrix_y.resize(terms, 0.0);
-
-    current_unc_matrix.resize(terms, 0.0);
-    current_R_sqr_value.resize(terms, 0.0);
+    current_matrix.resize(terms);
+    current_unc_matrix.resize(terms);
+    current_R_matrix.resize(terms);
 
     flux_matrix.resize(terms);
     flux_unc_matrix.resize(terms);
@@ -59,12 +56,20 @@ tally_info::tally_info (std::size_t poly_order)
 //This loop initializes both the flux matrix, and the associated uncertainty matrix. The sum of the entire matrix will yield the flux for the system.
    for(int m=0; m<terms; ++m)
     {
+      current_matrix[m].resize(terms);
+      current_unc_matrix[m].resize(terms);
+      current_R_matrix[m].resize(terms);
+
       flux_matrix[m].resize(terms);
       flux_unc_matrix[m].resize(terms);
       flux_R_matrix[m].resize(terms);
 
       for(int n=0; n<terms; ++n)
       {
+        current_matrix[m][n] = 0;
+        current_unc_matrix[m][n] = 0;
+        current_R_matrix[m][n] = 0;
+
 	flux_matrix[m][n].resize(terms);
         flux_unc_matrix[m][n].resize(terms);
         flux_R_matrix[m][n].resize(terms);
@@ -100,13 +105,15 @@ class legendre_info
     std::vector<double> y_basis;
     std::vector<double> z_basis;
     std::vector<double> n_counter;
-    std::vector<double> A_n_x;
-    std::vector<double> A_n_y;
     std::vector<double> P_n;
-    std::vector<std::vector<std::vector<double> > > a;
-    std::vector<std::vector<std::vector<double> > > A;
+
+    std::vector<std::vector<double> >  a;
+    std::vector<std::vector<double> >  A;
+    std::vector<std::vector<double> >  A_unc;
+
     std::vector<std::vector<std::vector<double> > > b;
     std::vector<std::vector<std::vector<double> > > B;
+    std::vector<std::vector<std::vector<double> > > B_unc;
 
     std::vector<double> Pn(std::size_t poly_terms, double x);
 
@@ -128,14 +135,13 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_surfaces)
     x_basis.resize(2*num_surfaces, 0.0);
     y_basis.resize(2*num_surfaces, 0.0);
     z_basis.resize(2*num_surfaces, 0.0);
-    A_n_x.resize(2*terms, 0.0);
-    A_n_y.resize(2*terms, 0.0);
+
     a.resize(terms);
     A.resize(terms);
-
-
+    A_unc.resize(terms);
     b.resize(terms);
     B.resize(terms);
+    B_unc.resize(terms);
 
 //This loop initilizes the coefficient matrix for both the current and the flux
 //To Do: Create some statement to differentiate the two and only intialize the coefficient matrix needed
@@ -143,20 +149,25 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_surfaces)
     {
       a[m].resize(terms);
       A[m].resize(terms);
+      A_unc[m].resize(terms);
+
       b[m].resize(terms);
       B[m].resize(terms);
+      B_unc[m].resize(terms);
       for(int n=0; n<terms; ++n)
       {
-        a[m][n].resize(terms);
-        A[m][n].resize(terms);
+        a[m][n] = 0;
+        A[m][n] = 0;
+        A_unc[m][n] = 0;;
+
         b[m][n].resize(terms);
         B[m][n].resize(terms);
+        B_unc[m][n].resize(terms);
         for(int i=0; i<terms; ++i)
         {
-          a[m][n][i] = 0;
-          A[m][n][i] = 0;
           b[m][n][i] = 0;
           B[m][n][i] = 0;
+          B_unc[m][n][i] = 0;
         }
       }
     }
@@ -184,8 +195,6 @@ class particle_info
     double particle_surface;
     double xs_tot;
     double size;
-
-    void get_particle (legendre_info &basis, particle_info &a);
 };
 
 //Solver class simply groups all of the various functions needed to solve for the FET

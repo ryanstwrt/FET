@@ -1,25 +1,16 @@
 //----------------------------------*-C++-*----------------------------------//
 /*!
- * \file   Shift/mc_tallies/FETs/surface_FET.cpp
+ * \file   Shift/mc_tallies/FET.cc
  * \author Ryan H. Stewart
  * \date   Wed June 28 04:30:47 2017
- * \brief  Funciton for scaling to legendre space.
+ * \mod    Thur Sept 20 04:53:00 2017
+ * \brief  Collection of FET functions for solving
  */
 //---------------------------------------------------------------------------//
 
 #include"FET.hh"
-#include "Distribution.hh"
 
 using namespace std;
-
-Distribution fluxshape;
-
-//Dummy random number generator for testing
-//Verified 7/18/17
-double random_num ()
-{
-    return rand()/(double) RAND_MAX;
-}
 
 //Scales the original phase space down to Legendre phase space [-1,1]
 //Verified 7/18/17
@@ -42,11 +33,11 @@ double FET_solver::scale (double x,
 void FET_solver::surface_eval (legendre_info &basis, 
 		   particle_info &a, std::size_t poly_terms)
 {
-    double temp_var;
+    double temp;
     double x_tild = scale(a.b_weight, basis);
     double y_tild = scale(a.b_weight, basis);
-    double ratio = fluxshape(x_tild)/ a.k_particle;
-    double ratio2 = fluxshape(y_tild)/ a.k_particle;
+    double ratio = a.k_particle;
+    double ratio2 = a.k_particle;
     std::vector<double> a_n_x(poly_terms, 0.0);
     std::vector<double> a_n_y(poly_terms, 0.0);
     std::vector<double> P_n_x = basis.Pn(poly_terms, x_tild);
@@ -56,18 +47,21 @@ void FET_solver::surface_eval (legendre_info &basis,
     //k is the number of times the particle crosses the specified surface, while m is the legendre coefficient
     for(int m=0; m<poly_terms; ++m)
     {
-       	a_n_x[m] += P_n_x[m];
-	a_n_y[m] += P_n_y[m];
+	for(int n=0; n<poly_terms; ++n)
+	{
+          basis.a[m][n] += a.b_weight * P_n_x[m] * P_n_y[n];
+        }
     }
 
     for(int m=0; m<poly_terms; ++m)
     {
-	temp_var = a_n_x[m] * ratio;
-	basis.A_n_x[m] += temp_var;
-	basis.A_n_x[m+poly_terms] += pow(temp_var,2);
-	temp_var = a_n_y[m] * ratio2;
-	basis.A_n_y[m] += temp_var;
-	basis.A_n_y[m+poly_terms] += pow(temp_var,2);
+	for(int n=0; n<poly_terms; ++n)
+	{
+  	  temp =  basis.a[m][n];
+	  basis.A[m][n] += temp;
+	  basis.A_unc[m][n] += pow(temp,2);
+	  basis.a[m][n] = 0;
+	}
     }
 
    basis.n_counter[0]++;
@@ -109,8 +103,9 @@ double temp;
       {
         for(int i=0; i<poly_terms; ++i)
         {
-  	  temp =  basis.b[m][n][i];
+  	  temp = basis.b[m][n][i];
 	  basis.B[m][n][i] += temp;
+	  basis.B_unc[m][n][i] += pow(temp,2);
 	  basis.b[m][n][i] = 0;
         }
       }
@@ -119,11 +114,75 @@ double temp;
    basis.n_counter[0]++;
 }
 
-//This is a dummy function until I figure out where to get the particle
-void particle_info::get_particle (legendre_info &basis,
-				  particle_info &a)
+//---------------------------------------------------------------------------//
+/*!
+ * Below solves for the final current or the flux for the tally.
+ *
+ * 
+ */
+
+void FET_solver::get_current (legendre_info &basis,
+	    	tally_info &tally, 
+		std::size_t poly_terms,
+		std::size_t N)
 {
-    a.b_weight = (basis.x_basis[basis.surface_index+1] - basis.x_basis[basis.surface_index]) * random_num();
-    a.k_particle = 1;//4 * random_num() + 1;
-    a.particle_surface = .25;//random_num();
+    std::vector<double> ortho_const(poly_terms, 0.0);
+    std::vector<double> var_a_n_x(poly_terms, 0.0);
+    std::vector<double> var_a_n_y(poly_terms, 0.0);
+
+    std::vector<double> var_b_n_x(poly_terms, 0.0);
+    std::vector<double> var_b_n_y(poly_terms, 0.0);
+    std::vector<double> var_b_n_z(poly_terms, 0.0);
+
+    std::vector<std::vector<double> >   var_a;
+    std::vector<std::vector<std::vector<double> > >  var_b;
+
+   var_b.resize(poly_terms);
+   var_a.resize(poly_terms);
+   for(int m=0; m<poly_terms; ++m)
+   {
+     ortho_const[m] = (2.0*m+1.0)/2.0;
+     var_b[m].resize(poly_terms);
+     var_a[m].resize(poly_terms);
+     for(int n=0; n<poly_terms; ++n)
+     {
+       var_b[m][n].resize(poly_terms);
+       var_a[m][n] = 0;
+       for(int i=0; i<poly_terms; ++i)
+       {
+         var_b[m][n][i] = 0;
+
+       }
+     }
+   }
+
+
+  for (int m = 0; m<poly_terms; m++)
+  {
+    for(int n=0; n<poly_terms; ++n)
+    {
+      basis.A[m][n] *= (basis.x_basis[basis.surface_index+1]-basis.x_basis[basis.surface_index]) / basis.n_counter[0];
+      tally.current_matrix[m][n] = basis.A[m][n] * ortho_const[m] * ortho_const[n];
+      var_a[m][n] = (basis.A_unc[m][n] - (1.0/N) * std::pow(basis.A[m][n],2) ) * 1.0 / (basis.n_counter[0]*(basis.n_counter[0]-1.0));
+      tally.current_unc_matrix[m][n] = std::sqrt(fabs(var_a[m][n]));
+      tally.current_R_matrix[m][n] = (var_a[m][n] * ortho_const[m] * ortho_const[n] ) / std::pow(basis.A[m][n],2.0);
+    }	
+  }
+
+  for(int m=0; m<poly_terms; ++m)
+  {
+    for(int n=0; n<poly_terms; ++n)
+    {
+      for(int i=0; i<poly_terms; ++i)
+      {
+	basis.B[m][n][i] *= (basis.x_basis[basis.surface_index+1]-basis.x_basis[basis.surface_index]) / basis.n_counter[0];
+	tally.flux_matrix[m][n][i] = basis.B[m][n][i] * ortho_const[m] * ortho_const[n] * ortho_const[i];
+
+        var_b[m][n][i] = (basis.B_unc[m][n][i] - (1.0/N) * std::pow(basis.B[m][n][i],2) ) * 1.0 / (basis.n_counter[0]*(basis.n_counter[0]-1.0)); 
+	tally.flux_unc_matrix[m][n][i] = std::sqrt(fabs(var_b[m][n][i]));
+	tally.flux_R_matrix[m][n][i] = (var_b[m][n][i] * ortho_const[m] * ortho_const[n] * ortho_const[i]) / std::pow(basis.B[m][n][i],2.0);
+      }
+    }
+  }
+
 }
