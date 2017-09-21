@@ -1,0 +1,830 @@
+Number of Particle: 833.000000
+Time take: 0.071027
+0.260223 * P_0(x) +/- 0.0108716 With an R^2 value of 0.000218176
+0.260223 * P_0(y) +/- 0.0108716 With an R^2 value of 0.000218176
+0.260223 * P_0(z) +/- 0.0108716 With an R^2 value of 0.000218176
+
+0.00301392 * P_1(x) +/- 0.00385702 With an R^2 value of 5.52729
+0.0131086 * P_1(y) +/- 0.00385702 With an R^2 value of 5.52729
+0.00413521 * P_1(z) +/- 0.00385702 With an R^2 value of 5.52729
+
+-0.307464 * P_2(x) +/- 0.00377387 With an R^2 value of 0.002354
+-0.304078 * P_2(y) +/- 0.00377387 With an R^2 value of 0.002354
+-0.311944 * P_2(z) +/- 0.00377387 With an R^2 value of 0.002354
+
+0.0339856 * P_3(x) +/- 0.00262107 With an R^2 value of 0.255018
+-0.0175155 * P_3(y) +/- 0.00262107 With an R^2 value of 0.255018
+-0.00823351 * P_3(z) +/- 0.00262107 With an R^2 value of 0.255018
+
+0.221812 * P_4(x) +/- 0.00252274 With an R^2 value of 0.0117872
+0.213854 * P_4(y) +/- 0.00252274 With an R^2 value of 0.0117872
+0.208767 * P_4(z) +/- 0.00252274 With an R^2 value of 0.0117872
+
+-0.00409352 * P_5(x) +/- 0.00212511 With an R^2 value of 44.8392
+0.00297125 * P_5(y) +/- 0.00212511 With an R^2 value of 44.8392
+-0.0188123 * P_5(z) +/- 0.00212511 With an R^2 value of 44.8392
+
+-0.181297 * P_6(x) +/- 0.00211232 With an R^2 value of 0.0372803
+-0.169108 * P_6(y) +/- 0.00211232 With an R^2 value of 0.0372803
+-0.167334 * P_6(z) +/- 0.00211232 With an R^2 value of 0.0372803
+
+0.0257773 * P_7(x) +/- 0.00175383 With an R^2 value of 1.95291
+0.0393611 * P_7(y) +/- 0.00175383 With an R^2 value of 1.95291
+0.0219753 * P_7(z) +/- 0.00175383 With an R^2 value of 1.95291
+
+0.183336 * P_8(x) +/- 0.0017366 With an R^2 value of 0.0551011
+0.158859 * P_8(y) +/- 0.0017366 With an R^2 value of 0.0551011
+0.17842 * P_8(z) +/- 0.0017366 With an R^2 value of 0.0551011
+
+0.0222885 * P_9(x) +/- 0.00161035 With an R^2 value of 4.4756
+-0.00850617 * P_9(y) +/- 0.00161035 With an R^2 value of 4.4756
+-0.00635889 * P_9(z) +/- 0.00161035 With an R^2 value of 4.4756
+
+-0.152378 * P_10(x) +/- 0.00146815 With an R^2 value of 0.107464
+-0.104412 * P_10(y) +/- 0.00146815 With an R^2 value of 0.107464
+-0.142389 * P_10(z) +/- 0.00146815 With an R^2 value of 0.107464
+
+0.00967881 * P_11(x) +/- 0.00137265 With an R^2 value of 30.5893
+0.0377532 * P_11(y) +/- 0.00137265 With an R^2 value of 30.5893
+0.0280149 * P_11(z) +/- 0.00137265 With an R^2 value of 30.5893
+
+0.157126 * P_12(x) +/- 0.0013742 With an R^2 value of 0.149395
+0.108577 * P_12(y) +/- 0.0013742 With an R^2 value of 0.149395
+0.151468 * P_12(z) +/- 0.0013742 With an R^2 value of 0.149395
+
+0.0381134 * P_13(x) +/- 0.00123874 With an R^2 value of 2.59901
+-0.0530782 * P_13(y) +/- 0.00123874 With an R^2 value of 2.59901
+-0.00481823 * P_13(z) +/- 0.00123874 With an R^2 value of 2.59901
+
+-0.157868 * P_14(x) +/- 0.00125966 With an R^2 value of 0.194099
+-0.127914 * P_14(y) +/- 0.00125966 With an R^2 value of 0.194099
+-0.195749 * P_14(z) +/- 0.00125966 With an R^2 value of 0.194099
+
+-0.0486418 * P_15(x) +/- 0.00113587 With an R^2 value of 2.03064
+0.00537815 * P_15(y) +/- 0.00113587 With an R^2 value of 2.03064
+-0.0325609 * P_15(z) +/- 0.00113587 With an R^2 value of 2.03064
+
+0.117453 * P_16(x) +/- 0.00117082 With an R^2 value of 0.446374
+0.105224 * P_16(y) +/- 0.00117082 With an R^2 value of 0.446374
+0.16148 * P_16(z) +/- 0.00117082 With an R^2 value of 0.446374
+
+-0.0565786 * P_17(x) +/- 0.00112709 With an R^2 value of 2.12679
+0.0388462 * P_17(y) +/- 0.00112709 With an R^2 value of 2.12679
+-0.00597676 * P_17(z) +/- 0.00112709 With an R^2 value of 2.12679
+
+-0.1155 * P_18(x) +/- 0.00113109 With an R^2 value of 0.607225
+-0.0249026 * P_18(y) +/- 0.00113109 With an R^2 value of 0.607225
+-0.106027 * P_18(z) +/- 0.00113109 With an R^2 value of 0.607225
+
+0.0453467 * P_19(x) +/- 0.00102637 With an R^2 value of 3.79856
+-0.0124996 * P_19(y) +/- 0.00102637 With an R^2 value of 3.79856
+0.00496966 * P_19(z) +/- 0.00102637 With an R^2 value of 3.79856
+
+0.00143795 * P_20(x) +/- 0.00106164 With an R^2 value of 4696.02
+0.0523541 * P_20(y) +/- 0.00106164 With an R^2 value of 4696.02
+0.0489064 * P_20(z) +/- 0.00106164 With an R^2 value of 4696.02
+
++0.260223*LegendreP[0,x]+0.00301392*LegendreP[1,x]+-0.307464*LegendreP[2,x]+0.0339856*LegendreP[3,x]+0.221812*LegendreP[4,x]+-0.00409352*LegendreP[5,x]+-0.181297*LegendreP[6,x]+0.0257773*LegendreP[7,x]+0.183336*LegendreP[8,x]+0.0222885*LegendreP[9,x]+-0.152378*LegendreP[10,x]+0.00967881*LegendreP[11,x]+0.157126*LegendreP[12,x]+0.0381134*LegendreP[13,x]+-0.157868*LegendreP[14,x]+-0.0486418*LegendreP[15,x]+0.117453*LegendreP[16,x]+-0.0565786*LegendreP[17,x]+-0.1155*LegendreP[18,x]+0.0453467*LegendreP[19,x]+0.00143795*LegendreP[20,x]
+
++0.260223*LegendreP[0,y]+0.0131086*LegendreP[1,y]+-0.304078*LegendreP[2,y]+-0.0175155*LegendreP[3,y]+0.213854*LegendreP[4,y]+0.00297125*LegendreP[5,y]+-0.169108*LegendreP[6,y]+0.0393611*LegendreP[7,y]+0.158859*LegendreP[8,y]+-0.00850617*LegendreP[9,y]+-0.104412*LegendreP[10,y]+0.0377532*LegendreP[11,y]+0.108577*LegendreP[12,y]+-0.0530782*LegendreP[13,y]+-0.127914*LegendreP[14,y]+0.00537815*LegendreP[15,y]+0.105224*LegendreP[16,y]+0.0388462*LegendreP[17,y]+-0.0249026*LegendreP[18,y]+-0.0124996*LegendreP[19,y]+0.0523541*LegendreP[20,y]
+
++0.260223*LegendreP[0,z]+0.00413521*LegendreP[1,z]+-0.311944*LegendreP[2,z]+-0.00823351*LegendreP[3,z]+0.208767*LegendreP[4,z]+-0.0188123*LegendreP[5,z]+-0.167334*LegendreP[6,z]+0.0219753*LegendreP[7,z]+0.17842*LegendreP[8,z]+-0.00635889*LegendreP[9,z]+-0.142389*LegendreP[10,z]+0.0280149*LegendreP[11,z]+0.151468*LegendreP[12,z]+-0.00481823*LegendreP[13,z]+-0.195749*LegendreP[14,z]+-0.0325609*LegendreP[15,z]+0.16148*LegendreP[16,z]+-0.00597676*LegendreP[17,z]+-0.106027*LegendreP[18,z]+0.00496966*LegendreP[19,z]+0.0489064*LegendreP[20,z]
+
+Number of Particle: 8376.000000
+Time take: 0.593099
+0.257399 * P_0(x) +/- 0.00336869 With an R^2 value of 2.141e-05
+0.257399 * P_0(y) +/- 0.00336869 With an R^2 value of 2.141e-05
+0.257399 * P_0(z) +/- 0.00336869 With an R^2 value of 2.141e-05
+
+0.00677117 * P_1(x) +/- 0.00119652 With an R^2 value of 0.105387
+-0.00199859 * P_1(y) +/- 0.00119652 With an R^2 value of 0.105387
+-0.00270508 * P_1(z) +/- 0.00119652 With an R^2 value of 0.105387
+
+-0.309666 * P_2(x) +/- 0.00120005 With an R^2 value of 0.000234655
+-0.299537 * P_2(y) +/- 0.00120005 With an R^2 value of 0.000234655
+-0.30774 * P_2(z) +/- 0.00120005 With an R^2 value of 0.000234655
+
+-0.0104886 * P_3(x) +/- 0.000809395 With an R^2 value of 0.255324
+0.0050696 * P_3(y) +/- 0.000809395 With an R^2 value of 0.255324
+0.0133684 * P_3(z) +/- 0.000809395 With an R^2 value of 0.255324
+
+0.232522 * P_4(x) +/- 0.000793227 With an R^2 value of 0.00106049
+0.226907 * P_4(y) +/- 0.000793227 With an R^2 value of 0.00106049
+0.234619 * P_4(z) +/- 0.000793227 With an R^2 value of 0.00106049
+
+0.00129941 * P_5(x) +/- 0.000650862 With an R^2 value of 41.7422
+0.000738254 * P_5(y) +/- 0.000650862 With an R^2 value of 41.7422
+-0.00129916 * P_5(z) +/- 0.000650862 With an R^2 value of 41.7422
+
+-0.181846 * P_6(x) +/- 0.000636999 With an R^2 value of 0.00336985
+-0.195515 * P_6(y) +/- 0.000636999 With an R^2 value of 0.00336985
+-0.201819 * P_6(z) +/- 0.000636999 With an R^2 value of 0.00336985
+
+0.00150957 * P_7(x) +/- 0.000543917 With an R^2 value of 54.7702
+0.0157013 * P_7(y) +/- 0.000543917 With an R^2 value of 54.7702
+0.00886786 * P_7(z) +/- 0.000543917 With an R^2 value of 54.7702
+
+0.162732 * P_8(x) +/- 0.000527659 With an R^2 value of 0.00645681
+0.172293 * P_8(y) +/- 0.000527659 With an R^2 value of 0.00645681
+0.161867 * P_8(z) +/- 0.000527659 With an R^2 value of 0.00645681
+
+0.0096494 * P_9(x) +/- 0.000486176 With an R^2 value of 2.1765
+-0.0165294 * P_9(y) +/- 0.000486176 With an R^2 value of 2.1765
+-0.0133877 * P_9(z) +/- 0.000486176 With an R^2 value of 2.1765
+
+-0.145235 * P_10(x) +/- 0.000470367 With an R^2 value of 0.0121423
+-0.157833 * P_10(y) +/- 0.000470367 With an R^2 value of 0.0121423
+-0.144368 * P_10(z) +/- 0.000470367 With an R^2 value of 0.0121423
+
+-0.00905516 * P_11(x) +/- 0.000424765 With an R^2 value of 3.34657
+0.00555935 * P_11(y) +/- 0.000424765 With an R^2 value of 3.34657
+0.0151279 * P_11(z) +/- 0.000424765 With an R^2 value of 3.34657
+
+0.141249 * P_12(x) +/- 0.000429199 With an R^2 value of 0.0180333
+0.125917 * P_12(y) +/- 0.000429199 With an R^2 value of 0.0180333
+0.140777 * P_12(z) +/- 0.000429199 With an R^2 value of 0.0180333
+
+0.00638832 * P_13(x) +/- 0.000386223 With an R^2 value of 8.99301
+-0.0087897 * P_13(y) +/- 0.000386223 With an R^2 value of 8.99301
+-0.0114441 * P_13(z) +/- 0.000386223 With an R^2 value of 8.99301
+
+-0.11897 * P_14(x) +/- 0.000393495 With an R^2 value of 0.0333509
+-0.0969451 * P_14(y) +/- 0.000393495 With an R^2 value of 0.0333509
+-0.130795 * P_14(z) +/- 0.000393495 With an R^2 value of 0.0333509
+
+-0.02079 * P_15(x) +/- 0.000365841 With an R^2 value of 1.15311
+0.00487602 * P_15(y) +/- 0.000365841 With an R^2 value of 1.15311
+0.00609235 * P_15(z) +/- 0.000365841 With an R^2 value of 1.15311
+
+0.102309 * P_16(x) +/- 0.000368377 With an R^2 value of 0.0582379
+0.101843 * P_16(y) +/- 0.000368377 With an R^2 value of 0.0582379
+0.118381 * P_16(z) +/- 0.000368377 With an R^2 value of 0.0582379
+
+8.98207e-07 * P_17(x) +/- 0.000347098 With an R^2 value of 8.00322e+08
+0.00533518 * P_17(y) +/- 0.000347098 With an R^2 value of 8.00322e+08
+-0.0174845 * P_17(z) +/- 0.000347098 With an R^2 value of 8.00322e+08
+
+-0.0966953 * P_18(x) +/- 0.000347356 With an R^2 value of 0.0817059
+-0.0720968 * P_18(y) +/- 0.000347356 With an R^2 value of 0.0817059
+-0.105915 * P_18(z) +/- 0.000347356 With an R^2 value of 0.0817059
+
+-9.7626e-05 * P_19(x) +/- 0.000320722 With an R^2 value of 80025.6
+-0.0165223 * P_19(y) +/- 0.000320722 With an R^2 value of 80025.6
+0.0277797 * P_19(z) +/- 0.000320722 With an R^2 value of 80025.6
+
+0.0964168 * P_20(x) +/- 0.000322086 With an R^2 value of 0.0961388
+0.0841251 * P_20(y) +/- 0.000322086 With an R^2 value of 0.0961388
+0.0926804 * P_20(z) +/- 0.000322086 With an R^2 value of 0.0961388
+
++0.257399*LegendreP[0,x]+0.00677117*LegendreP[1,x]+-0.309666*LegendreP[2,x]+-0.0104886*LegendreP[3,x]+0.232522*LegendreP[4,x]+0.00129941*LegendreP[5,x]+-0.181846*LegendreP[6,x]+0.00150957*LegendreP[7,x]+0.162732*LegendreP[8,x]+0.0096494*LegendreP[9,x]+-0.145235*LegendreP[10,x]+-0.00905516*LegendreP[11,x]+0.141249*LegendreP[12,x]+0.00638832*LegendreP[13,x]+-0.11897*LegendreP[14,x]+-0.02079*LegendreP[15,x]+0.102309*LegendreP[16,x]+8.98207e-07*LegendreP[17,x]+-0.0966953*LegendreP[18,x]+-9.7626e-05*LegendreP[19,x]+0.0964168*LegendreP[20,x]
+
++0.257399*LegendreP[0,y]+-0.00199859*LegendreP[1,y]+-0.299537*LegendreP[2,y]+0.0050696*LegendreP[3,y]+0.226907*LegendreP[4,y]+0.000738254*LegendreP[5,y]+-0.195515*LegendreP[6,y]+0.0157013*LegendreP[7,y]+0.172293*LegendreP[8,y]+-0.0165294*LegendreP[9,y]+-0.157833*LegendreP[10,y]+0.00555935*LegendreP[11,y]+0.125917*LegendreP[12,y]+-0.0087897*LegendreP[13,y]+-0.0969451*LegendreP[14,y]+0.00487602*LegendreP[15,y]+0.101843*LegendreP[16,y]+0.00533518*LegendreP[17,y]+-0.0720968*LegendreP[18,y]+-0.0165223*LegendreP[19,y]+0.0841251*LegendreP[20,y]
+
++0.257399*LegendreP[0,z]+-0.00270508*LegendreP[1,z]+-0.30774*LegendreP[2,z]+0.0133684*LegendreP[3,z]+0.234619*LegendreP[4,z]+-0.00129916*LegendreP[5,z]+-0.201819*LegendreP[6,z]+0.00886786*LegendreP[7,z]+0.161867*LegendreP[8,z]+-0.0133877*LegendreP[9,z]+-0.144368*LegendreP[10,z]+0.0151279*LegendreP[11,z]+0.140777*LegendreP[12,z]+-0.0114441*LegendreP[13,z]+-0.130795*LegendreP[14,z]+0.00609235*LegendreP[15,z]+0.118381*LegendreP[16,z]+-0.0174845*LegendreP[17,z]+-0.105915*LegendreP[18,z]+0.0277797*LegendreP[19,z]+0.0926804*LegendreP[20,z]
+
+Number of Particle: 83209.000000
+Time take: 1.654148
+0.257447 * P_0(x) +/- 0.00103638 With an R^2 value of 2.02568e-06
+0.257447 * P_0(y) +/- 0.00103638 With an R^2 value of 2.02568e-06
+0.257447 * P_0(z) +/- 0.00103638 With an R^2 value of 2.02568e-06
+
+0.00117298 * P_1(x) +/- 0.00038368 With an R^2 value of 0.361101
+-0.0017165 * P_1(y) +/- 0.00038368 With an R^2 value of 0.361101
+0.000527649 * P_1(z) +/- 0.00038368 With an R^2 value of 0.361101
+
+-0.305781 * P_2(x) +/- 0.000373549 With an R^2 value of 2.33182e-05
+-0.30536 * P_2(y) +/- 0.000373549 With an R^2 value of 2.33182e-05
+-0.305868 * P_2(z) +/- 0.000373549 With an R^2 value of 2.33182e-05
+
+-0.000434438 * P_3(x) +/- 0.000260084 With an R^2 value of 15.3665
+0.00209349 * P_3(y) +/- 0.000260084 With an R^2 value of 15.3665
+0.000687439 * P_3(z) +/- 0.000260084 With an R^2 value of 15.3665
+
+0.227635 * P_4(x) +/- 0.00025136 With an R^2 value of 0.000111109
+0.224707 * P_4(y) +/- 0.00025136 With an R^2 value of 0.000111109
+0.224077 * P_4(z) +/- 0.00025136 With an R^2 value of 0.000111109
+
+0.00214713 * P_5(x) +/- 0.000204557 With an R^2 value of 1.51009
+-0.00178595 * P_5(y) +/- 0.000204557 With an R^2 value of 1.51009
+0.00113389 * P_5(z) +/- 0.000204557 With an R^2 value of 1.51009
+
+-0.184464 * P_6(x) +/- 0.000198395 With an R^2 value of 0.000317674
+-0.184518 * P_6(y) +/- 0.000198395 With an R^2 value of 0.000317674
+-0.185739 * P_6(z) +/- 0.000198395 With an R^2 value of 0.000317674
+
+-0.00208943 * P_7(x) +/- 0.000172259 With an R^2 value of 2.86743
+0.00544906 * P_7(y) +/- 0.000172259 With an R^2 value of 2.86743
+0.00349534 * P_7(z) +/- 0.000172259 With an R^2 value of 2.86743
+
+0.159734 * P_8(x) +/- 0.000167838 With an R^2 value of 0.00067802
+0.153946 * P_8(y) +/- 0.000167838 With an R^2 value of 0.00067802
+0.158592 * P_8(z) +/- 0.000167838 With an R^2 value of 0.00067802
+
+0.00640446 * P_9(x) +/- 0.000151324 With an R^2 value of 0.478657
+-0.00133193 * P_9(y) +/- 0.000151324 With an R^2 value of 0.478657
+-0.00276044 * P_9(z) +/- 0.000151324 With an R^2 value of 0.478657
+
+-0.143243 * P_10(x) +/- 0.000148693 With an R^2 value of 0.00124738
+-0.138322 * P_10(y) +/- 0.000148693 With an R^2 value of 0.00124738
+-0.13848 * P_10(z) +/- 0.000148693 With an R^2 value of 0.00124738
+
+-0.000989726 * P_11(x) +/- 0.000135926 With an R^2 value of 28.6857
+0.00302367 * P_11(y) +/- 0.000135926 With an R^2 value of 28.6857
+-0.000817146 * P_11(z) +/- 0.000135926 With an R^2 value of 28.6857
+
+0.125215 * P_12(x) +/- 0.000134654 With an R^2 value of 0.00225871
+0.125879 * P_12(y) +/- 0.000134654 With an R^2 value of 0.00225871
+0.128606 * P_12(z) +/- 0.000134654 With an R^2 value of 0.00225871
+
+-0.00196867 * P_13(x) +/- 0.00012529 With an R^2 value of 9.96517
+0.000661722 * P_13(y) +/- 0.00012529 With an R^2 value of 9.96517
+-0.00415503 * P_13(z) +/- 0.00012529 With an R^2 value of 9.96517
+
+-0.115377 * P_14(x) +/- 0.000123876 With an R^2 value of 0.00351431
+-0.119301 * P_14(y) +/- 0.000123876 With an R^2 value of 0.00351431
+-0.119992 * P_14(z) +/- 0.000123876 With an R^2 value of 0.00351431
+
+-0.00637299 * P_15(x) +/- 0.000116708 With an R^2 value of 1.24885
+0.00148314 * P_15(y) +/- 0.000116708 With an R^2 value of 1.24885
+0.00631214 * P_15(z) +/- 0.000116708 With an R^2 value of 1.24885
+
+0.10435 * P_16(x) +/- 0.000115854 With an R^2 value of 0.00553722
+0.113757 * P_16(y) +/- 0.000115854 With an R^2 value of 0.00553722
+0.110502 * P_16(z) +/- 0.000115854 With an R^2 value of 0.00553722
+
+0.00541702 * P_17(x) +/- 0.000109603 With an R^2 value of 2.19401
+0.0011897 * P_17(y) +/- 0.000109603 With an R^2 value of 2.19401
+-0.00876863 * P_17(z) +/- 0.000109603 With an R^2 value of 2.19401
+
+-0.103118 * P_18(x) +/- 0.000108378 With an R^2 value of 0.00699404
+-0.109784 * P_18(y) +/- 0.000108378 With an R^2 value of 0.00699404
+-0.10578 * P_18(z) +/- 0.000108378 With an R^2 value of 0.00699404
+
+-0.00430193 * P_19(x) +/- 0.000103167 With an R^2 value of 4.26442
+-0.00371902 * P_19(y) +/- 0.000103167 With an R^2 value of 4.26442
+0.0110003 * P_19(z) +/- 0.000103167 With an R^2 value of 4.26442
+
+0.103307 * P_20(x) +/- 0.000102796 With an R^2 value of 0.00853011
+0.102997 * P_20(y) +/- 0.000102796 With an R^2 value of 0.00853011
+0.100402 * P_20(z) +/- 0.000102796 With an R^2 value of 0.00853011
+
++0.257447*LegendreP[0,x]+0.00117298*LegendreP[1,x]+-0.305781*LegendreP[2,x]+-0.000434438*LegendreP[3,x]+0.227635*LegendreP[4,x]+0.00214713*LegendreP[5,x]+-0.184464*LegendreP[6,x]+-0.00208943*LegendreP[7,x]+0.159734*LegendreP[8,x]+0.00640446*LegendreP[9,x]+-0.143243*LegendreP[10,x]+-0.000989726*LegendreP[11,x]+0.125215*LegendreP[12,x]+-0.00196867*LegendreP[13,x]+-0.115377*LegendreP[14,x]+-0.00637299*LegendreP[15,x]+0.10435*LegendreP[16,x]+0.00541702*LegendreP[17,x]+-0.103118*LegendreP[18,x]+-0.00430193*LegendreP[19,x]+0.103307*LegendreP[20,x]
+
++0.257447*LegendreP[0,y]+-0.0017165*LegendreP[1,y]+-0.30536*LegendreP[2,y]+0.00209349*LegendreP[3,y]+0.224707*LegendreP[4,y]+-0.00178595*LegendreP[5,y]+-0.184518*LegendreP[6,y]+0.00544906*LegendreP[7,y]+0.153946*LegendreP[8,y]+-0.00133193*LegendreP[9,y]+-0.138322*LegendreP[10,y]+0.00302367*LegendreP[11,y]+0.125879*LegendreP[12,y]+0.000661722*LegendreP[13,y]+-0.119301*LegendreP[14,y]+0.00148314*LegendreP[15,y]+0.113757*LegendreP[16,y]+0.0011897*LegendreP[17,y]+-0.109784*LegendreP[18,y]+-0.00371902*LegendreP[19,y]+0.102997*LegendreP[20,y]
+
++0.257447*LegendreP[0,z]+0.000527649*LegendreP[1,z]+-0.305868*LegendreP[2,z]+0.000687439*LegendreP[3,z]+0.224077*LegendreP[4,z]+0.00113389*LegendreP[5,z]+-0.185739*LegendreP[6,z]+0.00349534*LegendreP[7,z]+0.158592*LegendreP[8,z]+-0.00276044*LegendreP[9,z]+-0.13848*LegendreP[10,z]+-0.000817146*LegendreP[11,z]+0.128606*LegendreP[12,z]+-0.00415503*LegendreP[13,z]+-0.119992*LegendreP[14,z]+0.00631214*LegendreP[15,z]+0.110502*LegendreP[16,z]+-0.00876863*LegendreP[17,z]+-0.10578*LegendreP[18,z]+0.0110003*LegendreP[19,z]+0.100402*LegendreP[20,z]
+
+Number of Particle: 832703.000000
+Time take: 16.519234
+0.257425 * P_0(x) +/- 0.00021854 With an R^2 value of 9.00888e-08
+0.257425 * P_0(y) +/- 0.00021854 With an R^2 value of 9.00888e-08
+0.257425 * P_0(z) +/- 0.00021854 With an R^2 value of 9.00888e-08
+
+0.000478127 * P_1(x) +/- 0.000121834 With an R^2 value of 0.219143
+0.000104232 * P_1(y) +/- 0.000121834 With an R^2 value of 0.219143
+-0.000347074 * P_1(z) +/- 0.000121834 With an R^2 value of 0.219143
+
+-0.304509 * P_2(x) +/- 0.000103109 With an R^2 value of 1.7915e-06
+-0.30408 * P_2(y) +/- 0.000103109 With an R^2 value of 1.7915e-06
+-0.304586 * P_2(z) +/- 0.000103109 With an R^2 value of 1.7915e-06
+
+-0.000673489 * P_3(x) +/- 8.22259e-05 With an R^2 value of 0.639087
+-0.000402305 * P_3(y) +/- 8.22259e-05 With an R^2 value of 0.639087
+0.000732397 * P_3(z) +/- 8.22259e-05 With an R^2 value of 0.639087
+
+0.22504 * P_4(x) +/- 7.53801e-05 With an R^2 value of 1.02243e-05
+0.224001 * P_4(y) +/- 7.53801e-05 With an R^2 value of 1.02243e-05
+0.22397 * P_4(z) +/- 7.53801e-05 With an R^2 value of 1.02243e-05
+
+0.00114405 * P_5(x) +/- 6.42961e-05 With an R^2 value of 0.525498
+0.000476807 * P_5(y) +/- 6.42961e-05 With an R^2 value of 0.525498
+-0.000360309 * P_5(z) +/- 6.42961e-05 With an R^2 value of 0.525498
+
+-0.183874 * P_6(x) +/- 6.11711e-05 With an R^2 value of 3.03944e-05
+-0.1831 * P_6(y) +/- 6.11711e-05 With an R^2 value of 3.03944e-05
+-0.182579 * P_6(z) +/- 6.11711e-05 With an R^2 value of 3.03944e-05
+
+-0.000529843 * P_7(x) +/- 5.4234e-05 With an R^2 value of 4.42011
+-0.000418606 * P_7(y) +/- 5.4234e-05 With an R^2 value of 4.42011
+-0.000344217 * P_7(z) +/- 5.4234e-05 With an R^2 value of 4.42011
+
+0.157277 * P_8(x) +/- 5.24366e-05 With an R^2 value of 6.8265e-05
+0.15721 * P_8(y) +/- 5.24366e-05 With an R^2 value of 6.8265e-05
+0.153973 * P_8(z) +/- 5.24366e-05 With an R^2 value of 6.8265e-05
+
+0.00190106 * P_9(x) +/- 4.77538e-05 With an R^2 value of 0.540998
+-0.000134091 * P_9(y) +/- 4.77538e-05 With an R^2 value of 0.540998
+-0.00109347 * P_9(z) +/- 4.77538e-05 With an R^2 value of 0.540998
+
+-0.139111 * P_10(x) +/- 4.6504e-05 With an R^2 value of 0.000129367
+-0.139175 * P_10(y) +/- 4.6504e-05 With an R^2 value of 0.000129367
+-0.138776 * P_10(z) +/- 4.6504e-05 With an R^2 value of 0.000129367
+
+-0.00148642 * P_11(x) +/- 4.3116e-05 With an R^2 value of 1.27964
+0.00143932 * P_11(y) +/- 4.3116e-05 With an R^2 value of 1.27964
+0.000442958 * P_11(z) +/- 4.3116e-05 With an R^2 value of 1.27964
+
+0.126584 * P_12(x) +/- 4.2247e-05 With an R^2 value of 0.000217551
+0.125598 * P_12(y) +/- 4.2247e-05 With an R^2 value of 0.000217551
+0.127338 * P_12(z) +/- 4.2247e-05 With an R^2 value of 0.000217551
+
+0.000678634 * P_13(x) +/- 3.95975e-05 With an R^2 value of 8.37658
+-0.00106433 * P_13(y) +/- 3.95975e-05 With an R^2 value of 8.37658
+-0.00150437 * P_13(z) +/- 3.95975e-05 With an R^2 value of 8.37658
+
+-0.116454 * P_14(x) +/- 3.89364e-05 With an R^2 value of 0.000340806
+-0.116671 * P_14(y) +/- 3.89364e-05 With an R^2 value of 0.000340806
+-0.116222 * P_14(z) +/- 3.89364e-05 With an R^2 value of 0.000340806
+
+-0.00153977 * P_15(x) +/- 3.67999e-05 With an R^2 value of 2.12704
+0.00179049 * P_15(y) +/- 3.67999e-05 With an R^2 value of 2.12704
+0.000867714 * P_15(z) +/- 3.67999e-05 With an R^2 value of 2.12704
+
+0.107061 * P_16(x) +/- 3.63404e-05 With an R^2 value of 0.000517569
+0.110223 * P_16(y) +/- 3.63404e-05 With an R^2 value of 0.000517569
+0.10698 * P_16(z) +/- 3.63404e-05 With an R^2 value of 0.000517569
+
+0.000568534 * P_17(x) +/- 3.45149e-05 With an R^2 value of 19.7522
+5.12402e-05 * P_17(y) +/- 3.45149e-05 With an R^2 value of 19.7522
+-0.00168848 * P_17(z) +/- 3.45149e-05 With an R^2 value of 19.7522
+
+-0.103201 * P_18(x) +/- 3.40953e-05 With an R^2 value of 0.000691088
+-0.10415 * P_18(y) +/- 3.40953e-05 With an R^2 value of 0.000691088
+-0.102142 * P_18(z) +/- 3.40953e-05 With an R^2 value of 0.000691088
+
+0.00252567 * P_19(x) +/- 3.26304e-05 With an R^2 value of 1.23764
+-0.000863043 * P_19(y) +/- 3.26304e-05 With an R^2 value of 1.23764
+0.00369844 * P_19(z) +/- 3.26304e-05 With an R^2 value of 1.23764
+
+0.0965801 * P_20(x) +/- 3.23418e-05 With an R^2 value of 0.000966084
+0.0981177 * P_20(y) +/- 3.23418e-05 With an R^2 value of 0.000966084
+0.0975157 * P_20(z) +/- 3.23418e-05 With an R^2 value of 0.000966084
+
++0.257425*LegendreP[0,x]+0.000478127*LegendreP[1,x]+-0.304509*LegendreP[2,x]+-0.000673489*LegendreP[3,x]+0.22504*LegendreP[4,x]+0.00114405*LegendreP[5,x]+-0.183874*LegendreP[6,x]+-0.000529843*LegendreP[7,x]+0.157277*LegendreP[8,x]+0.00190106*LegendreP[9,x]+-0.139111*LegendreP[10,x]+-0.00148642*LegendreP[11,x]+0.126584*LegendreP[12,x]+0.000678634*LegendreP[13,x]+-0.116454*LegendreP[14,x]+-0.00153977*LegendreP[15,x]+0.107061*LegendreP[16,x]+0.000568534*LegendreP[17,x]+-0.103201*LegendreP[18,x]+0.00252567*LegendreP[19,x]+0.0965801*LegendreP[20,x]
+
++0.257425*LegendreP[0,y]+0.000104232*LegendreP[1,y]+-0.30408*LegendreP[2,y]+-0.000402305*LegendreP[3,y]+0.224001*LegendreP[4,y]+0.000476807*LegendreP[5,y]+-0.1831*LegendreP[6,y]+-0.000418606*LegendreP[7,y]+0.15721*LegendreP[8,y]+-0.000134091*LegendreP[9,y]+-0.139175*LegendreP[10,y]+0.00143932*LegendreP[11,y]+0.125598*LegendreP[12,y]+-0.00106433*LegendreP[13,y]+-0.116671*LegendreP[14,y]+0.00179049*LegendreP[15,y]+0.110223*LegendreP[16,y]+5.12402e-05*LegendreP[17,y]+-0.10415*LegendreP[18,y]+-0.000863043*LegendreP[19,y]+0.0981177*LegendreP[20,y]
+
++0.257425*LegendreP[0,z]+-0.000347074*LegendreP[1,z]+-0.304586*LegendreP[2,z]+0.000732397*LegendreP[3,z]+0.22397*LegendreP[4,z]+-0.000360309*LegendreP[5,z]+-0.182579*LegendreP[6,z]+-0.000344217*LegendreP[7,z]+0.153973*LegendreP[8,z]+-0.00109347*LegendreP[9,z]+-0.138776*LegendreP[10,z]+0.000442958*LegendreP[11,z]+0.127338*LegendreP[12,z]+-0.00150437*LegendreP[13,z]+-0.116222*LegendreP[14,z]+0.000867714*LegendreP[15,z]+0.10698*LegendreP[16,z]+-0.00168848*LegendreP[17,z]+-0.102142*LegendreP[18,z]+0.00369844*LegendreP[19,z]+0.0975157*LegendreP[20,z]
+
+Number of Particle: 83209.000000 (point source)
+Time take: 1.730033
+0.257447 * P_0(x) +/- 0.00103638 With an R^2 value of 2.02568e-06
+0.257447 * P_0(y) +/- 0.00103638 With an R^2 value of 2.02568e-06
+0.257447 * P_0(z) +/- 0.00103638 With an R^2 value of 2.02568e-06
+
+0.00117298 * P_1(x) +/- 0.00038368 With an R^2 value of 0.361101
+-0.0017165 * P_1(y) +/- 0.00038368 With an R^2 value of 0.361101
+0.000527649 * P_1(z) +/- 0.00038368 With an R^2 value of 0.361101
+
+-0.305781 * P_2(x) +/- 0.000373549 With an R^2 value of 2.33182e-05
+-0.30536 * P_2(y) +/- 0.000373549 With an R^2 value of 2.33182e-05
+-0.305868 * P_2(z) +/- 0.000373549 With an R^2 value of 2.33182e-05
+
+-0.000434438 * P_3(x) +/- 0.000260084 With an R^2 value of 15.3665
+0.00209349 * P_3(y) +/- 0.000260084 With an R^2 value of 15.3665
+0.000687439 * P_3(z) +/- 0.000260084 With an R^2 value of 15.3665
+
+0.227635 * P_4(x) +/- 0.00025136 With an R^2 value of 0.000111109
+0.224707 * P_4(y) +/- 0.00025136 With an R^2 value of 0.000111109
+0.224077 * P_4(z) +/- 0.00025136 With an R^2 value of 0.000111109
+
+0.00214713 * P_5(x) +/- 0.000204557 With an R^2 value of 1.51009
+-0.00178595 * P_5(y) +/- 0.000204557 With an R^2 value of 1.51009
+0.00113389 * P_5(z) +/- 0.000204557 With an R^2 value of 1.51009
+
+-0.184464 * P_6(x) +/- 0.000198395 With an R^2 value of 0.000317674
+-0.184518 * P_6(y) +/- 0.000198395 With an R^2 value of 0.000317674
+-0.185739 * P_6(z) +/- 0.000198395 With an R^2 value of 0.000317674
+
+-0.00208943 * P_7(x) +/- 0.000172259 With an R^2 value of 2.86743
+0.00544906 * P_7(y) +/- 0.000172259 With an R^2 value of 2.86743
+0.00349534 * P_7(z) +/- 0.000172259 With an R^2 value of 2.86743
+
+0.159734 * P_8(x) +/- 0.000167838 With an R^2 value of 0.00067802
+0.153946 * P_8(y) +/- 0.000167838 With an R^2 value of 0.00067802
+0.158592 * P_8(z) +/- 0.000167838 With an R^2 value of 0.00067802
+
+0.00640446 * P_9(x) +/- 0.000151324 With an R^2 value of 0.478657
+-0.00133193 * P_9(y) +/- 0.000151324 With an R^2 value of 0.478657
+-0.00276044 * P_9(z) +/- 0.000151324 With an R^2 value of 0.478657
+
+-0.143243 * P_10(x) +/- 0.000148693 With an R^2 value of 0.00124738
+-0.138322 * P_10(y) +/- 0.000148693 With an R^2 value of 0.00124738
+-0.13848 * P_10(z) +/- 0.000148693 With an R^2 value of 0.00124738
+
+-0.000989726 * P_11(x) +/- 0.000135926 With an R^2 value of 28.6857
+0.00302367 * P_11(y) +/- 0.000135926 With an R^2 value of 28.6857
+-0.000817146 * P_11(z) +/- 0.000135926 With an R^2 value of 28.6857
+
+0.125215 * P_12(x) +/- 0.000134654 With an R^2 value of 0.00225871
+0.125879 * P_12(y) +/- 0.000134654 With an R^2 value of 0.00225871
+0.128606 * P_12(z) +/- 0.000134654 With an R^2 value of 0.00225871
+
+-0.00196867 * P_13(x) +/- 0.00012529 With an R^2 value of 9.96517
+0.000661722 * P_13(y) +/- 0.00012529 With an R^2 value of 9.96517
+-0.00415503 * P_13(z) +/- 0.00012529 With an R^2 value of 9.96517
+
+-0.115377 * P_14(x) +/- 0.000123876 With an R^2 value of 0.00351431
+-0.119301 * P_14(y) +/- 0.000123876 With an R^2 value of 0.00351431
+-0.119992 * P_14(z) +/- 0.000123876 With an R^2 value of 0.00351431
+
+-0.00637299 * P_15(x) +/- 0.000116708 With an R^2 value of 1.24885
+0.00148314 * P_15(y) +/- 0.000116708 With an R^2 value of 1.24885
+0.00631214 * P_15(z) +/- 0.000116708 With an R^2 value of 1.24885
+
+0.10435 * P_16(x) +/- 0.000115854 With an R^2 value of 0.00553722
+0.113757 * P_16(y) +/- 0.000115854 With an R^2 value of 0.00553722
+0.110502 * P_16(z) +/- 0.000115854 With an R^2 value of 0.00553722
+
+0.00541702 * P_17(x) +/- 0.000109603 With an R^2 value of 2.19401
+0.0011897 * P_17(y) +/- 0.000109603 With an R^2 value of 2.19401
+-0.00876863 * P_17(z) +/- 0.000109603 With an R^2 value of 2.19401
+
+-0.103118 * P_18(x) +/- 0.000108378 With an R^2 value of 0.00699404
+-0.109784 * P_18(y) +/- 0.000108378 With an R^2 value of 0.00699404
+-0.10578 * P_18(z) +/- 0.000108378 With an R^2 value of 0.00699404
+
+-0.00430193 * P_19(x) +/- 0.000103167 With an R^2 value of 4.26442
+-0.00371902 * P_19(y) +/- 0.000103167 With an R^2 value of 4.26442
+0.0110003 * P_19(z) +/- 0.000103167 With an R^2 value of 4.26442
+
+0.103307 * P_20(x) +/- 0.000102796 With an R^2 value of 0.00853011
+0.102997 * P_20(y) +/- 0.000102796 With an R^2 value of 0.00853011
+0.100402 * P_20(z) +/- 0.000102796 With an R^2 value of 0.00853011
+
++0.257447*LegendreP[0,x]+0.00117298*LegendreP[1,x]+-0.305781*LegendreP[2,x]+-0.000434438*LegendreP[3,x]+0.227635*LegendreP[4,x]+0.00214713*LegendreP[5,x]+-0.184464*LegendreP[6,x]+-0.00208943*LegendreP[7,x]+0.159734*LegendreP[8,x]+0.00640446*LegendreP[9,x]+-0.143243*LegendreP[10,x]+-0.000989726*LegendreP[11,x]+0.125215*LegendreP[12,x]+-0.00196867*LegendreP[13,x]+-0.115377*LegendreP[14,x]+-0.00637299*LegendreP[15,x]+0.10435*LegendreP[16,x]+0.00541702*LegendreP[17,x]+-0.103118*LegendreP[18,x]+-0.00430193*LegendreP[19,x]+0.103307*LegendreP[20,x]
+
++0.257447*LegendreP[0,y]+-0.0017165*LegendreP[1,y]+-0.30536*LegendreP[2,y]+0.00209349*LegendreP[3,y]+0.224707*LegendreP[4,y]+-0.00178595*LegendreP[5,y]+-0.184518*LegendreP[6,y]+0.00544906*LegendreP[7,y]+0.153946*LegendreP[8,y]+-0.00133193*LegendreP[9,y]+-0.138322*LegendreP[10,y]+0.00302367*LegendreP[11,y]+0.125879*LegendreP[12,y]+0.000661722*LegendreP[13,y]+-0.119301*LegendreP[14,y]+0.00148314*LegendreP[15,y]+0.113757*LegendreP[16,y]+0.0011897*LegendreP[17,y]+-0.109784*LegendreP[18,y]+-0.00371902*LegendreP[19,y]+0.102997*LegendreP[20,y]
+
++0.257447*LegendreP[0,z]+0.000527649*LegendreP[1,z]+-0.305868*LegendreP[2,z]+0.000687439*LegendreP[3,z]+0.224077*LegendreP[4,z]+0.00113389*LegendreP[5,z]+-0.185739*LegendreP[6,z]+0.00349534*LegendreP[7,z]+0.158592*LegendreP[8,z]+-0.00276044*LegendreP[9,z]+-0.13848*LegendreP[10,z]+-0.000817146*LegendreP[11,z]+0.128606*LegendreP[12,z]+-0.00415503*LegendreP[13,z]+-0.119992*LegendreP[14,z]+0.00631214*LegendreP[15,z]+0.110502*LegendreP[16,z]+-0.00876863*LegendreP[17,z]+-0.10578*LegendreP[18,z]+0.0110003*LegendreP[19,z]+0.100402*LegendreP[20,z]
+
+Number of Particle: 83185.000000 (smalle box)
+Time take: 1.662259
+0.257537 * P_0(x) +/- 0.00103662 With an R^2 value of 2.02522e-06
+0.257537 * P_0(y) +/- 0.00103662 With an R^2 value of 2.02522e-06
+0.257537 * P_0(z) +/- 0.00103662 With an R^2 value of 2.02522e-06
+
+0.00173603 * P_1(x) +/- 0.000385547 With an R^2 value of 0.166462
+-0.000121416 * P_1(y) +/- 0.000385547 With an R^2 value of 0.166462
+-0.000374494 * P_1(z) +/- 0.000385547 With an R^2 value of 0.166462
+
+-0.305217 * P_2(x) +/- 0.000373353 With an R^2 value of 2.33799e-05
+-0.30466 * P_2(y) +/- 0.000373353 With an R^2 value of 2.33799e-05
+-0.306363 * P_2(z) +/- 0.000373353 With an R^2 value of 2.33799e-05
+
+0.000560163 * P_3(x) +/- 0.000258987 With an R^2 value of 9.16498
+-0.000123067 * P_3(y) +/- 0.000258987 With an R^2 value of 9.16498
+-7.55566e-05 * P_3(z) +/- 0.000258987 With an R^2 value of 9.16498
+
+0.225578 * P_4(x) +/- 0.000249816 With an R^2 value of 0.000111759
+0.225747 * P_4(y) +/- 0.000249816 With an R^2 value of 0.000111759
+0.227431 * P_4(z) +/- 0.000249816 With an R^2 value of 0.000111759
+
+-0.00375547 * P_5(x) +/- 0.000202794 With an R^2 value of 0.485141
+-0.00297746 * P_5(y) +/- 0.000202794 With an R^2 value of 0.485141
+0.00105233 * P_5(z) +/- 0.000202794 With an R^2 value of 0.485141
+
+-0.183337 * P_6(x) +/- 0.000197592 With an R^2 value of 0.00031899
+-0.185929 * P_6(y) +/- 0.000197592 With an R^2 value of 0.00031899
+-0.185574 * P_6(z) +/- 0.000197592 With an R^2 value of 0.00031899
+
+0.0040063 * P_7(x) +/- 0.000171703 With an R^2 value of 0.774909
+-0.00224473 * P_7(y) +/- 0.000171703 With an R^2 value of 0.774909
+-0.00137222 * P_7(z) +/- 0.000171703 With an R^2 value of 0.774909
+
+0.155651 * P_8(x) +/- 0.000168702 With an R^2 value of 0.000721425
+0.156626 * P_8(y) +/- 0.000168702 With an R^2 value of 0.000721425
+0.157573 * P_8(z) +/- 0.000168702 With an R^2 value of 0.000721425
+
+-0.00346909 * P_9(x) +/- 0.000151443 With an R^2 value of 1.63395
+-0.000353029 * P_9(y) +/- 0.000151443 With an R^2 value of 1.63395
+0.000708064 * P_9(z) +/- 0.000151443 With an R^2 value of 1.63395
+
+-0.1409 * P_10(x) +/- 0.000148544 With an R^2 value of 0.00128663
+-0.138246 * P_10(y) +/- 0.000148544 With an R^2 value of 0.00128663
+-0.135812 * P_10(z) +/- 0.000148544 With an R^2 value of 0.00128663
+
+0.00609537 * P_11(x) +/- 0.000136148 With an R^2 value of 0.758782
+0.00168968 * P_11(y) +/- 0.000136148 With an R^2 value of 0.758782
+0.00286013 * P_11(z) +/- 0.000136148 With an R^2 value of 0.758782
+
+0.122069 * P_12(x) +/- 0.000134528 With an R^2 value of 0.00237214
+0.125988 * P_12(y) +/- 0.000134528 With an R^2 value of 0.00237214
+0.124694 * P_12(z) +/- 0.000134528 With an R^2 value of 0.00237214
+
+-0.00687692 * P_13(x) +/- 0.000124702 With an R^2 value of 0.80902
+0.00149305 * P_13(y) +/- 0.000124702 With an R^2 value of 0.80902
+-0.000186323 * P_13(z) +/- 0.000124702 With an R^2 value of 0.80902
+
+-0.110938 * P_14(x) +/- 0.000124029 With an R^2 value of 0.00381055
+-0.112914 * P_14(y) +/- 0.000124029 With an R^2 value of 0.00381055
+-0.114307 * P_14(z) +/- 0.000124029 With an R^2 value of 0.00381055
+
+0.00160576 * P_15(x) +/- 0.000116362 With an R^2 value of 19.5549
+-0.00156381 * P_15(y) +/- 0.000116362 With an R^2 value of 19.5549
+-0.00412702 * P_15(z) +/- 0.000116362 With an R^2 value of 19.5549
+
+0.103823 * P_16(x) +/- 0.000115382 With an R^2 value of 0.00554804
+0.109424 * P_16(y) +/- 0.000115382 With an R^2 value of 0.00554804
+0.102396 * P_16(z) +/- 0.000115382 With an R^2 value of 0.00554804
+
+-0.00291953 * P_17(x) +/- 0.000109416 With an R^2 value of 7.52751
+0.00928261 * P_17(y) +/- 0.000109416 With an R^2 value of 7.52751
+0.00422022 * P_17(z) +/- 0.000109416 With an R^2 value of 7.52751
+
+-0.0917044 * P_18(x) +/- 0.000108201 With an R^2 value of 0.00881454
+-0.100421 * P_18(y) +/- 0.000108201 With an R^2 value of 0.00881454
+-0.0953492 * P_18(z) +/- 0.000108201 With an R^2 value of 0.00881454
+
+-0.000156115 * P_19(x) +/- 0.000103065 With an R^2 value of 3231.73
+-0.00456565 * P_19(y) +/- 0.000103065 With an R^2 value of 3231.73
+-0.00645869 * P_19(z) +/- 0.000103065 With an R^2 value of 3231.73
+
+0.0935424 * P_20(x) +/- 0.000101827 With an R^2 value of 0.0102086
+0.0917904 * P_20(y) +/- 0.000101827 With an R^2 value of 0.0102086
+0.100635 * P_20(z) +/- 0.000101827 With an R^2 value of 0.0102086
+
++0.257537*LegendreP[0,x]+0.00173603*LegendreP[1,x]+-0.305217*LegendreP[2,x]+0.000560163*LegendreP[3,x]+0.225578*LegendreP[4,x]+-0.00375547*LegendreP[5,x]+-0.183337*LegendreP[6,x]+0.0040063*LegendreP[7,x]+0.155651*LegendreP[8,x]+-0.00346909*LegendreP[9,x]+-0.1409*LegendreP[10,x]+0.00609537*LegendreP[11,x]+0.122069*LegendreP[12,x]+-0.00687692*LegendreP[13,x]+-0.110938*LegendreP[14,x]+0.00160576*LegendreP[15,x]+0.103823*LegendreP[16,x]+-0.00291953*LegendreP[17,x]+-0.0917044*LegendreP[18,x]+-0.000156115*LegendreP[19,x]+0.0935424*LegendreP[20,x]
+
++0.257537*LegendreP[0,y]+-0.000121416*LegendreP[1,y]+-0.30466*LegendreP[2,y]+-0.000123067*LegendreP[3,y]+0.225747*LegendreP[4,y]+-0.00297746*LegendreP[5,y]+-0.185929*LegendreP[6,y]+-0.00224473*LegendreP[7,y]+0.156626*LegendreP[8,y]+-0.000353029*LegendreP[9,y]+-0.138246*LegendreP[10,y]+0.00168968*LegendreP[11,y]+0.125988*LegendreP[12,y]+0.00149305*LegendreP[13,y]+-0.112914*LegendreP[14,y]+-0.00156381*LegendreP[15,y]+0.109424*LegendreP[16,y]+0.00928261*LegendreP[17,y]+-0.100421*LegendreP[18,y]+-0.00456565*LegendreP[19,y]+0.0917904*LegendreP[20,y]
+
++0.257537*LegendreP[0,z]+-0.000374494*LegendreP[1,z]+-0.306363*LegendreP[2,z]+-7.55566e-05*LegendreP[3,z]+0.227431*LegendreP[4,z]+0.00105233*LegendreP[5,z]+-0.185574*LegendreP[6,z]+-0.00137222*LegendreP[7,z]+0.157573*LegendreP[8,z]+0.000708064*LegendreP[9,z]+-0.135812*LegendreP[10,z]+0.00286013*LegendreP[11,z]+0.124694*LegendreP[12,z]+-0.000186323*LegendreP[13,z]+-0.114307*LegendreP[14,z]+-0.00412702*LegendreP[15,z]+0.102396*LegendreP[16,z]+0.00422022*LegendreP[17,z]+-0.0953492*LegendreP[18,z]+-0.00645869*LegendreP[19,z]+0.100635*LegendreP[20,z]
+
+Number of Particle: 82963.000000 (med box)
+Time take: 1.704605
+0.258081 * P_0(x) +/- 0.00104233 With an R^2 value of 2.03894e-06
+0.258081 * P_0(y) +/- 0.00104233 With an R^2 value of 2.03894e-06
+0.258081 * P_0(z) +/- 0.00104233 With an R^2 value of 2.03894e-06
+
+0.00126425 * P_1(x) +/- 0.000386826 With an R^2 value of 0.315964
+0.00153652 * P_1(y) +/- 0.000386826 With an R^2 value of 0.315964
+0.00143429 * P_1(z) +/- 0.000386826 With an R^2 value of 0.315964
+
+-0.303556 * P_2(x) +/- 0.000374988 With an R^2 value of 2.38439e-05
+-0.3033 * P_2(y) +/- 0.000374988 With an R^2 value of 2.38439e-05
+-0.303891 * P_2(z) +/- 0.000374988 With an R^2 value of 2.38439e-05
+
+-0.00210597 * P_3(x) +/- 0.000262019 With an R^2 value of 0.66369
+-0.000294413 * P_3(y) +/- 0.000262019 With an R^2 value of 0.66369
+-0.000942048 * P_3(z) +/- 0.000262019 With an R^2 value of 0.66369
+
+0.222133 * P_4(x) +/- 0.000250712 With an R^2 value of 0.000116081
+0.222874 * P_4(y) +/- 0.000250712 With an R^2 value of 0.000116081
+0.217812 * P_4(z) +/- 0.000250712 With an R^2 value of 0.000116081
+
+-0.000357172 * P_5(x) +/- 0.000206352 With an R^2 value of 55.533
+0.000611296 * P_5(y) +/- 0.000206352 With an R^2 value of 55.533
+0.00268202 * P_5(z) +/- 0.000206352 With an R^2 value of 55.533
+
+-0.174122 * P_6(x) +/- 0.000197877 With an R^2 value of 0.00035467
+-0.173982 * P_6(y) +/- 0.000197877 With an R^2 value of 0.00035467
+-0.170265 * P_6(z) +/- 0.000197877 With an R^2 value of 0.00035467
+
+0.00437004 * P_7(x) +/- 0.000174574 With an R^2 value of 0.673246
+-0.00251337 * P_7(y) +/- 0.000174574 With an R^2 value of 0.673246
+-0.00208287 * P_7(z) +/- 0.000174574 With an R^2 value of 0.673246
+
+0.140857 * P_8(x) +/- 0.000167688 With an R^2 value of 0.000870368
+0.139219 * P_8(y) +/- 0.000167688 With an R^2 value of 0.000870368
+0.138498 * P_8(z) +/- 0.000167688 With an R^2 value of 0.000870368
+
+-0.00183597 * P_9(x) +/- 0.000153034 With an R^2 value of 5.9568
+0.0016635 * P_9(y) +/- 0.000153034 With an R^2 value of 5.9568
+-0.00144709 * P_9(z) +/- 0.000153034 With an R^2 value of 5.9568
+
+-0.11512 * P_10(x) +/- 0.000147728 With an R^2 value of 0.0019063
+-0.114738 * P_10(y) +/- 0.000147728 With an R^2 value of 0.0019063
+-0.111132 * P_10(z) +/- 0.000147728 With an R^2 value of 0.0019063
+
+0.00134303 * P_11(x) +/- 0.00013817 With an R^2 value of 16.0971
+-0.00513115 * P_11(y) +/- 0.00013817 With an R^2 value of 16.0971
+-0.00119593 * P_11(z) +/- 0.00013817 With an R^2 value of 16.0971
+
+0.0958526 * P_12(x) +/- 0.000133565 With an R^2 value of 0.00379236
+0.0949891 * P_12(y) +/- 0.000133565 With an R^2 value of 0.00379236
+0.096501 * P_12(z) +/- 0.000133565 With an R^2 value of 0.00379236
+
+-0.0046709 * P_13(x) +/- 0.00012743 With an R^2 value of 1.83123
+5.13852e-05 * P_13(y) +/- 0.00012743 With an R^2 value of 1.83123
+0.00704323 * P_13(z) +/- 0.00012743 With an R^2 value of 1.83123
+
+-0.0790962 * P_14(x) +/- 0.000122495 With an R^2 value of 0.00731191
+-0.0783352 * P_14(y) +/- 0.000122495 With an R^2 value of 0.00731191
+-0.0754268 * P_14(z) +/- 0.000122495 With an R^2 value of 0.00731191
+
+0.00160454 * P_15(x) +/- 0.000118679 With an R^2 value of 20.3722
+-0.00327189 * P_15(y) +/- 0.000118679 With an R^2 value of 20.3722
+-0.00528129 * P_15(z) +/- 0.000118679 With an R^2 value of 20.3722
+
+0.0678762 * P_16(x) +/- 0.000114445 With an R^2 value of 0.0127707
+0.0692079 * P_16(y) +/- 0.000114445 With an R^2 value of 0.0127707
+0.0611504 * P_16(z) +/- 0.000114445 With an R^2 value of 0.0127707
+
+0.000698161 * P_17(x) +/- 0.000110813 With an R^2 value of 135.015
+0.00818089 * P_17(y) +/- 0.000110813 With an R^2 value of 135.015
+0.00868987 * P_17(z) +/- 0.000110813 With an R^2 value of 135.015
+
+-0.0565712 * P_18(x) +/- 0.000107421 With an R^2 value of 0.0228299
+-0.0517263 * P_18(y) +/- 0.000107421 With an R^2 value of 0.0228299
+-0.0534371 * P_18(z) +/- 0.000107421 With an R^2 value of 0.0228299
+
+-0.0012174 * P_19(x) +/- 0.000104682 With an R^2 value of 54.8249
+-0.00506508 * P_19(y) +/- 0.000104682 With an R^2 value of 54.8249
+-0.00382471 * P_19(z) +/- 0.000104682 With an R^2 value of 54.8249
+
+0.0357764 * P_20(x) +/- 0.000101875 With an R^2 value of 0.0698566
+0.0411824 * P_20(y) +/- 0.000101875 With an R^2 value of 0.0698566
+0.0398186 * P_20(z) +/- 0.000101875 With an R^2 value of 0.0698566
+
++0.258081*LegendreP[0,x]+0.00126425*LegendreP[1,x]+-0.303556*LegendreP[2,x]+-0.00210597*LegendreP[3,x]+0.222133*LegendreP[4,x]+-0.000357172*LegendreP[5,x]+-0.174122*LegendreP[6,x]+0.00437004*LegendreP[7,x]+0.140857*LegendreP[8,x]+-0.00183597*LegendreP[9,x]+-0.11512*LegendreP[10,x]+0.00134303*LegendreP[11,x]+0.0958526*LegendreP[12,x]+-0.0046709*LegendreP[13,x]+-0.0790962*LegendreP[14,x]+0.00160454*LegendreP[15,x]+0.0678762*LegendreP[16,x]+0.000698161*LegendreP[17,x]+-0.0565712*LegendreP[18,x]+-0.0012174*LegendreP[19,x]+0.0357764*LegendreP[20,x]
+
++0.258081*LegendreP[0,y]+0.00153652*LegendreP[1,y]+-0.3033*LegendreP[2,y]+-0.000294413*LegendreP[3,y]+0.222874*LegendreP[4,y]+0.000611296*LegendreP[5,y]+-0.173982*LegendreP[6,y]+-0.00251337*LegendreP[7,y]+0.139219*LegendreP[8,y]+0.0016635*LegendreP[9,y]+-0.114738*LegendreP[10,y]+-0.00513115*LegendreP[11,y]+0.0949891*LegendreP[12,y]+5.13852e-05*LegendreP[13,y]+-0.0783352*LegendreP[14,y]+-0.00327189*LegendreP[15,y]+0.0692079*LegendreP[16,y]+0.00818089*LegendreP[17,y]+-0.0517263*LegendreP[18,y]+-0.00506508*LegendreP[19,y]+0.0411824*LegendreP[20,y]
+
++0.258081*LegendreP[0,z]+0.00143429*LegendreP[1,z]+-0.303891*LegendreP[2,z]+-0.000942048*LegendreP[3,z]+0.217812*LegendreP[4,z]+0.00268202*LegendreP[5,z]+-0.170265*LegendreP[6,z]+-0.00208287*LegendreP[7,z]+0.138498*LegendreP[8,z]+-0.00144709*LegendreP[9,z]+-0.111132*LegendreP[10,z]+-0.00119593*LegendreP[11,z]+0.096501*LegendreP[12,z]+0.00704323*LegendreP[13,z]+-0.0754268*LegendreP[14,z]+-0.00528129*LegendreP[15,z]+0.0611504*LegendreP[16,z]+0.00868987*LegendreP[17,z]+-0.0534371*LegendreP[18,z]+-0.00382471*LegendreP[19,z]+0.0398186*LegendreP[20,z]
+
+Number of Particle: 60644.000000 (large_box)
+Time take: 1.110557
+0.239128 * P_0(x) +/- 0.00113426 With an R^2 value of 2.81237e-06
+0.239128 * P_0(y) +/- 0.00113426 With an R^2 value of 2.81237e-06
+0.239128 * P_0(z) +/- 0.00113426 With an R^2 value of 2.81237e-06
+
+0.000285576 * P_1(x) +/- 0.000549587 With an R^2 value of 12.4998
+-0.000590936 * P_1(y) +/- 0.000549587 With an R^2 value of 12.4998
+0.0024095 * P_1(z) +/- 0.000549587 With an R^2 value of 12.4998
+
+-0.0713002 * P_2(x) +/- 0.000402897 With an R^2 value of 0.000498916
+-0.0724712 * P_2(y) +/- 0.000402897 With an R^2 value of 0.000498916
+-0.0704193 * P_2(z) +/- 0.000402897 With an R^2 value of 0.000498916
+
+-0.0013936 * P_3(x) +/- 0.000329696 With an R^2 value of 2.39971
+0.00429287 * P_3(y) +/- 0.000329696 With an R^2 value of 2.39971
+-0.00295322 * P_3(z) +/- 0.000329696 With an R^2 value of 2.39971
+
+-0.0166495 * P_4(x) +/- 0.000283895 With an R^2 value of 0.0264941
+-0.0157248 * P_4(y) +/- 0.000283895 With an R^2 value of 0.0264941
+-0.0177985 * P_4(z) +/- 0.000283895 With an R^2 value of 0.0264941
+
+-0.00014049 * P_5(x) +/- 0.000252166 With an R^2 value of 536.009
+-0.00690536 * P_5(y) +/- 0.000252166 With an R^2 value of 536.009
+0.00135401 * P_5(z) +/- 0.000252166 With an R^2 value of 536.009
+
+-0.00573053 * P_6(x) +/- 0.000228722 With an R^2 value of 0.437488
+-0.0110867 * P_6(y) +/- 0.000228722 With an R^2 value of 0.437488
+-0.00520475 * P_6(z) +/- 0.000228722 With an R^2 value of 0.437488
+
+0.00175648 * P_7(x) +/- 0.000211032 With an R^2 value of 6.08967
+0.000113772 * P_7(y) +/- 0.000211032 With an R^2 value of 6.08967
+0.00134896 * P_7(z) +/- 0.000211032 With an R^2 value of 6.08967
+
+-0.00330165 * P_8(x) +/- 0.000196744 With an R^2 value of 2.18071
+0.00155359 * P_8(y) +/- 0.000196744 With an R^2 value of 2.18071
+-0.00341233 * P_8(z) +/- 0.000196744 With an R^2 value of 2.18071
+
+-6.61978e-05 * P_9(x) +/- 0.000185092 With an R^2 value of 6702.82
+0.00415304 * P_9(y) +/- 0.000185092 With an R^2 value of 6702.82
+0.00258974 * P_9(z) +/- 0.000185092 With an R^2 value of 6702.82
+
+0.000386005 * P_10(x) +/- 0.000174553 With an R^2 value of 236.72
+-0.00602058 * P_10(y) +/- 0.000174553 With an R^2 value of 236.72
+-0.00135235 * P_10(z) +/- 0.000174553 With an R^2 value of 236.72
+
+0.0041074 * P_11(x) +/- 0.000165767 With an R^2 value of 2.47715
+-0.00491263 * P_11(y) +/- 0.000165767 With an R^2 value of 2.47715
+0.000347266 * P_11(z) +/- 0.000165767 With an R^2 value of 2.47715
+
+-0.00503424 * P_12(x) +/- 0.000158979 With an R^2 value of 1.94779
+0.00431242 * P_12(y) +/- 0.000158979 With an R^2 value of 1.94779
+-0.000332406 * P_12(z) +/- 0.000158979 With an R^2 value of 1.94779
+
+0.000793475 * P_13(x) +/- 0.000151873 With an R^2 value of 90.1355
+-0.00146426 * P_13(y) +/- 0.000151873 With an R^2 value of 90.1355
+0.0035718 * P_13(z) +/- 0.000151873 With an R^2 value of 90.1355
+
+-0.00554994 * P_14(x) +/- 0.000145805 With an R^2 value of 2.10412
+0.00140641 * P_14(y) +/- 0.000145805 With an R^2 value of 2.10412
+-0.000483308 * P_14(z) +/- 0.000145805 With an R^2 value of 2.10412
+
+-0.0048922 * P_15(x) +/- 0.00014146 With an R^2 value of 3.11356
+0.0128393 * P_15(y) +/- 0.00014146 With an R^2 value of 3.11356
+0.000951718 * P_15(z) +/- 0.00014146 With an R^2 value of 3.11356
+
+-0.00102206 * P_16(x) +/- 0.000136646 With an R^2 value of 80.2965
+0.00198191 * P_16(y) +/- 0.000136646 With an R^2 value of 80.2965
+-0.00309798 * P_16(z) +/- 0.000136646 With an R^2 value of 80.2965
+
+-0.000409255 * P_17(x) +/- 0.00013192 With an R^2 value of 556.86
+0.00141785 * P_17(y) +/- 0.00013192 With an R^2 value of 556.86
+-0.00202786 * P_17(z) +/- 0.00013192 With an R^2 value of 556.86
+
+-0.00624035 * P_18(x) +/- 0.000128259 With an R^2 value of 2.6747
+-0.00207158 * P_18(y) +/- 0.000128259 With an R^2 value of 2.6747
+-0.00324434 * P_18(z) +/- 0.000128259 With an R^2 value of 2.6747
+
+0.00402889 * P_19(x) +/- 0.000124625 With an R^2 value of 7.09489
+0.00177404 * P_19(y) +/- 0.000124625 With an R^2 value of 7.09489
+0.000570684 * P_19(z) +/- 0.000124625 With an R^2 value of 7.09489
+
+0.000144107 * P_20(x) +/- 0.000122019 With an R^2 value of 6176.6
+-0.00329467 * P_20(y) +/- 0.000122019 With an R^2 value of 6176.6
+0.00350745 * P_20(z) +/- 0.000122019 With an R^2 value of 6176.6
+
++0.239128*LegendreP[0,x]+0.000285576*LegendreP[1,x]+-0.0713002*LegendreP[2,x]+-0.0013936*LegendreP[3,x]+-0.0166495*LegendreP[4,x]+-0.00014049*LegendreP[5,x]+-0.00573053*LegendreP[6,x]+0.00175648*LegendreP[7,x]+-0.00330165*LegendreP[8,x]+-6.61978e-05*LegendreP[9,x]+0.000386005*LegendreP[10,x]+0.0041074*LegendreP[11,x]+-0.00503424*LegendreP[12,x]+0.000793475*LegendreP[13,x]+-0.00554994*LegendreP[14,x]+-0.0048922*LegendreP[15,x]+-0.00102206*LegendreP[16,x]+-0.000409255*LegendreP[17,x]+-0.00624035*LegendreP[18,x]+0.00402889*LegendreP[19,x]+0.000144107*LegendreP[20,x]
+
++0.239128*LegendreP[0,y]+-0.000590936*LegendreP[1,y]+-0.0724712*LegendreP[2,y]+0.00429287*LegendreP[3,y]+-0.0157248*LegendreP[4,y]+-0.00690536*LegendreP[5,y]+-0.0110867*LegendreP[6,y]+0.000113772*LegendreP[7,y]+0.00155359*LegendreP[8,y]+0.00415304*LegendreP[9,y]+-0.00602058*LegendreP[10,y]+-0.00491263*LegendreP[11,y]+0.00431242*LegendreP[12,y]+-0.00146426*LegendreP[13,y]+0.00140641*LegendreP[14,y]+0.0128393*LegendreP[15,y]+0.00198191*LegendreP[16,y]+0.00141785*LegendreP[17,y]+-0.00207158*LegendreP[18,y]+0.00177404*LegendreP[19,y]+-0.00329467*LegendreP[20,y]
+
++0.239128*LegendreP[0,z]+0.0024095*LegendreP[1,z]+-0.0704193*LegendreP[2,z]+-0.00295322*LegendreP[3,z]+-0.0177985*LegendreP[4,z]+0.00135401*LegendreP[5,z]+-0.00520475*LegendreP[6,z]+0.00134896*LegendreP[7,z]+-0.00341233*LegendreP[8,z]+0.00258974*LegendreP[9,z]+-0.00135235*LegendreP[10,z]+0.000347266*LegendreP[11,z]+-0.000332406*LegendreP[12,z]+0.0035718*LegendreP[13,z]+-0.000483308*LegendreP[14,z]+0.000951718*LegendreP[15,z]+-0.00309798*LegendreP[16,z]+-0.00202786*LegendreP[17,z]+-0.00324434*LegendreP[18,z]+0.000570684*LegendreP[19,z]+0.00350745*LegendreP[20,z]
+
+Number of Particle: 3329192.000000
+Time take: 65.003814
+0.257372 * P_0(x) +/- 0.000194217 With an R^2 value of -7.11808e-08
+0.257372 * P_0(y) +/- 0.000194217 With an R^2 value of -7.11808e-08
+0.257372 * P_0(z) +/- 0.000194217 With an R^2 value of -7.11808e-08
+
+0.00024293 * P_1(x) +/- 6.09776e-05 With an R^2 value of 0.212644
+-9.94075e-06 * P_1(y) +/- 6.09776e-05 With an R^2 value of 0.212644
+-0.000393711 * P_1(z) +/- 6.09776e-05 With an R^2 value of 0.212644
+
+-0.30403 * P_2(x) +/- 1.07145e-05 With an R^2 value of -1.94059e-08
+-0.303832 * P_2(y) +/- 1.07145e-05 With an R^2 value of -1.94059e-08
+-0.303898 * P_2(z) +/- 1.07145e-05 With an R^2 value of -1.94059e-08
+
+-0.000352315 * P_3(x) +/- 4.107e-05 With an R^2 value of 0.582627
+-7.59626e-06 * P_3(y) +/- 4.107e-05 With an R^2 value of 0.582627
+0.000312209 * P_3(z) +/- 4.107e-05 With an R^2 value of 0.582627
+
+0.224083 * P_4(x) +/- 3.08729e-05 With an R^2 value of 1.72972e-06
+0.223699 * P_4(y) +/- 3.08729e-05 With an R^2 value of 1.72972e-06
+0.224123 * P_4(z) +/- 3.08729e-05 With an R^2 value of 1.72972e-06
+
+-1.48639e-06 * P_5(x) +/- 3.21045e-05 With an R^2 value of 77616.1
+6.33105e-05 * P_5(y) +/- 3.21045e-05 With an R^2 value of 77616.1
+0.000113833 * P_5(z) +/- 3.21045e-05 With an R^2 value of 77616.1
+
+-0.183799 * P_6(x) +/- 2.79624e-05 With an R^2 value of 6.35624e-06
+-0.182996 * P_6(y) +/- 2.79624e-05 With an R^2 value of 6.35624e-06
+-0.182982 * P_6(z) +/- 2.79624e-05 With an R^2 value of 6.35624e-06
+
+0.00025888 * P_7(x) +/- 2.71165e-05 With an R^2 value of 4.62864
+8.1803e-05 * P_7(y) +/- 2.71165e-05 With an R^2 value of 4.62864
+-7.96307e-06 * P_7(z) +/- 2.71165e-05 With an R^2 value of 4.62864
+
+0.156475 * P_8(x) +/- 2.49709e-05 With an R^2 value of 1.56399e-05
+0.156836 * P_8(y) +/- 2.49709e-05 With an R^2 value of 1.56399e-05
+0.155775 * P_8(z) +/- 2.49709e-05 With an R^2 value of 1.56399e-05
+
+-3.5521e-05 * P_9(x) +/- 2.38482e-05 With an R^2 value of 386.464
+-0.000183618 * P_9(y) +/- 2.38482e-05 With an R^2 value of 386.464
+-0.000721113 * P_9(z) +/- 2.38482e-05 With an R^2 value of 386.464
+
+-0.138923 * P_10(x) +/- 2.25561e-05 With an R^2 value of 3.05175e-05
+-0.138941 * P_10(y) +/- 2.25561e-05 With an R^2 value of 3.05175e-05
+-0.138968 * P_10(z) +/- 2.25561e-05 With an R^2 value of 3.05175e-05
+
+-0.000128012 * P_11(x) +/- 2.15341e-05 With an R^2 value of 43.0373
+0.000269835 * P_11(y) +/- 2.15341e-05 With an R^2 value of 43.0373
+0.000666946 * P_11(z) +/- 2.15341e-05 With an R^2 value of 43.0373
+
+0.125851 * P_12(x) +/- 2.06835e-05 With an R^2 value of 5.27555e-05
+0.125622 * P_12(y) +/- 2.06835e-05 With an R^2 value of 5.27555e-05
+0.126119 * P_12(z) +/- 2.06835e-05 With an R^2 value of 5.27555e-05
+
+0.000297194 * P_13(x) +/- 1.97802e-05 With an R^2 value of 10.8989
+8.58797e-05 * P_13(y) +/- 1.97802e-05 With an R^2 value of 10.8989
+-0.000103218 * P_13(z) +/- 1.97802e-05 With an R^2 value of 10.8989
+
+-0.116346 * P_14(x) +/- 1.9169e-05 With an R^2 value of 8.27565e-05
+-0.116855 * P_14(y) +/- 1.9169e-05 With an R^2 value of 8.27565e-05
+-0.116858 * P_14(z) +/- 1.9169e-05 With an R^2 value of 8.27565e-05
+
+0.000475929 * P_15(x) +/- 1.83949e-05 With an R^2 value of 5.56298
+0.000102526 * P_15(y) +/- 1.83949e-05 With an R^2 value of 5.56298
+0.000274122 * P_15(z) +/- 1.83949e-05 With an R^2 value of 5.56298
+
+0.107655 * P_16(x) +/- 1.794e-05 With an R^2 value of 0.000124747
+0.108584 * P_16(y) +/- 1.794e-05 With an R^2 value of 0.000124747
+0.108308 * P_16(z) +/- 1.794e-05 With an R^2 value of 0.000124747
+
+-0.000875717 * P_17(x) +/- 1.72559e-05 With an R^2 value of 2.08095
+-0.00099919 * P_17(y) +/- 1.72559e-05 With an R^2 value of 2.08095
+-0.000611354 * P_17(z) +/- 1.72559e-05 With an R^2 value of 2.08095
+
+-0.102378 * P_18(x) +/- 1.68967e-05 With an R^2 value of 0.000172467
+-0.10287 * P_18(y) +/- 1.68967e-05 With an R^2 value of 0.000172467
+-0.101889 * P_18(z) +/- 1.68967e-05 With an R^2 value of 0.000172467
+
+0.001234 * P_19(x) +/- 1.63115e-05 With an R^2 value of 1.29557
+0.000104426 * P_19(y) +/- 1.63115e-05 With an R^2 value of 1.29557
+0.000838531 * P_19(z) +/- 1.63115e-05 With an R^2 value of 1.29557
+
+0.0971242 * P_20(x) +/- 1.60269e-05 With an R^2 value of 0.000234587
+0.0970644 * P_20(y) +/- 1.60269e-05 With an R^2 value of 0.000234587
+0.0961346 * P_20(z) +/- 1.60269e-05 With an R^2 value of 0.000234587
+
++0.257372*LegendreP[0,x]+0.00024293*LegendreP[1,x]+-0.30403*LegendreP[2,x]+-0.000352315*LegendreP[3,x]+0.224083*LegendreP[4,x]+-1.48639e-06*LegendreP[5,x]+-0.183799*LegendreP[6,x]+0.00025888*LegendreP[7,x]+0.156475*LegendreP[8,x]+-3.5521e-05*LegendreP[9,x]+-0.138923*LegendreP[10,x]+-0.000128012*LegendreP[11,x]+0.125851*LegendreP[12,x]+0.000297194*LegendreP[13,x]+-0.116346*LegendreP[14,x]+0.000475929*LegendreP[15,x]+0.107655*LegendreP[16,x]+-0.000875717*LegendreP[17,x]+-0.102378*LegendreP[18,x]+0.001234*LegendreP[19,x]+0.0971242*LegendreP[20,x]
+
++0.257372*LegendreP[0,y]+-9.94075e-06*LegendreP[1,y]+-0.303832*LegendreP[2,y]+-7.59626e-06*LegendreP[3,y]+0.223699*LegendreP[4,y]+6.33105e-05*LegendreP[5,y]+-0.182996*LegendreP[6,y]+8.1803e-05*LegendreP[7,y]+0.156836*LegendreP[8,y]+-0.000183618*LegendreP[9,y]+-0.138941*LegendreP[10,y]+0.000269835*LegendreP[11,y]+0.125622*LegendreP[12,y]+8.58797e-05*LegendreP[13,y]+-0.116855*LegendreP[14,y]+0.000102526*LegendreP[15,y]+0.108584*LegendreP[16,y]+-0.00099919*LegendreP[17,y]+-0.10287*LegendreP[18,y]+0.000104426*LegendreP[19,y]+0.0970644*LegendreP[20,y]
+
++0.257372*LegendreP[0,z]+-0.000393711*LegendreP[1,z]+-0.303898*LegendreP[2,z]+0.000312209*LegendreP[3,z]+0.224123*LegendreP[4,z]+0.000113833*LegendreP[5,z]+-0.182982*LegendreP[6,z]+-7.96307e-06*LegendreP[7,z]+0.155775*LegendreP[8,z]+-0.000721113*LegendreP[9,z]+-0.138968*LegendreP[10,z]+0.000666946*LegendreP[11,z]+0.126119*LegendreP[12,z]+-0.000103218*LegendreP[13,z]+-0.116858*LegendreP[14,z]+0.000274122*LegendreP[15,z]+0.108308*LegendreP[16,z]+-0.000611354*LegendreP[17,z]+-0.101889*LegendreP[18,z]+0.000838531*LegendreP[19,z]+0.0961346*LegendreP[20,z]
+
+
+
