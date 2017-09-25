@@ -22,8 +22,6 @@ class tally_info
     inline tally_info (std::size_t poly_order);
     virtual ~tally_info() = default;
 
-    std::vector<double> surface_indices;
-
     std::vector<std::vector<double> > current_matrix;
     std::vector<std::vector<double> > current_unc_matrix;
     std::vector<std::vector<double> > current_R_matrix;
@@ -87,11 +85,11 @@ tally_info::tally_info (std::size_t poly_order)
 class legendre_info
 {
   public:
-    inline legendre_info (std::size_t poly_order, std::size_t num_surfaces);
+    inline legendre_info (std::size_t poly_order, std::size_t num_tallies);
     virtual ~legendre_info() = default;
 
     int surface_index;
-    std::size_t num_surfaces;
+    std::size_t num_tallies;
     std::vector<double> x_basis;
     std::vector<double> y_basis;
     std::vector<double> z_basis;
@@ -116,16 +114,17 @@ class legendre_info
 };
 
 //Constructor for legendre_info
-legendre_info::legendre_info (std::size_t poly_order, std::size_t num_surfaces)
+//To do: Remove the num_surfaces nominclature
+legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
 		 : order(poly_order)
 		  ,terms(poly_order+1)
-		  ,num_surfaces(num_surfaces)
-		  ,n_counter(num_surfaces, 0.0)
+		  ,num_tallies(num_tallies)
+		  ,n_counter(num_tallies, 0.0)
 		  ,P_n(poly_order+1, 0.0)
 {
-    x_basis.resize(2*num_surfaces, 0.0);
-    y_basis.resize(2*num_surfaces, 0.0);
-    z_basis.resize(2*num_surfaces, 0.0);
+    x_basis.resize(2*num_tallies, 0.0);
+    y_basis.resize(2*num_tallies, 0.0);
+    z_basis.resize(2*num_tallies, 0.0);
 
     a.resize(terms);
     A.resize(terms);
@@ -135,7 +134,7 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_surfaces)
     B_unc.resize(terms);
 
 //This loop initilizes the coefficient matrix for both the current and the flux
-//To Do: Create some statement to differentiate the two and only intialize the coefficient matrix needed
+//To Do: Create some statement to differentiate the two types of FETs (surface vs collision) and only intialize the coefficient matrix needed
    for(int m=0; m<terms; ++m)
     {
       a[m].resize(terms);
@@ -164,12 +163,12 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_surfaces)
     }
 //Currently sets the boundries for the x,y, and z dimensions
 //To Do: Figure out a better way to store this information, perhaps a 3 x 3 x 3 matrix to be initialized above?
-	x_basis[0] = -10;
-	y_basis[0] = -10;
-	z_basis[0] = -10;
-	x_basis[1] = 10;
-	y_basis[1] = 10;
-	z_basis[1] = 10;
+	x_basis[0] = -1;
+	y_basis[0] = -1;
+	z_basis[0] = -1;
+	x_basis[1] = 1;
+	y_basis[1] = 1;
+	z_basis[1] = 1;
 }
 
 //This class will either absorb the values coming out of shift, or disappear once integrated
@@ -197,6 +196,6 @@ class FET_solver
     void collision_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void collision_eval2 (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void get_current (legendre_info &basis, tally_info &tally, std::size_t poly_terms);
-    double scale (double x, legendre_info basis);
+    double scale (double x, std::vector<double> dimension_basis);
 };
 

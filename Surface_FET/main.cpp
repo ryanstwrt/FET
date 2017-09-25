@@ -22,9 +22,9 @@ input.open("/opt/Shift_inputs/point10e3.rst");
 myfile.open ("misc.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
-const std::size_t poly_order = 10;
+const std::size_t poly_order = 3;
 const std::size_t poly_terms = poly_order + 1;
-const std::size_t num_surfaces = 1;
+const std::size_t num_tallies = 1;
 double xs;
 double wt;
 double x1;
@@ -38,7 +38,7 @@ std::string::size_type sz;
 std::string str;
 
 tally_info tally (poly_order);
-legendre_info basis(poly_order, num_surfaces);
+legendre_info basis(poly_order, num_tallies);
 particle_info a;
 basis.surface_index=0;
 FET_solver solver;
@@ -81,23 +81,25 @@ for (int m=0; m < poly_terms; ++m)
     {
       for(int i=0; i<poly_terms; ++i)
       {
-	if(/*tally.flux_unc_matrix[m][n][i] >= tally.flux_unc_matrix[m][n][i]/100 || */tally.flux_R_matrix[m][n][i] >= 1)
+	if(tally.flux_R_matrix[m][n][i] >= 1)
 	{
 	std::cout<<"P("<<m<<")("<<n<<")("<<i<<") = " << tally.flux_matrix[m][n][i] << " +/- " << tally.flux_unc_matrix[m][n][i] << " w/ " << tally.flux_R_matrix[m][n][i] <<std::endl;
-	if(tally.flux_R_matrix[m][n][i] >= 10)
-	{
-	counter++;
-	}
-	counter1++;
+	 if(tally.flux_R_matrix[m][n][i] >= 10)
+	  {
+	  counter++;
+	  }
+	  else
+  	  counter1++;
 	}
 //	if(tally.flux_R_matrix[m][n][i] > 1)
 	counter2++;
        }
-	std::cout<<std::endl;
     }
+
+    std::cout<<std::endl;
 }
-std::cout<<"Percentage of R^2 > 1: " <<counter/counter2<<std::endl;
-std::cout<<"Percentage of R^2 > 10: " <<counter1/counter2<<std::endl;
+std::cout<<"Percentage of R^2 > 1: " <<counter1/counter2<<std::endl;
+std::cout<<"Percentage of R^2 > 10: " <<counter/counter2<<std::endl;
 
 double time = (double)(clock() - tStart)/CLOCKS_PER_SEC;
 myfile << "Number of Particle: " + std::to_string(basis.n_counter[0]) + "\n";

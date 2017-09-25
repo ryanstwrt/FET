@@ -3,7 +3,7 @@
  * \file   Shift/mc_tallies/FET.cc
  * \author Ryan H. Stewart
  * \date   Wed June 28 04:30:47 2017
- * \mod    Thur Sept 20 04:53:00 2017
+ * \mod    Thur Sept 25 09:48:00 2017
  * \brief  Collection of FET functions for solving
  */
 //---------------------------------------------------------------------------//
@@ -12,30 +12,37 @@
 
 using namespace std;
 
+
+//---------------------------------------------------------------------------//
+/*!
+ * Below solves for the contribution of an individual particle to the tally.
+ *
+ * 
+ */
+//---------------------------------------------------------------------------//
 //Scales the reactor phase space down to Legendre phase space [-1,1]
 //Verified 7/18/17
-double FET_solver::scale (double x, 
-	     legendre_info basis)
+//TO DO: Create a new variable (or use an existing variable) to stop the rest of the eval from executing if the variable is not within the domain.
+double FET_solver::scale (double position, 
+	     std::vector<double> dimension_basis)
 {
-    if(x < basis.x_basis[basis.surface_index] || x > basis.x_basis[basis.surface_index+1])
+    if(position < dimension_basis[0] || position > dimension_basis[1])
     {
 	std::cout<< "The domain does not encompass the entire range of the problem."<<endl;
     }
     else
     {
-	return (2 * ((x - basis.x_basis[basis.surface_index])/(basis.x_basis[basis.surface_index+1] - basis.x_basis[basis.surface_index])) - 1);
+	return (2 * ((position - dimension_basis[0])/(dimension_basis[1] - dimension_basis[0])) - 1);
 
     }
 }
 
-
-
+//To Do: Split the surface eval function similar to the collision eval function
 void FET_solver::surface_eval (legendre_info &basis, 
 		   particle_info &a, std::size_t poly_terms)
 {
-    double temp;
-    double x_tild = scale(a.b_weight, basis);
-    double y_tild = scale(a.b_weight, basis);
+    double x_tild = scale(a.x, basis.x_basis);
+    double y_tild = scale(a.y, basis.y_basis);
     std::vector<double> P_n_x = basis.Pn(poly_terms, x_tild);
     std::vector<double> P_n_y = basis.Pn(poly_terms, y_tild);
 
@@ -52,9 +59,8 @@ void FET_solver::surface_eval (legendre_info &basis,
     {
 	for(int n=0; n<poly_terms; ++n)
 	{
-  	  temp =  basis.a[m][n];
-	  basis.A[m][n] += temp;
-	  basis.A_unc[m][n] += pow(temp,2);
+	  basis.A[m][n] += basis.a[m][n];
+	  basis.A_unc[m][n] += pow(basis.a[m][n],2);
 	  basis.a[m][n] = 0;
 	}
     }
@@ -62,13 +68,13 @@ void FET_solver::surface_eval (legendre_info &basis,
    basis.n_counter[0]++;
 }
 
+//Solves the legendre polynomial for a particles nth contribution to an estimate of the coefficient i.e. this will happen multiple times for each particle until the particle dies
 void FET_solver::collision_eval (legendre_info &basis, 
 		   particle_info &a, std::size_t poly_terms)
 {
-
-    double x_tild = scale(a.x, basis);
-    double y_tild = scale(a.y, basis);
-    double z_tild = scale(a.z, basis);
+    double x_tild = scale(a.x, basis.x_basis);
+    double y_tild = scale(a.y, basis.y_basis);
+    double z_tild = scale(a.z, basis.z_basis);
     std::vector<double> P_n_x = basis.Pn(poly_terms, x_tild);
     std::vector<double> P_n_y = basis.Pn(poly_terms, y_tild);
     std::vector<double> P_n_z = basis.Pn(poly_terms, z_tild);
@@ -87,11 +93,10 @@ void FET_solver::collision_eval (legendre_info &basis,
 
 }
 
+//Particle death trigers eval2 and generates an estimate for the coefficient for the nth particle.
 void FET_solver::collision_eval2(legendre_info &basis, 
 		   particle_info &a, std::size_t poly_terms)
 {
-double temp;
-
 //Sums the contribution of the flux of each particle
     for(int m=0; m<poly_terms; ++m)
     {
@@ -99,14 +104,12 @@ double temp;
       {
         for(int i=0; i<poly_terms; ++i)
         {
-  	  temp = basis.b[m][n][i];
-	  basis.B[m][n][i] += temp;
-	  basis.B_unc[m][n][i] += pow(temp,2);
+	  basis.B[m][n][i] += basis.b[m][n][i];
+	  basis.B_unc[m][n][i] += pow(basis.b[m][n][i],2);
 	  basis.b[m][n][i] = 0;
         }
       }
    }
-
    basis.n_counter[0]++;
 }
 
@@ -187,7 +190,7 @@ void FET_solver::get_current (legendre_info &basis,
 
 //---------------------------------------------------------------------------//
 /*!
- * Below solves for the final current or the flux for the tally.
+ * Below solves the Legendre Polynomials for the highest order term and saves all of the lower order terms in a vector.
  *
  * 
  */
@@ -198,6 +201,8 @@ std::vector<double> legendre_info::Pn(std::size_t poly_terms,
 {
 const double x2 = x * x;
 
+//Switch case to solve for the first twelve cases of the Legendre polynomials
+//This decreases the time requried for calculations
     switch(poly_terms)
     {
 	default:
@@ -228,6 +233,7 @@ const double x2 = x * x;
 	case 0:
 	save(0, 1.0);
     }
+//Solves for any case above 12 and saves it in the polynomial vector
 	for (int n = 13; n < poly_terms; ++n)
 	{
 	save(n, ( ( 2 * n - 1 ) * x * load( n - 1 ) - ( n - 1 ) * load( n - 2 ) ) / n );
@@ -236,6 +242,7 @@ const double x2 = x * x;
     return P_n;
 }
 
+//Serves as a loader and saver for the polynomial vector
 double
 legendre_info::load(std::size_t index) const
 {
