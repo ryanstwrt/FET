@@ -18,8 +18,8 @@ int main (int argc, char** argv)
 {
 ofstream myfile;
 ifstream input;
-input.open("/opt/Shift_inputs/fuel3.rst");
-myfile.open ("fuel.txt", ios::in | ios::app);
+input.open("/opt/Shift_inputs/point10e3.rst");
+myfile.open ("misc.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
 const std::size_t poly_order = 10;
