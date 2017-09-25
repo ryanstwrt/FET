@@ -24,8 +24,6 @@ class tally_info
 
     std::vector<double> surface_indices;
 
-    double current_total_unc;
-    double flux_total_unc;
     std::vector<std::vector<double> > current_matrix;
     std::vector<std::vector<double> > current_unc_matrix;
     std::vector<std::vector<double> > current_R_matrix;
@@ -85,13 +83,6 @@ tally_info::tally_info (std::size_t poly_order)
 
 
 }
-/*
-class collision_tally_info
-{
-  private:
-    double total_xc;
-
-};*/
 
 class legendre_info
 {
@@ -173,12 +164,12 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_surfaces)
     }
 //Currently sets the boundries for the x,y, and z dimensions
 //To Do: Figure out a better way to store this information, perhaps a 3 x 3 x 3 matrix to be initialized above?
-	x_basis[0] = -1;
-	y_basis[0] = -1;
-	z_basis[0] = -1;
-	x_basis[1] = 1;
-	y_basis[1] = 1;
-	z_basis[1] = 1;
+	x_basis[0] = -10;
+	y_basis[0] = -10;
+	z_basis[0] = -10;
+	x_basis[1] = 10;
+	y_basis[1] = 10;
+	z_basis[1] = 10;
 }
 
 //This class will either absorb the values coming out of shift, or disappear once integrated
@@ -205,7 +196,7 @@ class FET_solver
     void surface_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void collision_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void collision_eval2 (legendre_info &basis, particle_info &a, std::size_t poly_terms);
-    void get_current (legendre_info &basis, tally_info &tally, std::size_t poly_terms, std::size_t N);
+    void get_current (legendre_info &basis, tally_info &tally, std::size_t poly_terms);
     double scale (double x, legendre_info basis);
 };
 
