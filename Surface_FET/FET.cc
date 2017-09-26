@@ -22,13 +22,12 @@ using namespace std;
 //---------------------------------------------------------------------------//
 //Scales the reactor phase space down to Legendre phase space [-1,1]
 //Verified 7/18/17
-//TO DO: Create a new variable (or use an existing variable) to stop the rest of the eval from executing if the variable is not within the domain.
 double FET_solver::scale (double position, 
 	     std::vector<double> dimension_basis)
 {
     if(position < dimension_basis[0] || position > dimension_basis[1])
     {
-	std::cout<< "The domain does not encompass the entire range of the problem."<<endl;
+	return 2;
     }
     else
     {
@@ -37,23 +36,34 @@ double FET_solver::scale (double position,
     }
 }
 
-//To Do: Split the surface eval function similar to the collision eval function
+//Solves the legendre polynomial for a particles nth contribution to an estimate of the coefficient i.e. this will happen multiple times for each particle until the particle dies
 void FET_solver::surface_eval (legendre_info &basis, 
 		   particle_info &a, std::size_t poly_terms)
 {
     double x_tild = scale(a.x, basis.x_basis);
     double y_tild = scale(a.y, basis.y_basis);
+
+  if(x_tild != 2 || y_tild != 2)
+  {
     std::vector<double> P_n_x = basis.Pn(poly_terms, x_tild);
     std::vector<double> P_n_y = basis.Pn(poly_terms, y_tild);
 
 //Sums the contribution to the current of each collision from one particle
+
     for(int m=0; m<poly_terms; ++m)
     {
 	for(int n=0; n<poly_terms; ++n)
 	{
-          basis.a[m][n] += a.b_weight * P_n_x[m] * P_n_y[n];
+          basis.a[m][n] += a.wt * P_n_x[m] * P_n_y[n];
         }
     }
+  }
+}
+
+//Particle death triggers eval and generates an estimate for the coefficient for the nth particle.
+void FET_solver::surface_eval2 (legendre_info &basis, 
+		   particle_info &a, std::size_t poly_terms)
+{
 //Sums the contribution to the current of each particle
     for(int m=0; m<poly_terms; ++m)
     {
@@ -75,25 +85,28 @@ void FET_solver::collision_eval (legendre_info &basis,
     double x_tild = scale(a.x, basis.x_basis);
     double y_tild = scale(a.y, basis.y_basis);
     double z_tild = scale(a.z, basis.z_basis);
+  
+  if(x_tild != 2 || y_tild != 2 || z_tild != 2 )
+  {
     std::vector<double> P_n_x = basis.Pn(poly_terms, x_tild);
     std::vector<double> P_n_y = basis.Pn(poly_terms, y_tild);
     std::vector<double> P_n_z = basis.Pn(poly_terms, z_tild);
 
 //Sums the contribution to the flux of each collision from one particle
-  for(int m=0; m<poly_terms; ++m)
-  {
-    for(int n=0; n<poly_terms; ++n)
+    for(int m=0; m<poly_terms; ++m)
     {
-      for(int i=0; i<poly_terms; ++i)
+      for(int n=0; n<poly_terms; ++n)
       {
-        basis.b[m][n][i] += a.b_weight * P_n_x[m] * P_n_y[n] * P_n_z[i] / a.xs_tot;
+        for(int i=0; i<poly_terms; ++i)
+        {
+          basis.b[m][n][i] += a.wt * P_n_x[m] * P_n_y[n] * P_n_z[i] / a.xs_tot;
+        }
       }
     }
   }
-
 }
 
-//Particle death trigers eval2 and generates an estimate for the coefficient for the nth particle.
+//Particle death triggers eval and generates an estimate for the coefficient for the nth particle.
 void FET_solver::collision_eval2(legendre_info &basis, 
 		   particle_info &a, std::size_t poly_terms)
 {
@@ -158,12 +171,13 @@ void FET_solver::get_current (legendre_info &basis,
    }
 
 //Solves for the final coefficient, followed by the current, the uncertainty, and finally the R^2 value
-  for (int m = 0; m<poly_terms; m++)
+  for (int m=0; m<poly_terms; m++)
   {
     for(int n=0; n<poly_terms; ++n)
     {
-      basis.A[m][n] *= (basis.x_basis[basis.surface_index+1]-basis.x_basis[basis.surface_index]) / basis.n_counter[0];
+      basis.A[m][n] *= ((basis.x_basis[0]-basis.x_basis[1])*(basis.y_basis[0]-basis.y_basis[1])) / basis.n_counter[0];
       tally.current_matrix[m][n] = basis.A[m][n] * ortho_const[m] * ortho_const[n];
+
       var_a[m][n] = (basis.A_unc[m][n] - (1.0/basis.n_counter[0]) * std::pow(basis.A[m][n],2) ) * 1.0 / (basis.n_counter[0]*(basis.n_counter[0]-1.0));
       tally.current_unc_matrix[m][n] = std::sqrt(fabs(var_a[m][n]));
       tally.current_R_matrix[m][n] = (var_a[m][n] * ortho_const[m] * ortho_const[n] ) / std::pow(basis.A[m][n],2.0);
@@ -177,10 +191,10 @@ void FET_solver::get_current (legendre_info &basis,
     {
       for(int i=0; i<poly_terms; ++i)
       {
-	basis.B[m][n][i] *= (basis.x_basis[basis.surface_index+1]-basis.x_basis[basis.surface_index]) / basis.n_counter[0];
+	basis.B[m][n][i] *= 1 / basis.n_counter[0];
 	tally.flux_matrix[m][n][i] = basis.B[m][n][i] * ortho_const[m] * ortho_const[n] * ortho_const[i];
 
-        var_b[m][n][i] = (basis.B_unc[m][n][i] - (1.0/basis.n_counter[0]) * std::pow(basis.B[m][n][i],2) ) * 1.0 / (basis.n_counter[0]*(basis.n_counter[0]-1.0)); 
+        var_b[m][n][i] = (basis.B_unc[m][n][i]-(1.0/basis.n_counter[0])*std::pow(basis.B[m][n][i],2))*1.0/(basis.n_counter[0]*(basis.n_counter[0]-1.0)); 
 	tally.flux_unc_matrix[m][n][i] = std::sqrt(fabs(var_b[m][n][i]));
 	tally.flux_R_matrix[m][n][i] = (var_b[m][n][i] * ortho_const[m] * ortho_const[n] * ortho_const[i]) / std::pow(basis.B[m][n][i],2.0);
       }

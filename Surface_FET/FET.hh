@@ -16,6 +16,7 @@
 #include<cstdlib>
 #include<cmath>
 
+//Holds the information regarding the final current and flux
 class tally_info
 {
   public:
@@ -50,7 +51,7 @@ tally_info::tally_info (std::size_t poly_order)
     flux_R_matrix.resize(terms);
 
 //This loop initializes both the flux matrix, and the associated uncertainty matrix. The sum of the entire matrix will yield the flux for the system.
-   for(int m=0; m<terms; ++m)
+    for(int m=0; m<terms; ++m)
     {
       current_matrix[m].resize(terms);
       current_unc_matrix[m].resize(terms);
@@ -79,16 +80,15 @@ tally_info::tally_info (std::size_t poly_order)
       }
     }
 
-
 }
 
+//This class holds all of the inforomation regarding the estimate for the coefficients
 class legendre_info
 {
   public:
     inline legendre_info (std::size_t poly_order, std::size_t num_tallies);
     virtual ~legendre_info() = default;
 
-    int surface_index;
     std::size_t num_tallies;
     std::vector<double> x_basis;
     std::vector<double> y_basis;
@@ -114,7 +114,6 @@ class legendre_info
 };
 
 //Constructor for legendre_info
-//To do: Remove the num_surfaces nominclature
 legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
 		 : order(poly_order)
 		  ,terms(poly_order+1)
@@ -172,17 +171,16 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
 }
 
 //This class will either absorb the values coming out of shift, or disappear once integrated
+//To Do: position will be given with a number space number space number (ex 1 0 1). find a way to seperate this out
 class particle_info
 {
   public:
-    std::vector<double> a_n;
-    double b_weight;
-    int k_particle;
-    bool b_alive;
+    double wt;
+    bool alive;
+    bool domain;
     double x;
     double y;
     double z;    
-    double particle_surface;
     double xs_tot;
     double size;
 };
@@ -191,8 +189,8 @@ class particle_info
 class FET_solver
 {
   public:
-
     void surface_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
+    void surface_eval2 (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void collision_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void collision_eval2 (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void get_current (legendre_info &basis, tally_info &tally, std::size_t poly_terms);
