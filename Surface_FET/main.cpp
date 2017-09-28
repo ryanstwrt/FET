@@ -18,11 +18,11 @@ int main (int argc, char** argv)
 {
 ofstream myfile;
 ifstream input;
-input.open("/opt/Shift_inputs/fuel.rst");
-myfile.open ("test.txt", ios::in | ios::app);
+input.open("/opt/Shift_inputs/fuel_rod3.rst");
+myfile.open ("fuel_rod.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
-const std::size_t poly_order = 9;
+const std::size_t poly_order = 5;
 const std::size_t poly_terms = poly_order + 1;
 const std::size_t num_tallies = 1;
 double xs;
@@ -30,10 +30,8 @@ double wt;
 double x1;
 double y1;
 double z1;
-double counter = 0;
-double counter1 = 0;
-double counter2 = 0;
 char c;
+int counter = 0;
 std::string::size_type sz;
 std::string str;
 
@@ -44,9 +42,11 @@ FET_solver solver;
 
 while( !input.eof() )
 {
+	counter++;
 	getline( input, str);
 	int size_old = a.size;
-	a.size = str.size();	
+	a.size = str.size();
+	
 	if(a.size <= 3 && size_old >= 3)
 	{
 		a.alive = 0;
@@ -73,42 +73,21 @@ while( !input.eof() )
 
 std::cout<< basis.n_counter[0] << std::endl;
 solver.get_current(basis, tally, poly_terms);
+solver.cleanup(tally, poly_terms);
 
 //To Do: Remove coefficients with greater than 10, and warn the user for coefficients greater than 1
 
-for (int m=0; m < poly_terms; ++m)
-{
-   for(int n=0; n<poly_terms; ++n)
-    {
-      for(int i=0; i<poly_terms; ++i)
-      {
-	if(tally.flux_R_matrix[m][n][i] >= 1)
-	{
-	std::cout<<"P("<<m<<")("<<n<<")("<<i<<") = " << tally.flux_matrix[m][n][i] << " +/- " << tally.flux_unc_matrix[m][n][i] << " w/ " << tally.flux_R_matrix[m][n][i] <<std::endl;
-	 if(tally.flux_R_matrix[m][n][i] >= 10)
-	  {
-	    counter++;
-	    counter1++;
-	    tally.flux_matrix[m][n][i] = 0;
-	  }
-	  else
-  	    counter1++;
-	}
-	  counter2++;
-      }
-    }
-    std::cout<<std::endl;
-}
-std::cout<<counter<<"  "<<counter1<<"  "<<counter2<<std::endl;
-std::cout<<"Percentage of R^2 > 1: " <<(1-counter1/counter2)*100<<std::endl;
-std::cout<<"Percentage of R^2 > 10: " <<(1-counter/counter2)*100<<std::endl;
+
+
+std::cout<<"Percentage of R^2 > 1: " <<tally.R_great_10/tally.total_coeff*100<<std::endl;
+std::cout<<"Percentage of R^2 > 10: " <<tally.R_great_1/tally.total_coeff*100<<std::endl;
 
 double time = (double)(clock() - tStart)/CLOCKS_PER_SEC;
 myfile << "Number of Particle: " + std::to_string(basis.n_counter[0]) + "\n";
 myfile << "Time take: " + std::to_string(time) + "\n";
-myfile << "Percentage of R^2 > 1: " + std::to_string((1-counter1/counter2)*100) +"\n";
-myfile << "Percentage of R^2 > 10: " + std::to_string((1-counter/counter2)*100) +"\n";
-myfile << "All coefficients > R^2, basis -1,1 \n";
+myfile << "Percentage of R^2 > 1: " + std::to_string(tally.R_great_1/tally.total_coeff*100) +"\n";
+myfile << "Percentage of R^2 > 10: " + std::to_string(tally.R_great_10/tally.total_coeff*100) +"\n";
+myfile << "100 particle per generation \n";
 
 for (int m=0; m < poly_terms; ++m)
 {

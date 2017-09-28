@@ -23,6 +23,9 @@ class tally_info
     inline tally_info (std::size_t poly_order);
     virtual ~tally_info() = default;
 
+    double R_great_10;
+    double R_great_1;
+    double total_coeff;
     std::vector<std::vector<double> > current_matrix;
     std::vector<std::vector<double> > current_unc_matrix;
     std::vector<std::vector<double> > current_R_matrix;
@@ -164,10 +167,10 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
 //To Do: Figure out a better way to store this information, perhaps a 3 x 3 x 3 matrix to be initialized above?
 	x_basis[0] = -1;
 	y_basis[0] = -1;
-	z_basis[0] = -1;
+	z_basis[0] = -5;
 	x_basis[1] = 1;
 	y_basis[1] = 1;
-	z_basis[1] = 1;
+	z_basis[1] = 5;
 }
 
 //This class will either absorb the values coming out of shift, or disappear once integrated
@@ -194,6 +197,7 @@ class FET_solver
     void collision_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void collision_eval2 (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void get_current (legendre_info &basis, tally_info &tally, std::size_t poly_terms);
+    void cleanup (tally_info &tally, std::size_t poly_terms);
     double scale (double x, std::vector<double> dimension_basis);
 };
 
