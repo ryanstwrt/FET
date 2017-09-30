@@ -12,7 +12,14 @@
 
 using namespace std;
 
+void FET_solver::initializer (initial_info &info)
+{
 
+info.poly_order = 5;
+info.poly_terms = info.poly_order + 1;
+info.num_tallies = 1;
+
+}
 //---------------------------------------------------------------------------//
 /*!
  * Below solves for the contribution of an individual particle to the tally.
@@ -136,7 +143,6 @@ void FET_solver::collision_eval2(legendre_info &basis,
 //---------------------------------------------------------------------------//
 
 
-//To Do: Fix orthonormalization constant to incorporate all three dimensions
 void FET_solver::get_current (legendre_info &basis,
 	    	tally_info &tally, 
 		std::size_t poly_terms)
@@ -184,7 +190,6 @@ void FET_solver::get_current (legendre_info &basis,
   }
 
 //Solves for the final coefficient, followed by the flux, the uncertainty, and finally the R^2 value
-//TO DO: Check if I need to apply the ortho-normal constants for R^2
   for(int m=0; m<poly_terms; ++m)
   {
     for(int n=0; n<poly_terms; ++n)
