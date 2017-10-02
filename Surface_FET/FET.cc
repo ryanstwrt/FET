@@ -15,9 +15,10 @@ using namespace std;
 void FET_solver::initializer (initial_info &info)
 {
 
-info.poly_order = 5;
+info.poly_order = 9;
 info.poly_terms = info.poly_order + 1;
 info.num_tallies = 1;
+
 
 }
 //---------------------------------------------------------------------------//

@@ -19,12 +19,15 @@ int main (int argc, char** argv)
 ofstream myfile;
 ifstream input;
 input.open("/opt/Shift_inputs/fuel_rod3.25.rst");
-myfile.open ("fuel_rod_full.txt", ios::in | ios::app);
+myfile.open ("fuel_rod.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
 FET_solver solver;
 initial_info info;
 solver.initializer(info);
+tally_info tally (info.poly_order);
+legendre_info basis (info.poly_order, info.num_tallies);
+particle_info a;
 
 double xs;
 double wt;
@@ -35,11 +38,6 @@ char c;
 int counter = 0;
 std::string::size_type sz;
 std::string str;
-
-tally_info tally (info.poly_order);
-legendre_info basis(info.poly_order, info.num_tallies);
-particle_info a;
-
 
 while( !input.eof() )
 {
