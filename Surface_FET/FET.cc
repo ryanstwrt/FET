@@ -15,7 +15,7 @@ using namespace std;
 void FET_solver::initializer (initial_info &info)
 {
 
-info.poly_order = 7;
+info.poly_order = 6;
 info.poly_terms = info.poly_order + 1;
 info.num_tallies = 1;
 
@@ -101,9 +101,9 @@ void FET_solver::collision_eval (legendre_info &basis,
 
     if(x_tild != 2 || y_tild != 2 || z_tild != 2 )
     {
-      std::vector<double> P_n_x = basis.Pn(poly_terms, x_tild);
-      std::vector<double> P_n_y = basis.Pn(poly_terms, y_tild);
-      std::vector<double> P_n_z = basis.Pn(poly_terms, z_tild);
+      std::vector<double> P_n_x = basis.Pn(poly_terms-1, x_tild);
+      std::vector<double> P_n_y = basis.Pn(poly_terms-1, y_tild);
+      std::vector<double> P_n_z = basis.Pn(poly_terms-1, z_tild);
 
 //Sums the contribution to the flux of each collision from one particle
       for(int m=0; m<poly_terms; ++m)
@@ -112,7 +112,7 @@ void FET_solver::collision_eval (legendre_info &basis,
         {
           for(int i=0; i<poly_terms; ++i)
           {
-            basis.b[m][n][i] += a.wt * P_n_x[m] * P_n_y[n] * P_n_z[i] / a.xs_tot;
+            basis.b[m][n][i][k] += a.wt * P_n_x[m] * P_n_y[n] * P_n_z[i] / a.xs_tot;
           }
         }
       }
@@ -125,19 +125,22 @@ void FET_solver::collision_eval2(legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
 {
 //Sums the contribution of the flux of each particle
+  for(int k=0; k < basis.num_tallies; ++k)
+  {
     for(int m=0; m<poly_terms; ++m)
     {
       for(int n=0; n<poly_terms; ++n)
       {
         for(int i=0; i<poly_terms; ++i)
         {
-	  basis.B[m][n][i] += basis.b[m][n][i];
-	  basis.B_unc[m][n][i] += pow(basis.b[m][n][i],2);
-	  basis.b[m][n][i] = 0;
+	  basis.B[m][n][i][k] += basis.b[m][n][i][k];
+	  basis.B_unc[m][n][i][k] += pow(basis.b[m][n][i][k],2);
+	  basis.b[m][n][i][k] = 0;
         }
       }
-   }
-   basis.n_counter[0]++;
+    }
+  }
+  basis.n_counter[0]++;
 }
 
 //---------------------------------------------------------------------------//
@@ -196,21 +199,21 @@ void FET_solver::get_current (legendre_info &basis,
   }
 
 //Solves for the final coefficient, followed by the flux, the uncertainty, and finally the R^2 value
-  for(int m=0; m<poly_terms; ++m)
+  for(int k=0; k < basis.num_tallies; ++k)
   {
-    for(int n=0; n<poly_terms; ++n)
+    for(int m=0; m<poly_terms; ++m)
     {
-      for(int i=0; i<poly_terms; ++i)
+      for(int n=0; n<poly_terms; ++n)
       {
-	basis.B[m][n][i] *= 1 / basis.n_counter[0];
-        var_b[m][n][i] = (basis.B_unc[m][n][i]-(1.0/basis.n_counter[0])*std::pow(basis.B[m][n][i],2))*1.0/(basis.n_counter[0]*(basis.n_counter[0]-1.0));
+        for(int i=0; i<poly_terms; ++i)
+        {
+	  basis.B[m][n][i][k] *= 1 / basis.n_counter[0];
+          var_b[m][n][i] = (basis.B_unc[m][n][i][k]-(1.0/basis.n_counter[0])*std::pow(basis.B[m][n][i][k],2))*1.0/(basis.n_counter[0]*(basis.n_counter[0]-1.0));
 
-
-	tally.flux_R_matrix[m][n][i] = (var_b[m][n][i])  * ortho_const[m][n][i]/ std::pow(basis.B[m][n][i],2.0);
-	tally.flux_matrix[m][n][i] = basis.B[m][n][i] * ortho_const[m][n][i];
-	tally.flux_unc_matrix[m][n][i] = std::sqrt(fabs(var_b[m][n][i]));
-
-
+	  tally.flux_R_matrix[m][n][i] = (var_b[m][n][i])  * ortho_const[m][n][i]/ std::pow(basis.B[m][n][i][k],2.0);
+	  tally.flux_matrix[m][n][i] = basis.B[m][n][i][k] * ortho_const[m][n][i];
+	  tally.flux_unc_matrix[m][n][i] = std::sqrt(fabs(var_b[m][n][i]));
+        }
       }
     }
   }
@@ -257,14 +260,14 @@ for (int m=0; m < poly_terms; ++m)
  */
 //---------------------------------------------------------------------------//
 
-std::vector<double> legendre_info::Pn(std::size_t poly_terms,
+std::vector<double> legendre_info::Pn(std::size_t poly_order,
 		       double x)
 {
 const double x2 = x * x;
 
 //Switch case to solve for the first twelve cases of the Legendre polynomials
 //This decreases the time requried for calculations
-    switch(poly_terms)
+    switch(poly_order)
     {
 	default:
 	case 12:
@@ -295,7 +298,7 @@ const double x2 = x * x;
 	save(0, 1.0);
     }
 //Solves for any case above 12 and saves it in the polynomial vector
-	for (int n = 13; n < poly_terms; ++n)
+	for (int n = 13; n < poly_order; ++n)
 	{
 	save(n, ( ( 2 * n - 1 ) * x * load( n - 1 ) - ( n - 1 ) * load( n - 2 ) ) / n );
 	}

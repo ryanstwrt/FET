@@ -121,9 +121,9 @@ class legendre_info
     multi_vectors::vector_2d  A;
     multi_vectors::vector_2d  A_unc;
 
-    multi_vectors::vector_3d b;
-    multi_vectors::vector_3d B;
-    multi_vectors::vector_3d B_unc;
+    multi_vectors::vector_4d b;
+    multi_vectors::vector_4d B;
+    multi_vectors::vector_4d B_unc;
 
     std::vector<double> Pn(std::size_t poly_terms, double x);
 
@@ -175,12 +175,27 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
         B_unc[m][n].resize(terms);
         for(int i=0; i<terms; ++i)
         {
-          b[m][n][i] = 0;
-          B[m][n][i] = 0;
-          B_unc[m][n][i] = 0;
+          b[m][n][i].resize(num_tallies);
+          B[m][n][i].resize(num_tallies);
+          B_unc[m][n][i].resize(num_tallies);
+
+	    for(int k=0; k<num_tallies; ++k)
+	    {
+
+	      b[m][n][i][k] = 0;
+	      B[m][n][i][k] = 0;
+	      B_unc[m][n][i][k] = 0;
+	      if(i == terms)
+	      {
+	      b[terms][terms][terms][k] = k;
+	      B[terms][terms][terms][k] = k;
+	      B_unc[terms][terms][terms][k] = k;
+	      }
+	    }
         }
       }
     }
+std::cout<<terms<<std::endl;
 //Currently sets the boundries for the x,y, and z dimensions
 //To Do: Figure out a better way to store this information, perhaps a 3 x 3 x 3 matrix to be initialized above?
 	x_basis[0] = -1;
@@ -189,6 +204,7 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
 	x_basis[1] = 1;
 	y_basis[1] = 1;
 	z_basis[1] = 5;
+std::cout<<"test"<<std::endl;
 }
 
 //This class will either absorb the values coming out of shift, or disappear once integrated
