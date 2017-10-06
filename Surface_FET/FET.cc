@@ -15,22 +15,21 @@ using namespace std;
 void FET_solver::initializer (initial_info &info)
 {
 
-info.poly_order = 9;
+info.poly_order = 7;
 info.poly_terms = info.poly_order + 1;
 info.num_tallies = 1;
-
 
 }
 //---------------------------------------------------------------------------//
 /*!
  * Below solves for the contribution of an individual particle to the tally.
  *
- * 
+ *
  */
 //---------------------------------------------------------------------------//
 //Scales the reactor phase space down to Legendre phase space [-1,1]
 //Verified 7/18/17
-double FET_solver::scale (double position, 
+double FET_solver::scale (double position,
 	     std::vector<double> dimension_basis)
 {
     if(position < dimension_basis[0] || position > dimension_basis[1])
@@ -45,7 +44,7 @@ double FET_solver::scale (double position,
 }
 
 //Solves the legendre polynomial for a particles nth contribution to an estimate of the coefficient i.e. this will happen multiple times for each particle until the particle dies
-void FET_solver::surface_eval (legendre_info &basis, 
+void FET_solver::surface_eval (legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
 {
     double x_tild = scale(a.x, basis.x_basis);
@@ -69,7 +68,7 @@ void FET_solver::surface_eval (legendre_info &basis,
 }
 
 //Particle death triggers eval and generates an estimate for the coefficient for the nth particle.
-void FET_solver::surface_eval2 (legendre_info &basis, 
+void FET_solver::surface_eval2 (legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
 {
 //Sums the contribution to the current of each particle
@@ -88,27 +87,33 @@ void FET_solver::surface_eval2 (legendre_info &basis,
 
 //Solves the legendre polynomial for a particles nth contribution to an estimate of the coefficient i.e. this will happen multiple times for each particle until the particle dies
 //TO DO: Combine collision eval with an if statement (if p.alive == 1)
-void FET_solver::collision_eval (legendre_info &basis, 
+void FET_solver::collision_eval (legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
 {
+
+    
+
     double x_tild = scale(a.x, basis.x_basis);
     double y_tild = scale(a.y, basis.y_basis);
     double z_tild = scale(a.z, basis.z_basis);
-  
-  if(x_tild != 2 || y_tild != 2 || z_tild != 2 )
+  for(int k=0; k < basis.num_tallies; ++k)
   {
-    std::vector<double> P_n_x = basis.Pn(poly_terms, x_tild);
-    std::vector<double> P_n_y = basis.Pn(poly_terms, y_tild);
-    std::vector<double> P_n_z = basis.Pn(poly_terms, z_tild);
+
+    if(x_tild != 2 || y_tild != 2 || z_tild != 2 )
+    {
+      std::vector<double> P_n_x = basis.Pn(poly_terms, x_tild);
+      std::vector<double> P_n_y = basis.Pn(poly_terms, y_tild);
+      std::vector<double> P_n_z = basis.Pn(poly_terms, z_tild);
 
 //Sums the contribution to the flux of each collision from one particle
-    for(int m=0; m<poly_terms; ++m)
-    {
-      for(int n=0; n<poly_terms; ++n)
+      for(int m=0; m<poly_terms; ++m)
       {
-        for(int i=0; i<poly_terms; ++i)
+        for(int n=0; n<poly_terms; ++n)
         {
-          basis.b[m][n][i] += a.wt * P_n_x[m] * P_n_y[n] * P_n_z[i] / a.xs_tot;
+          for(int i=0; i<poly_terms; ++i)
+          {
+            basis.b[m][n][i] += a.wt * P_n_x[m] * P_n_y[n] * P_n_z[i] / a.xs_tot;
+          }
         }
       }
     }
@@ -116,7 +121,7 @@ void FET_solver::collision_eval (legendre_info &basis,
 }
 
 //Particle death triggers eval and generates an estimate for the coefficient for the nth particle.
-void FET_solver::collision_eval2(legendre_info &basis, 
+void FET_solver::collision_eval2(legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
 {
 //Sums the contribution of the flux of each particle
@@ -139,13 +144,13 @@ void FET_solver::collision_eval2(legendre_info &basis,
 /*!
  * Below solves for the final current or the flux for the tally.
  *
- * 
+ *
  */
 //---------------------------------------------------------------------------//
 
 
 void FET_solver::get_current (legendre_info &basis,
-	    	tally_info &tally, 
+	    	tally_info &tally,
 		std::size_t poly_terms)
 {
 //Dummy variables for solving for the current
@@ -171,7 +176,7 @@ void FET_solver::get_current (legendre_info &basis,
        {
          var_b[m][n][i] = 0;
 	 ortho_const[m][n][i] = (2*m-1) * (2*n-1)* (2*i-1) / ((basis.x_basis[1]-basis.x_basis[0])*(basis.y_basis[1]-basis.y_basis[0])*(basis.z_basis[1]-basis.z_basis[0]));
-	 
+
        }
      }
    }
@@ -187,7 +192,7 @@ void FET_solver::get_current (legendre_info &basis,
       var_a[m][n] = (basis.A_unc[m][n] - (1.0/basis.n_counter[0]) * std::pow(basis.A[m][n],2) ) * 1.0 / (basis.n_counter[0]*(basis.n_counter[0]-1.0));
       tally.current_unc_matrix[m][n] = std::sqrt(fabs(var_a[m][n]));
       tally.current_R_matrix[m][n] = (var_a[m][n] * ortho_const[m][n][0] ) / std::pow(basis.A[m][n],2.0);
-    }	
+    }
   }
 
 //Solves for the final coefficient, followed by the flux, the uncertainty, and finally the R^2 value
@@ -202,7 +207,7 @@ void FET_solver::get_current (legendre_info &basis,
 
 
 	tally.flux_R_matrix[m][n][i] = (var_b[m][n][i])  * ortho_const[m][n][i]/ std::pow(basis.B[m][n][i],2.0);
-	tally.flux_matrix[m][n][i] = basis.B[m][n][i] * ortho_const[m][n][i]; 
+	tally.flux_matrix[m][n][i] = basis.B[m][n][i] * ortho_const[m][n][i];
 	tally.flux_unc_matrix[m][n][i] = std::sqrt(fabs(var_b[m][n][i]));
 
 
@@ -212,7 +217,7 @@ void FET_solver::get_current (legendre_info &basis,
 }
 
 //Removes any coefficient with an R^2 value greater than 10. And lets the user know how many coefficients had R^2 values greater than 1 and greater than 10
-void FET_solver::cleanup (tally_info &tally, 
+void FET_solver::cleanup (tally_info &tally,
 		std::size_t poly_terms)
 {
 
@@ -248,11 +253,11 @@ for (int m=0; m < poly_terms; ++m)
 /*!
  * Below solves the Legendre Polynomials for the highest order term and saves all of the lower order terms in a vector.
  *
- * 
+ *
  */
 //---------------------------------------------------------------------------//
 
-std::vector<double> legendre_info::Pn(std::size_t poly_terms, 
+std::vector<double> legendre_info::Pn(std::size_t poly_terms,
 		       double x)
 {
 const double x2 = x * x;
@@ -277,7 +282,7 @@ const double x2 = x * x;
 	case 6:
 	save(6, (((231 * x2 - 315) * x2 + 105) * x2 - 5) / 16);
 	case 5:
-	save(5, ((63 * x2 - 70) * x2 + 15)*x / 8); 
+	save(5, ((63 * x2 - 70) * x2 + 15)*x / 8);
 	case 4:
 	save(4, ((35 * x2 - 30) * x2 + 3) / 8);
 	case 3:
@@ -310,4 +315,3 @@ legendre_info::save(std::size_t index, double value)
 {
   P_n[index] = value;
 }
-

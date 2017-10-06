@@ -16,6 +16,15 @@
 #include<cstdlib>
 #include<cmath>
 
+class multi_vectors
+{
+public:
+typedef std::vector<double>    vector_1d;
+typedef std::vector<vector_1d> vector_2d;
+typedef std::vector<vector_2d> vector_3d;
+typedef std::vector<vector_3d> vector_4d;
+};
+
 class initial_info
 {
   public:
@@ -35,13 +44,13 @@ class tally_info
     double R_great_10;
     double R_great_1;
     double total_coeff;
-    std::vector<std::vector<double> > current_matrix;
-    std::vector<std::vector<double> > current_unc_matrix;
-    std::vector<std::vector<double> > current_R_matrix;
+    multi_vectors::vector_2d current_matrix;
+    multi_vectors::vector_2d current_unc_matrix;
+    multi_vectors::vector_2d current_R_matrix;
 
-    std::vector<std::vector<std::vector<double> > > flux_matrix;
-    std::vector<std::vector<std::vector<double> > > flux_unc_matrix;
-    std::vector<std::vector<std::vector<double> > > flux_R_matrix;
+    multi_vectors::vector_3d flux_matrix;
+    multi_vectors::vector_3d flux_unc_matrix;
+    multi_vectors::vector_3d flux_R_matrix;
 
 
   private:
@@ -108,13 +117,13 @@ class legendre_info
     std::vector<double> n_counter;
     std::vector<double> P_n;
 
-    std::vector<std::vector<double> >  a;
-    std::vector<std::vector<double> >  A;
-    std::vector<std::vector<double> >  A_unc;
+    multi_vectors::vector_2d  a;
+    multi_vectors::vector_2d  A;
+    multi_vectors::vector_2d  A_unc;
 
-    std::vector<std::vector<std::vector<double> > > b;
-    std::vector<std::vector<std::vector<double> > > B;
-    std::vector<std::vector<std::vector<double> > > B_unc;
+    multi_vectors::vector_3d b;
+    multi_vectors::vector_3d B;
+    multi_vectors::vector_3d B_unc;
 
     std::vector<double> Pn(std::size_t poly_terms, double x);
 
