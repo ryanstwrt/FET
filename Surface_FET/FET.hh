@@ -38,7 +38,7 @@ class initial_info
 class tally_info
 {
   public:
-    inline tally_info (std::size_t poly_order);
+    inline tally_info (std::size_t poly_order,  std::size_t num_tallies);
     virtual ~tally_info() = default;
 
     double R_great_10;
@@ -48,9 +48,9 @@ class tally_info
     multi_vectors::vector_2d current_unc_matrix;
     multi_vectors::vector_2d current_R_matrix;
 
-    multi_vectors::vector_3d flux_matrix;
-    multi_vectors::vector_3d flux_unc_matrix;
-    multi_vectors::vector_3d flux_R_matrix;
+    multi_vectors::vector_4d flux_matrix;
+    multi_vectors::vector_4d flux_unc_matrix;
+    multi_vectors::vector_4d flux_R_matrix;
 
 
   private:
@@ -58,9 +58,9 @@ class tally_info
     std::size_t terms;
 };
 
-tally_info::tally_info (std::size_t poly_order) 
+tally_info::tally_info (std::size_t poly_order, std::size_t num_tallies) 
 			: order(poly_order)
-			,terms(poly_order+1)
+			, terms(poly_order+1)
 {
 
     current_matrix.resize(terms);
@@ -94,12 +94,26 @@ tally_info::tally_info (std::size_t poly_order)
 
         for(int i=0; i<terms; ++i)
         {
-          flux_matrix[m][n][i] = 0;
-          flux_unc_matrix[m][n][i] = 0;
-          flux_R_matrix[m][n][i] = 0;
+          flux_matrix[m][n][i].resize(terms);
+          flux_unc_matrix[m][n][i].resize(terms);
+          flux_R_matrix[m][n][i].resize(terms);
+
+	    for(int k=0; k<num_tallies; ++k)
+	    {
+
+	      flux_matrix[m][n][i][k] = 0;
+	      flux_unc_matrix[m][n][i][k] = 0;
+	      flux_R_matrix[m][n][i][k] = 0;
+	      if(i == terms)
+	      {
+	      flux_matrix[terms][terms][terms][k] = k;
+	      flux_unc_matrix[terms][terms][terms][k] = k;
+	      flux_R_matrix[terms][terms][terms][k] = k;
+	      }
+	    }
+          }
         }
       }
-    }
 
 }
 
@@ -168,7 +182,7 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
       {
         a[m][n] = 0;
         A[m][n] = 0;
-        A_unc[m][n] = 0;;
+        A_unc[m][n] = 0;
 
         b[m][n].resize(terms);
         B[m][n].resize(terms);
@@ -195,7 +209,6 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
         }
       }
     }
-std::cout<<terms<<std::endl;
 //Currently sets the boundries for the x,y, and z dimensions
 //To Do: Figure out a better way to store this information, perhaps a 3 x 3 x 3 matrix to be initialized above?
 	x_basis[0] = -1;
@@ -204,7 +217,6 @@ std::cout<<terms<<std::endl;
 	x_basis[1] = 1;
 	y_basis[1] = 1;
 	z_basis[1] = 5;
-std::cout<<"test"<<std::endl;
 }
 
 //This class will either absorb the values coming out of shift, or disappear once integrated
@@ -230,8 +242,8 @@ class FET_solver
     void surface_eval2 (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void collision_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void collision_eval2 (legendre_info &basis, particle_info &a, std::size_t poly_terms);
-    void get_current (legendre_info &basis, tally_info &tally, std::size_t poly_terms);
-    void cleanup (tally_info &tally, std::size_t poly_terms);
+    void get_current (legendre_info &basis, tally_info &tally, std::size_t num_tallies, std::size_t poly_terms);
+    void cleanup (tally_info &tally, std::size_t poly_terms, std::size_t num_tallies);
     double scale (double x, std::vector<double> dimension_basis);
     void initializer (initial_info &info);
 };

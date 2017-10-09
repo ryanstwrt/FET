@@ -18,14 +18,14 @@ int main (int argc, char** argv)
 {
 ofstream myfile;
 ifstream input;
-input.open("/opt/Shift_inputs/fuel_rod.rst");
+input.open("/opt/Shift_inputs/fuel_rod2.rst");
 myfile.open ("fuel_rod.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
 FET_solver solver;
 initial_info info;
 solver.initializer(info);
-tally_info tally (info.poly_order);
+tally_info tally (info.poly_order, info.num_tallies);
 legendre_info basis (info.poly_order, info.num_tallies);
 particle_info a;
 
@@ -71,8 +71,8 @@ while( !input.eof() )
 }
 
 std::cout<< basis.n_counter[0] << std::endl;
-solver.get_current(basis, tally, info.poly_terms);
-solver.cleanup(tally, info.poly_terms);
+solver.get_current(basis, tally, info.num_tallies, info.poly_terms);
+solver.cleanup(tally, info.poly_terms, info.num_tallies);
 
 //To Do: Remove coefficients with greater than 10, and warn the user for coefficients greater than 1
 
@@ -88,14 +88,17 @@ myfile << "Percentage of R^2 > 1: " + std::to_string(tally.R_great_1/tally.total
 myfile << "Percentage of R^2 > 10: " + std::to_string(tally.R_great_10/tally.total_coeff*100) +"\n";
 myfile << "100000 particle per generation \n";
 
-for (int m=0; m < info.poly_terms; ++m)
+for(int k=0; k<info.num_tallies; ++k)
 {
-   for(int n=0; n<info.poly_terms; ++n)
+  for (int m=0; m < info.poly_terms; ++m)
+  {
+    for(int n=0; n<info.poly_terms; ++n)
     {
       for(int i=0; i<info.poly_terms; ++i)
       {
+	myfile << "Tally" << k << " \n";
 	myfile << "+";
-	myfile << tally.flux_matrix[m][n][i];
+	myfile << tally.flux_matrix[m][n][i][k];
 	myfile << "*LegendreP[";
 	myfile << std::to_string(m);
 	myfile << ",x]*LegendreP[";
@@ -103,6 +106,7 @@ for (int m=0; m < info.poly_terms; ++m)
 	myfile << ",y]*LegendreP[";
 	myfile << std::to_string(i);
 	myfile << ",z]";
+	}
        }
     }
 }

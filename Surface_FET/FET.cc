@@ -151,15 +151,16 @@ void FET_solver::collision_eval2(legendre_info &basis,
  */
 //---------------------------------------------------------------------------//
 
-
+//To Do: Update the vhe surface currant to allow for multiple tallies
 void FET_solver::get_current (legendre_info &basis,
 	    	tally_info &tally,
+		std::size_t num_tallies,
 		std::size_t poly_terms)
 {
 //Dummy variables for solving for the current
     std::vector<std::vector<double> >   var_a;
-    std::vector<std::vector<std::vector<double> > >  var_b;
-    std::vector<std::vector<std::vector<double> > >   ortho_const;
+    std::vector<std::vector<std::vector<std::vector<double> > > > var_b;
+    std::vector<std::vector<std::vector<std::vector<double> > > >  ortho_const;
 
 //Initialize the dummy variables to the same dimensions as the current/flux
    var_b.resize(poly_terms);
@@ -177,9 +178,14 @@ void FET_solver::get_current (legendre_info &basis,
        var_a[m][n] = 0;
        for(int i=0; i<poly_terms; ++i)
        {
-         var_b[m][n][i] = 0;
-	 ortho_const[m][n][i] = (2*m-1) * (2*n-1)* (2*i-1) / ((basis.x_basis[1]-basis.x_basis[0])*(basis.y_basis[1]-basis.y_basis[0])*(basis.z_basis[1]-basis.z_basis[0]));
+	 var_b[m][n][i].resize(num_tallies);
+         ortho_const[m][n][i].resize(poly_terms);
+	 for(int k=0; k<num_tallies; ++k)
+	 {
+         var_b[m][n][i][k] = 0;
+	 ortho_const[m][n][i][k] = (2*m-1) * (2*n-1)* (2*i-1) / ((basis.x_basis[2*k+1]-basis.x_basis[2*k])*(basis.y_basis[2*k+1]-basis.y_basis[2*k])*(basis.z_basis[2*k+1]-basis.z_basis[2*k]));
 
+	 }
        }
      }
    }
@@ -190,11 +196,11 @@ void FET_solver::get_current (legendre_info &basis,
     for(int n=0; n<poly_terms; ++n)
     {
       basis.A[m][n] *= ((basis.x_basis[0]-basis.x_basis[1])*(basis.y_basis[0]-basis.y_basis[1])) / basis.n_counter[0];
-      tally.current_matrix[m][n] = basis.A[m][n] * ortho_const[m][n][0];
+      tally.current_matrix[m][n] = basis.A[m][n] * ortho_const[m][n][0][0];
 
       var_a[m][n] = (basis.A_unc[m][n] - (1.0/basis.n_counter[0]) * std::pow(basis.A[m][n],2) ) * 1.0 / (basis.n_counter[0]*(basis.n_counter[0]-1.0));
       tally.current_unc_matrix[m][n] = std::sqrt(fabs(var_a[m][n]));
-      tally.current_R_matrix[m][n] = (var_a[m][n] * ortho_const[m][n][0] ) / std::pow(basis.A[m][n],2.0);
+      tally.current_R_matrix[m][n] = (var_a[m][n] * ortho_const[m][n][0][0] ) / std::pow(basis.A[m][n],2.0);
     }
   }
 
@@ -208,11 +214,11 @@ void FET_solver::get_current (legendre_info &basis,
         for(int i=0; i<poly_terms; ++i)
         {
 	  basis.B[m][n][i][k] *= 1 / basis.n_counter[0];
-          var_b[m][n][i] = (basis.B_unc[m][n][i][k]-(1.0/basis.n_counter[0])*std::pow(basis.B[m][n][i][k],2))*1.0/(basis.n_counter[0]*(basis.n_counter[0]-1.0));
+          var_b[m][n][i][k] = (basis.B_unc[m][n][i][k]-(1.0/basis.n_counter[0])*std::pow(basis.B[m][n][i][k],2))*1.0/(basis.n_counter[0]*(basis.n_counter[0]-1.0));
 
-	  tally.flux_R_matrix[m][n][i] = (var_b[m][n][i])  * ortho_const[m][n][i]/ std::pow(basis.B[m][n][i][k],2.0);
-	  tally.flux_matrix[m][n][i] = basis.B[m][n][i][k] * ortho_const[m][n][i];
-	  tally.flux_unc_matrix[m][n][i] = std::sqrt(fabs(var_b[m][n][i]));
+	  tally.flux_R_matrix[m][n][i][k] = (var_b[m][n][i][k])  * ortho_const[m][n][i][k]/ std::pow(basis.B[m][n][i][k],2.0);
+	  tally.flux_matrix[m][n][i][k] = basis.B[m][n][i][k] * ortho_const[m][n][i][k];
+	  tally.flux_unc_matrix[m][n][i][k] = std::sqrt(fabs(var_b[m][n][i][k]));
         }
       }
     }
@@ -220,31 +226,36 @@ void FET_solver::get_current (legendre_info &basis,
 }
 
 //Removes any coefficient with an R^2 value greater than 10. And lets the user know how many coefficients had R^2 values greater than 1 and greater than 10
+//To Do: Update cleanup to perform a clean up on surface tallies
 void FET_solver::cleanup (tally_info &tally,
-		std::size_t poly_terms)
+		std::size_t poly_terms, std::size_t num_tallies)
 {
 
-    tally.R_great_10 = 0;
-    tally.R_great_1 = 0;
+    tally.R_great_10  = 0;
+    tally.R_great_1   = 0;
     tally.total_coeff = 0;
-
-for (int m=0; m < poly_terms; ++m)
+for(int k=0; k < num_tallies; ++k)
 {
-   for(int n=0; n<poly_terms; ++n)
+  for (int m=0; m < poly_terms; ++m)
+  {
+    for(int n=0; n<poly_terms; ++n)
     {
       for(int i=0; i<poly_terms; ++i)
       {
-	if(tally.flux_R_matrix[m][n][i] >= 1)
-	{
-	    tally.R_great_1++;
-	 if(tally.flux_R_matrix[m][n][i] >= 10)
+
+	
+ 	  if(tally.flux_R_matrix[m][n][i][k] >= 1)
+	  { 
+	      tally.R_great_1++;
+	  if(tally.flux_R_matrix[m][n][i][k] >= 10)
 	  {
 	    tally.R_great_10++;
-	    std::cout<<"P("<<m<<")("<<n<<")("<<i<<") = "<<tally.flux_matrix[m][n][i]<<" +/- "<<tally.flux_unc_matrix[m][n][i]<<" w/ "<<tally.flux_R_matrix[m][n][i]<<std::endl;
-	    tally.flux_matrix[m][n][i] = 0;
+	    std::cout<<"P("<<m<<")("<<n<<")("<<i<<") = "<<tally.flux_matrix[m][n][i][k]<<" +/- "<<tally.flux_unc_matrix[m][n][i][k]<<" w/ "<<tally.flux_R_matrix[m][n][i][k]<<std::endl;
+	    tally.flux_matrix[m][n][i][k] = 0;
 
 	  }
 	}
+      }
 	  tally.total_coeff++;
       }
     }
