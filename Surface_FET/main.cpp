@@ -18,7 +18,7 @@ int main (int argc, char** argv)
 {
 ofstream myfile;
 ifstream input;
-input.open("/opt/Shift_inputs/fuel_rod2.rst");
+input.open("/opt/Shift_inputs/fuel_rod3.25.rst");
 myfile.open ("fuel_rod.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
@@ -77,19 +77,26 @@ solver.cleanup(tally, info.poly_terms, info.num_tallies);
 //To Do: Remove coefficients with greater than 10, and warn the user for coefficients greater than 1
 
 
-
-std::cout<<"Percentage of R^2 > 1: " <<tally.R_great_10/tally.total_coeff*100<<std::endl;
-std::cout<<"Percentage of R^2 > 10: " <<tally.R_great_1/tally.total_coeff*100<<std::endl;
+for(int k=0; k<info.num_tallies; ++k)
+{
+std::cout<<"Percentage of R^2 > 1: " <<(tally.R_greater[k]-tally.R_greater[k+1])/tally.total_coeff[k]*100<<std::endl;
+std::cout<<"Percentage of R^2 > 10: " <<tally.R_greater[k+1]/tally.total_coeff[k]*100<<std::endl;
+}
 
 double time = (double)(clock() - tStart)/CLOCKS_PER_SEC;
-myfile << "Number of Particle: " + std::to_string(basis.n_counter[0]) + "\n";
 myfile << "Time take: " + std::to_string(time) + "\n";
-myfile << "Percentage of R^2 > 1: " + std::to_string(tally.R_great_1/tally.total_coeff*100) +"\n";
-myfile << "Percentage of R^2 > 10: " + std::to_string(tally.R_great_10/tally.total_coeff*100) +"\n";
-myfile << "100000 particle per generation \n";
 
 for(int k=0; k<info.num_tallies; ++k)
 {
+if(k==0)
+myfile<<"Fuel Rod Only \n";
+
+if(k==1)
+myfile<<"Fuel + Water";
+
+myfile << "Number of Particle: " + std::to_string(basis.n_counter[k]) + "\n";
+  myfile << "Percentage of R^2 > 1: " + std::to_string((tally.R_greater[k]-tally.R_greater[k+1])/tally.total_coeff[k]*100) +"\n";
+  myfile << "Percentage of R^2 > 10: " + std::to_string(tally.R_greater[k+1]/tally.total_coeff[k]*100) +"\n";
   for (int m=0; m < info.poly_terms; ++m)
   {
     for(int n=0; n<info.poly_terms; ++n)
@@ -109,6 +116,8 @@ for(int k=0; k<info.num_tallies; ++k)
 	}
        }
     }
+  myfile << "\n";
+  myfile << "\n";
 }
 
 myfile << "\n";

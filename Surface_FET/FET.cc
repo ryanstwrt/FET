@@ -15,9 +15,9 @@ using namespace std;
 void FET_solver::initializer (initial_info &info)
 {
 
-info.poly_order = 6;
+info.poly_order = 9;
 info.poly_terms = info.poly_order + 1;
-info.num_tallies = 1;
+info.num_tallies = 2;
 
 }
 //---------------------------------------------------------------------------//
@@ -91,14 +91,16 @@ void FET_solver::collision_eval (legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
 {
 
-    
+    double x_tild;
+    double y_tild;
+    double z_tild;
 
-    double x_tild = scale(a.x, basis.x_basis);
-    double y_tild = scale(a.y, basis.y_basis);
-    double z_tild = scale(a.z, basis.z_basis);
   for(int k=0; k < basis.num_tallies; ++k)
   {
 
+    x_tild = scale(a.x, basis.x_basis);
+    y_tild = scale(a.y, basis.y_basis);
+    z_tild = scale(a.z, basis.z_basis);
     if(x_tild != 2 || y_tild != 2 || z_tild != 2 )
     {
       std::vector<double> P_n_x = basis.Pn(poly_terms-1, x_tild);
@@ -120,7 +122,8 @@ void FET_solver::collision_eval (legendre_info &basis,
   }
 }
 
-//Particle death triggers eval and generates an estimate for the coefficient for the nth particle.
+//Particle death triggers eval and generates an estimate for the coefficient for the nth particle.\
+//To Do: Fix the number of particles per tally
 void FET_solver::collision_eval2(legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
 {
@@ -139,8 +142,9 @@ void FET_solver::collision_eval2(legendre_info &basis,
         }
       }
     }
+  basis.n_counter[k]++;
   }
-  basis.n_counter[0]++;
+
 }
 
 //---------------------------------------------------------------------------//
@@ -231,32 +235,26 @@ void FET_solver::cleanup (tally_info &tally,
 		std::size_t poly_terms, std::size_t num_tallies)
 {
 
-    tally.R_great_10  = 0;
-    tally.R_great_1   = 0;
-    tally.total_coeff = 0;
-for(int k=0; k < num_tallies; ++k)
-{
-  for (int m=0; m < poly_terms; ++m)
+  for(int k=0; k < num_tallies; ++k)
   {
-    for(int n=0; n<poly_terms; ++n)
+    for (int m=0; m < poly_terms; ++m)
     {
-      for(int i=0; i<poly_terms; ++i)
+      for(int n=0; n<poly_terms; ++n)
       {
-
-	
+        for(int i=0; i<poly_terms; ++i)
+        {
  	  if(tally.flux_R_matrix[m][n][i][k] >= 1)
 	  { 
-	      tally.R_great_1++;
-	  if(tally.flux_R_matrix[m][n][i][k] >= 10)
-	  {
-	    tally.R_great_10++;
-	    std::cout<<"P("<<m<<")("<<n<<")("<<i<<") = "<<tally.flux_matrix[m][n][i][k]<<" +/- "<<tally.flux_unc_matrix[m][n][i][k]<<" w/ "<<tally.flux_R_matrix[m][n][i][k]<<std::endl;
-	    tally.flux_matrix[m][n][i][k] = 0;
-
+	    tally.R_greater[k]++;
+	    if(tally.flux_R_matrix[m][n][i][k] >= 10)
+	    {
+	      tally.R_greater[k+1]++;
+//	      std::cout<<"P("<<m<<")("<<n<<")("<<i<<") = "<<tally.flux_matrix[m][n][i][k]<<" +/- "<<tally.flux_unc_matrix[m][n][i][k]<<" w/ "<<tally.flux_R_matrix[m][n][i][k]<<std::endl;
+	      tally.flux_matrix[m][n][i][k] = 0;
+	    }
 	  }
-	}
-      }
-	  tally.total_coeff++;
+        tally.total_coeff[k]++;
+        }
       }
     }
     std::cout<<std::endl;

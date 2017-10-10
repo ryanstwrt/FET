@@ -41,9 +41,9 @@ class tally_info
     inline tally_info (std::size_t poly_order,  std::size_t num_tallies);
     virtual ~tally_info() = default;
 
-    double R_great_10;
-    double R_great_1;
-    double total_coeff;
+    multi_vectors::vector_1d R_greater;
+    multi_vectors::vector_1d total_coeff;
+
     multi_vectors::vector_2d current_matrix;
     multi_vectors::vector_2d current_unc_matrix;
     multi_vectors::vector_2d current_R_matrix;
@@ -62,6 +62,8 @@ tally_info::tally_info (std::size_t poly_order, std::size_t num_tallies)
 			: order(poly_order)
 			, terms(poly_order+1)
 {
+    R_greater.resize(2*num_tallies);
+    total_coeff.resize(num_tallies);
 
     current_matrix.resize(terms);
     current_unc_matrix.resize(terms);
@@ -72,7 +74,12 @@ tally_info::tally_info (std::size_t poly_order, std::size_t num_tallies)
     flux_R_matrix.resize(terms);
 
 //This loop initializes both the flux matrix, and the associated uncertainty matrix. The sum of the entire matrix will yield the flux for the system.
-    for(int m=0; m<terms; ++m)
+	    for(int k=0; k<num_tallies; ++k)
+	    {
+		R_greater[k]=0;
+		R_greater[2*k]=0;
+		total_coeff[k] = 0;
+   for(int m=0; m<terms; ++m)
     {
       current_matrix[m].resize(terms);
       current_unc_matrix[m].resize(terms);
@@ -98,8 +105,7 @@ tally_info::tally_info (std::size_t poly_order, std::size_t num_tallies)
           flux_unc_matrix[m][n][i].resize(terms);
           flux_R_matrix[m][n][i].resize(terms);
 
-	    for(int k=0; k<num_tallies; ++k)
-	    {
+
 
 	      flux_matrix[m][n][i][k] = 0;
 	      flux_unc_matrix[m][n][i][k] = 0;
@@ -217,6 +223,12 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
 	x_basis[1] = 1;
 	y_basis[1] = 1;
 	z_basis[1] = 5;
+	x_basis[2] = -5;
+	y_basis[2] = -5;
+	z_basis[2] = -10;
+	x_basis[3] = 5;
+	y_basis[3] = 5;
+	z_basis[3] = 10;
 }
 
 //This class will either absorb the values coming out of shift, or disappear once integrated
