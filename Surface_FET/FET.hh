@@ -74,13 +74,14 @@ tally_info::tally_info (std::size_t poly_order, std::size_t num_tallies)
     flux_unc_matrix.resize(terms);
     flux_R_matrix.resize(terms);
 
-//This loop initializes both the flux matrix, and the associated uncertainty matrix. The sum of the entire matrix will yield the flux for the system.
-	    for(int k=0; k<num_tallies; ++k)
-	    {
-		R_greater[k]=0;
-		R_greater[2*k]=0;
-		total_coeff[k] = 0;
-   for(int m=0; m<terms; ++m)
+//This loop initializes both the flux matrix, and the associated uncertainty 
+//matrix. The sum of the entire matrix will yield the flux for the system.
+for(int k=0; k<num_tallies; ++k)
+{
+  R_greater[k]=0;
+  R_greater[2*k]=0;
+  total_coeff[k] = 0;
+    for(int m=0; m<terms; ++m)
     {
       current_matrix[m].resize(terms);
       current_unc_matrix[m].resize(terms);
@@ -124,7 +125,8 @@ tally_info::tally_info (std::size_t poly_order, std::size_t num_tallies)
 
 }
 
-//This class holds all of the inforomation regarding the estimate for the coefficients
+//This class holds all of the inforomation regarding the estimate for the 
+//coefficients
 class legendre_info
 {
   public:
@@ -175,7 +177,8 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
     B_unc.resize(terms);
 
 //This loop initilizes the coefficient matrix for both the current and the flux
-//To Do: Create some statement to differentiate the two types of FETs (surface vs collision) and only intialize the coefficient matrix needed
+//To Do: Create some statement to differentiate the two types of FETs
+// (surface vs collision) and only intialize the coefficient matrix needed
    for(int m=0; m<terms; ++m)
     {
       a[m].resize(terms);
@@ -235,7 +238,8 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
 	z_basis[3] = 10;
 }
 
-//This class will either absorb the values coming out of shift, or disappear once integrated
+//This class will either absorb the values coming out of shift,
+//or disappear once integrated
 //To Do: position will be given with a number space number space number (ex 1 0 1). find a way to seperate this out
 class particle_info
 {
@@ -250,16 +254,23 @@ class particle_info
     double size;
 };
 
-//Solver class simply groups all of the various functions needed to solve for the FET
+//Solver class simply groups all of the various functions needed to solve 
+//for the FET
 class FET_solver
 {
   public:
-    void surface_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
-    void surface_eval2 (legendre_info &basis, particle_info &a, std::size_t poly_terms);
-    void collision_eval (legendre_info &basis, particle_info &a, std::size_t poly_terms);
-    void collision_eval2 (legendre_info &basis, particle_info &a, std::size_t poly_terms);
-    void get_current (legendre_info &basis, tally_info &tally, std::size_t num_tallies, std::size_t poly_terms);
-    void cleanup (tally_info &tally, std::size_t poly_terms, std::size_t num_tallies);
+    void surface_eval (legendre_info &basis, particle_info &a, 
+		std::size_t poly_terms);
+    void surface_eval2 (legendre_info &basis, particle_info &a, 
+		std::size_t poly_terms);
+    void collision_eval (legendre_info &basis, particle_info &a, 
+		std::size_t poly_terms);
+    void collision_eval2 (legendre_info &basis, particle_info &a, 
+		std::size_t poly_terms);
+    void get_current (legendre_info &basis, tally_info &tally, 
+		std::size_t num_tallies, std::size_t poly_terms);
+    void cleanup (tally_info &tally, std::size_t poly_terms, 
+		std::size_t num_tallies);
     double scale (double x, std::vector<double> dimension_basis, int k);
     void initializer (initial_info &info);
 };

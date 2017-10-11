@@ -39,7 +39,8 @@ double FET_solver::scale (double position,
     }
     else
     {
-	return (2 * ((position - dimension_basis[k])/(dimension_basis[k+1] - dimension_basis[k])) - 1);
+	return (2 * ((position - dimension_basis[k])/(dimension_basis[k+1]-
+	dimension_basis[k])) - 1);
 
     }
 }
@@ -199,28 +200,39 @@ void FET_solver::get_current (legendre_info &basis,
 	 for(int k=0; k<num_tallies; ++k)
 	 {
          var_b[m][n][i][k] = 0;
-	 ortho_const[m][n][i][k] = (2*m-1) * (2*n-1)* (2*i-1) / ((basis.x_basis[2*k+1]-basis.x_basis[2*k])*(basis.y_basis[2*k+1]-basis.y_basis[2*k])*(basis.z_basis[2*k+1]-basis.z_basis[2*k]));
+	 ortho_const[m][n][i][k] = (2*m-1) * (2*n-1)* (2*i-1) / 
+	 ((basis.x_basis[2*k+1]-basis.x_basis[2*k])*(basis.y_basis[2*k+1]-
+	 basis.y_basis[2*k])*(basis.z_basis[2*k+1]-basis.z_basis[2*k]));
 
 	 }
        }
      }
    }
 
-//Solves for the final coefficient, followed by the current, the uncertainty, and finally the R^2 value
+//Solves for the final coefficient, followed by the current, the uncertainty,
+//and finally the R^2 value
   for (int m=0; m<poly_terms; m++)
   {
     for(int n=0; n<poly_terms; ++n)
     {
-      basis.A[m][n] *= ((basis.x_basis[0]-basis.x_basis[1])*(basis.y_basis[0]-basis.y_basis[1])) / basis.n_counter[0];
+      basis.A[m][n] *= ((basis.x_basis[0]-basis.x_basis[1])*
+      (basis.y_basis[0]-basis.y_basis[1])) / basis.n_counter[0];
+
       tally.current_matrix[m][n] = basis.A[m][n] * ortho_const[m][n][0][0];
 
-      var_a[m][n] = (basis.A_unc[m][n] - (1.0/basis.n_counter[0]) * std::pow(basis.A[m][n],2) ) * 1.0 / (basis.n_counter[0]*(basis.n_counter[0]-1.0));
+      var_a[m][n] = (basis.A_unc[m][n] - (1/basis.n_counter[0]) * 
+      std::pow(basis.A[m][n],2) ) * 1/ 
+      (basis.n_counter[0]*(basis.n_counter[0]-1));
+
       tally.current_unc_matrix[m][n] = std::sqrt(fabs(var_a[m][n]));
-      tally.current_R_matrix[m][n] = (var_a[m][n] * ortho_const[m][n][0][0] ) / std::pow(basis.A[m][n],2.0);
+
+      tally.current_R_matrix[m][n] = (var_a[m][n] * ortho_const[m][n][0][0] )/
+      std::pow(basis.A[m][n],2.0);
     }
   }
 
-//Solves for the final coefficient, followed by the flux, the uncertainty, and finally the R^2 value
+//Solves for the final coefficient, followed by the flux, the uncertainty, 
+//and finally the R^2 value
   for(int k=0; k < basis.num_tallies; ++k)
   {
     for(int m=0; m<poly_terms; ++m)
@@ -230,10 +242,16 @@ void FET_solver::get_current (legendre_info &basis,
         for(int i=0; i<poly_terms; ++i)
         {
 	  basis.B[m][n][i][k] *= 1 / basis.n_counter[0];
-          var_b[m][n][i][k] = (basis.B_unc[m][n][i][k]-(1.0/basis.n_counter[0])*std::pow(basis.B[m][n][i][k],2))*1.0/(basis.n_counter[0]*(basis.n_counter[0]-1.0));
+          var_b[m][n][i][k] = (basis.B_unc[m][n][i][k]-(1/basis.n_counter[0])*
+	  std::pow(basis.B[m][n][i][k],2))*1.0/(basis.n_counter[0]*
+	  (basis.n_counter[0]-1.0));
 
-	  tally.flux_R_matrix[m][n][i][k] = (var_b[m][n][i][k])  * ortho_const[m][n][i][k]/ std::pow(basis.B[m][n][i][k],2.0);
-	  tally.flux_matrix[m][n][i][k] = basis.B[m][n][i][k] * ortho_const[m][n][i][k];
+	  tally.flux_R_matrix[m][n][i][k] = (var_b[m][n][i][k]) * 
+	  ortho_const[m][n][i][k]/ std::pow(basis.B[m][n][i][k],2.0);
+
+	  tally.flux_matrix[m][n][i][k] = basis.B[m][n][i][k]*
+	  ortho_const[m][n][i][k];
+
 	  tally.flux_unc_matrix[m][n][i][k] = std::sqrt(fabs(var_b[m][n][i][k]));
         }
       }
@@ -255,13 +273,15 @@ void FET_solver::cleanup (tally_info &tally,
       {
         for(int i=0; i<poly_terms; ++i)
         {
- 	  if(tally.flux_R_matrix[m][n][i][k] >= 1 && tally.flux_R_matrix[m][n][i][k] <= 10)
+ 	  if(tally.flux_R_matrix[m][n][i][k] >= 1 && 
+	  tally.flux_R_matrix[m][n][i][k] <= 10)
 	    tally.R_greater[2*k]++;
 	  else if(tally.flux_R_matrix[m][n][i][k] >= 10)
+	  {
 	    tally.R_greater[2*k+1]++;
-
-//	      std::cout<<"P("<<m<<")("<<n<<")("<<i<<") = "<<tally.flux_matrix[m][n][i][k]<<" +/- "<<tally.flux_unc_matrix[m][n][i][k]<<" w/ "<<tally.flux_R_matrix[m][n][i][k]<<std::endl;
+//  std::cout<<"P("<<m<<")("<<n<<")("<<i<<") = "<<tally.flux_matrix[m][n][i][k]<<" +/- "<<tally.flux_unc_matrix[m][n][i][k]<<" w/ "<<tally.flux_R_matrix[m][n][i][k]<<std::endl;
 	      tally.flux_matrix[m][n][i][k] = 0;
+	  }
         tally.total_coeff[k]++;
         }
       }
@@ -272,9 +292,8 @@ void FET_solver::cleanup (tally_info &tally,
 
 //---------------------------------------------------------------------------//
 /*!
- * Below solves the Legendre Polynomials for the highest order term and saves all of the lower order terms in a vector.
- *
- *
+ * Below solves the Legendre Polynomials for the highest order term and saves 
+ * all of the lower order terms in a vector.
  */
 //---------------------------------------------------------------------------//
 
@@ -289,15 +308,20 @@ const double x2 = x * x;
     {
 	default:
 	case 12:
-	save(12, ((((((676039 * x2 - 1939938) * x2 + 2078505) * x2 - 1021020) * x2 + 225225) * x2 - 18018) * x2 + 231) / 1024);
+	save(12, ((((((676039 * x2 - 1939938) * x2 + 2078505) * x2 - 1021020)* 
+		 x2 + 225225) * x2 - 18018) * x2 + 231) / 1024);
 	case 11:
-	save(11, (((((88179 * x2 - 230945) * x2 + 218790) * x2 - 90090) * x2 + 15015) * x2 - 693) * x / 256);
+	save(11, (((((88179 * x2 - 230945) * x2 + 218790) * x2 - 90090) * x2+
+		 15015) * x2 - 693) * x / 256);
 	case 10:
-	save(10, (((((46189 * x2 - 109395) * x2 + 90090) * x2 - 30030) * x2 + 3465) * x2 - 63) / 256);
+	save(10, (((((46189 * x2 - 109395) * x2 + 90090) * x2 - 30030) * x2+
+		 3465) * x2 - 63) / 256);
 	case 9:
-	save(9, ((((12155 * x2 - 25740) * x2 + 18018) * x2 - 4620) * x2 + 315) * x / 128);
+	save(9, ((((12155 * x2 - 25740) * x2 + 18018) * x2 - 4620) * x2 + 315)* 
+		x / 128);
 	case 8:
-	save(8, ((((6435 * x2 - 12012) * x2 + 6930) * x2 - 1260) * x2 + 35) / 128);
+	save(8, ((((6435 * x2 - 12012) * x2 + 6930) * x2 - 1260) * x2 + 35) /
+		128);
 	case 7:
 	save(7, (((429 * x2 - 693) * x2 + 315) * x2 - 35) * x / 16);
 	case 6:
@@ -318,7 +342,7 @@ const double x2 = x * x;
 //Solves for any case above 12 and saves it in the polynomial vector
 	for (int n = 13; n < poly_order; ++n)
 	{
-	save(n, ( ( 2 * n - 1 ) * x * load( n - 1 ) - ( n - 1 ) * load( n - 2 ) ) / n );
+	save(n, ( (2*n-1) * x * load(n-1) - (n-1) * load(n-2) ) / n );
 	}
 
     return P_n;

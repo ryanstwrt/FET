@@ -18,7 +18,7 @@ int main (int argc, char** argv)
 {
 ofstream myfile;
 ifstream input;
-input.open("/opt/Shift_inputs/fuel_rod2.5.rst");
+input.open("/opt/Shift_inputs/fuel_rod.rst");
 myfile.open ("fuel_rod.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
