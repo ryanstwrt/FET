@@ -15,7 +15,7 @@ using namespace std;
 void FET_solver::initializer (initial_info &info)
 {
 
-info.poly_order = 3;
+info.poly_order = 9;
 info.poly_terms = info.poly_order + 1;
 info.num_tallies = 2;
 
@@ -286,7 +286,7 @@ void FET_solver::cleanup (tally_info &tally,
         }
       }
     }
-    std::cout<<tally.R_greater[k]<<"  "<<tally.R_greater[k+1]<<"  "<<tally.total_coeff[k]<<std::endl;
+//    std::cout<<tally.R_greater[k]<<"  "<<tally.R_greater[k+1]<<"  "<<tally.total_coeff[k]<<std::endl;
   }
 }
 

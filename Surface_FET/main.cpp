@@ -18,7 +18,7 @@ int main (int argc, char** argv)
 {
 ofstream myfile;
 ifstream input;
-input.open("/opt/Shift_inputs/fuel_rod.rst");
+input.open("/opt/Shift_inputs/fuel_rod1.5.rst");
 myfile.open ("fuel_rod.txt", ios::in | ios::app);
 clock_t tStart = clock ();
 
@@ -79,9 +79,9 @@ solver.cleanup(tally, info.poly_terms, info.num_tallies);
 
 for(int k=0; k<info.num_tallies; ++k)
 {
-std::cout<<tally.R_greater[k]<<"  "<<tally.R_greater[k+1]<<"  "<<std::endl;
-std::cout<<"Percentage of R^2 > 1: " <<tally.R_greater[k]/tally.total_coeff[k]*100<<std::endl;
-std::cout<<"Percentage of R^2 > 10: " <<tally.R_greater[k+1]/tally.total_coeff[k]*100<<std::endl;
+//std::cout<<tally.R_greater[k]<<"  "<<tally.R_greater[k+1]<<"  "<<std::endl;
+std::cout<<"Percentage of R^2 > 1: " <<tally.R_greater[2*k]/tally.total_coeff[k]*100<<std::endl;
+std::cout<<"Percentage of R^2 > 10: " <<tally.R_greater[2*k+1]/tally.total_coeff[k]*100<<std::endl;
 std::cout<<basis.n_counter[k]<<std::endl;
 std::cout<<std::endl;
 }
@@ -99,8 +99,8 @@ myfile<<"Fuel + Water";
 
   myfile << "Tally " << k << " \n";
   myfile << "Number of Particle: " + std::to_string(basis.n_counter[k]) + "\n";
-  myfile << "Percentage of R^2 > 1: " + std::to_string((tally.R_greater[k])/tally.total_coeff[k]*100) +"\n";
-  myfile << "Percentage of R^2 > 10: " + std::to_string(tally.R_greater[k+1]/tally.total_coeff[k]*100) +"\n";
+  myfile << "Percentage of R^2 > 1: " + std::to_string((tally.R_greater[2*k])/tally.total_coeff[k]*100) +"\n";
+  myfile << "Percentage of R^2 > 10: " + std::to_string(tally.R_greater[2*k+1]/tally.total_coeff[k]*100) +"\n";
   for (int m=0; m < info.poly_terms; ++m)
   {
     for(int n=0; n<info.poly_terms; ++n)
