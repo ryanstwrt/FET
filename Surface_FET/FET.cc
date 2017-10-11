@@ -183,6 +183,8 @@ void FET_solver::get_current (legendre_info &basis,
    var_b.resize(poly_terms);
    var_a.resize(poly_terms);
    ortho_const.resize(poly_terms);
+for(int k=0; k<num_tallies; ++k)
+{
    for(int m=0; m<poly_terms; ++m)
    {
      var_b[m].resize(poly_terms);
@@ -197,14 +199,15 @@ void FET_solver::get_current (legendre_info &basis,
        {
 	 var_b[m][n][i].resize(num_tallies);
          ortho_const[m][n][i].resize(poly_terms);
-	 for(int k=0; k<num_tallies; ++k)
-	 {
+
          var_b[m][n][i][k] = 0;
-	 ortho_const[m][n][i][k] = (2*m-1) * (2*n-1)* (2*i-1) / 
+	 ortho_const[m][n][i][k] = (2*m+1) * (2*n+1)* (2*i+1) / 
 	 ((basis.x_basis[2*k+1]-basis.x_basis[2*k])*(basis.y_basis[2*k+1]-
 	 basis.y_basis[2*k])*(basis.z_basis[2*k+1]-basis.z_basis[2*k]));
+//	std::cout<<ortho_const[m][n][i][k]<<"  ";
 
 	 }
+//	std::cout<<std::endl;
        }
      }
    }
