@@ -45,6 +45,7 @@ double FET_solver::scale (double position,
 }
 
 //Solves the legendre polynomial for a particles nth contribution to an estimate of the coefficient i.e. this will happen multiple times for each particle until the particle dies
+//To Do: Update surface evals to make collision eval.
 void FET_solver::surface_eval (legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
 {
@@ -85,7 +86,9 @@ void FET_solver::surface_eval2 (legendre_info &basis,
       basis.n_counter[0]++;
 }
 
-//Solves the legendre polynomial for a particles nth contribution to an estimate of the coefficient i.e. this will happen multiple times for each particle until the particle dies
+//Solves the legendre polynomial for a particles nth contribution to an
+//estimate of the coefficient i.e. this will happen multiple times for 
+//each particle until the particle dies
 //TO DO: Combine collision eval with an if statement (if p.alive == 1)
 void FET_solver::collision_eval (legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
@@ -114,7 +117,8 @@ void FET_solver::collision_eval (legendre_info &basis,
         {
           for(int i=0; i<poly_terms; ++i)
           {
-            basis.b[m][n][i][k] += a.wt * P_n_x[m] * P_n_y[n] * P_n_z[i] / a.xs_tot;
+            basis.b[m][n][i][k] += a.wt * P_n_x[m] * P_n_y[n] * P_n_z[i] 
+	    / a.xs_tot;
           }
         }
       }
@@ -122,10 +126,11 @@ void FET_solver::collision_eval (legendre_info &basis,
   }
 }
 
-//Particle death triggers eval and generates an estimate for the coefficient for the nth particle.\
-//To Do: Fix the number of particles per tally
+//Particle death triggers eval and generates an estimate for the coefficient
+//for the nth particle.
 void FET_solver::collision_eval2(legendre_info &basis,
-		   particle_info &a, std::size_t poly_terms)
+		   		 particle_info &a, 
+				  std::size_t poly_terms)
 {
 bool test;
 //Sums the contribution of the flux of each particle
@@ -141,7 +146,6 @@ bool test;
 	  test = 0;
 	  else
 	  test =1;
-	  std::cout<<basis.b[m][n][i][k]<<"  "<<test<<std::endl;
 
 	  basis.B[m][n][i][k] += basis.b[m][n][i][k];
 	  basis.B_unc[m][n][i][k] += pow(basis.b[m][n][i][k],2);

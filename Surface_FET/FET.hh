@@ -16,6 +16,7 @@
 #include<cstdlib>
 #include<cmath>
 
+//Class of vectors to make life easier/look prettier.
 class multi_vectors
 {
 public:
@@ -131,11 +132,11 @@ class legendre_info
     virtual ~legendre_info() = default;
 
     std::size_t num_tallies;
-    std::vector<double> x_basis;
-    std::vector<double> y_basis;
-    std::vector<double> z_basis;
-    std::vector<double> n_counter;
-    std::vector<double> P_n;
+    multi_vectors::vector_1d x_basis;
+    multi_vectors::vector_1d y_basis;
+    multi_vectors::vector_1d z_basis;
+    multi_vectors::vector_1d n_counter;
+    multi_vectors::vector_1d P_n;
 
     multi_vectors::vector_2d  a;
     multi_vectors::vector_2d  A;
@@ -216,6 +217,10 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
       }
     }
 //Currently sets the boundries for the x,y, and z dimensions
+//Each dimension is a single vector. For multiple tallies, each dimension
+//increases by a factor of 2*tally_number+1. Thus tally 0, utilizes the 
+//first spot in the array for the minimum, and the second spot in the 
+//array for the maximum.
 	x_basis[0] = -1;
 	y_basis[0] = -1;
 	z_basis[0] = -5;
