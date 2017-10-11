@@ -15,7 +15,7 @@ using namespace std;
 void FET_solver::initializer (initial_info &info)
 {
 
-info.poly_order = 9;
+info.poly_order = 3;
 info.poly_terms = info.poly_order + 1;
 info.num_tallies = 2;
 
@@ -30,15 +30,16 @@ info.num_tallies = 2;
 //Scales the reactor phase space down to Legendre phase space [-1,1]
 //Verified 7/18/17
 double FET_solver::scale (double position,
-	     std::vector<double> dimension_basis)
+	     std::vector<double> dimension_basis, 
+	     int k)
 {
-    if(position < dimension_basis[0] || position > dimension_basis[1])
+    if(position < dimension_basis[k] || position > dimension_basis[k+1])
     {
 	return 2;
     }
     else
     {
-	return (2 * ((position - dimension_basis[0])/(dimension_basis[1] - dimension_basis[0])) - 1);
+	return (2 * ((position - dimension_basis[k])/(dimension_basis[k+1] - dimension_basis[k])) - 1);
 
     }
 }
@@ -47,8 +48,8 @@ double FET_solver::scale (double position,
 void FET_solver::surface_eval (legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
 {
-    double x_tild = scale(a.x, basis.x_basis);
-    double y_tild = scale(a.y, basis.y_basis);
+    double x_tild = scale(a.x, basis.x_basis, 0);
+    double y_tild = scale(a.y, basis.y_basis, 0);
 
   if(x_tild != 2 || y_tild != 2)
   {
@@ -72,17 +73,16 @@ void FET_solver::surface_eval2 (legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
 {
 //Sums the contribution to the current of each particle
-    for(int m=0; m<poly_terms; ++m)
-    {
-	for(int n=0; n<poly_terms; ++n)
-	{
-	  basis.A[m][n] += basis.a[m][n];
-	  basis.A_unc[m][n] += pow(basis.a[m][n],2);
-	  basis.a[m][n] = 0;
-	}
-    }
-
-   basis.n_counter[0]++;
+      for(int m=0; m<poly_terms; ++m)
+      {
+	  for(int n=0; n<poly_terms; ++n)
+	  {
+	    basis.A[m][n] += basis.a[m][n];
+	    basis.A_unc[m][n] += pow(basis.a[m][n],2);
+	    basis.a[m][n] = 0;
+	  }
+      }
+      basis.n_counter[0]++;
 }
 
 //Solves the legendre polynomial for a particles nth contribution to an estimate of the coefficient i.e. this will happen multiple times for each particle until the particle dies
@@ -95,12 +95,12 @@ void FET_solver::collision_eval (legendre_info &basis,
     double y_tild;
     double z_tild;
 
-  for(int k=0; k < basis.num_tallies; ++k)
+  for(int k=0; k<basis.num_tallies; ++k)
   {
+    x_tild = scale(a.x, basis.x_basis, 2*k);
+    y_tild = scale(a.y, basis.y_basis, 2*k);
+    z_tild = scale(a.z, basis.z_basis, 2*k);
 
-    x_tild = scale(a.x, basis.x_basis);
-    y_tild = scale(a.y, basis.y_basis);
-    z_tild = scale(a.z, basis.z_basis);
     if(x_tild != 2 || y_tild != 2 || z_tild != 2 )
     {
       std::vector<double> P_n_x = basis.Pn(poly_terms-1, x_tild);
@@ -127,8 +127,9 @@ void FET_solver::collision_eval (legendre_info &basis,
 void FET_solver::collision_eval2(legendre_info &basis,
 		   particle_info &a, std::size_t poly_terms)
 {
+bool test;
 //Sums the contribution of the flux of each particle
-  for(int k=0; k < basis.num_tallies; ++k)
+  for(int k=0; k<basis.num_tallies; ++k)
   {
     for(int m=0; m<poly_terms; ++m)
     {
@@ -136,13 +137,20 @@ void FET_solver::collision_eval2(legendre_info &basis,
       {
         for(int i=0; i<poly_terms; ++i)
         {
+	  if(basis.b[m][n][i][k] == 0)
+	  test = 0;
+	  else
+	  test =1;
+	  std::cout<<basis.b[m][n][i][k]<<"  "<<test<<std::endl;
+
 	  basis.B[m][n][i][k] += basis.b[m][n][i][k];
 	  basis.B_unc[m][n][i][k] += pow(basis.b[m][n][i][k],2);
 	  basis.b[m][n][i][k] = 0;
         }
       }
     }
-  basis.n_counter[k]++;
+    if(test == 1)
+    basis.n_counter[k]++;
   }
 
 }
@@ -164,7 +172,7 @@ void FET_solver::get_current (legendre_info &basis,
 //Dummy variables for solving for the current
     std::vector<std::vector<double> >   var_a;
     std::vector<std::vector<std::vector<std::vector<double> > > > var_b;
-    std::vector<std::vector<std::vector<std::vector<double> > > >  ortho_const;
+    std::vector<std::vector<std::vector<std::vector<double> > > > ortho_const;
 
 //Initialize the dummy variables to the same dimensions as the current/flux
    var_b.resize(poly_terms);
@@ -243,21 +251,18 @@ void FET_solver::cleanup (tally_info &tally,
       {
         for(int i=0; i<poly_terms; ++i)
         {
- 	  if(tally.flux_R_matrix[m][n][i][k] >= 1)
-	  { 
-	    tally.R_greater[k]++;
-	    if(tally.flux_R_matrix[m][n][i][k] >= 10)
-	    {
-	      tally.R_greater[k+1]++;
+ 	  if(tally.flux_R_matrix[m][n][i][k] >= 1 && tally.flux_R_matrix[m][n][i][k] <= 10)
+	    tally.R_greater[2*k]++;
+	  else if(tally.flux_R_matrix[m][n][i][k] >= 10)
+	    tally.R_greater[2*k+1]++;
+
 //	      std::cout<<"P("<<m<<")("<<n<<")("<<i<<") = "<<tally.flux_matrix[m][n][i][k]<<" +/- "<<tally.flux_unc_matrix[m][n][i][k]<<" w/ "<<tally.flux_R_matrix[m][n][i][k]<<std::endl;
 	      tally.flux_matrix[m][n][i][k] = 0;
-	    }
-	  }
         tally.total_coeff[k]++;
         }
       }
     }
-    std::cout<<std::endl;
+    std::cout<<tally.R_greater[k]<<"  "<<tally.R_greater[k+1]<<"  "<<tally.total_coeff[k]<<std::endl;
   }
 }
 

@@ -216,7 +216,6 @@ legendre_info::legendre_info (std::size_t poly_order, std::size_t num_tallies)
       }
     }
 //Currently sets the boundries for the x,y, and z dimensions
-//To Do: Figure out a better way to store this information, perhaps a 3 x 3 x 3 matrix to be initialized above?
 	x_basis[0] = -1;
 	y_basis[0] = -1;
 	z_basis[0] = -5;
@@ -256,7 +255,7 @@ class FET_solver
     void collision_eval2 (legendre_info &basis, particle_info &a, std::size_t poly_terms);
     void get_current (legendre_info &basis, tally_info &tally, std::size_t num_tallies, std::size_t poly_terms);
     void cleanup (tally_info &tally, std::size_t poly_terms, std::size_t num_tallies);
-    double scale (double x, std::vector<double> dimension_basis);
+    double scale (double x, std::vector<double> dimension_basis, int k);
     void initializer (initial_info &info);
 };
 
